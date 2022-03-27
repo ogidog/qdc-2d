@@ -1,0 +1,12 @@
+STEP;4
+METHOD;circular
+INPUT;D:\Temp\-QDC-2D-main\TEMPLATES\examples\createdJoints1.txt
+THETA;10
+SCALE;10
+OUTPUT;D:\Temp\-QDC-2D-main\test.txt
+COVER;0.8
+JOINT;j1;10;5
+JOINT;j2;40;10
+JOINT;j2;100;10
+CIRCLES;3
+TABLE;D:\Temp\-QDC-2D-main\TEMPLATES\examples\wantedJoints.txt
