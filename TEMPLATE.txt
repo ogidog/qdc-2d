@@ -1,6 +1,6 @@
 STEP;3
-METHOD;circular
-INPUT;.\TEMPLATES\examples\createdJoints1.txt
+METHOD;hough
+INPUT;D:\intellij-idea-workspace\qdc-2d\TEMPLATES\examples\createdJoints1.txt
 THETA;10
 SCALE;10
 OUTPUT;test.txt
@@ -9,4 +9,4 @@ JOINT;j1;10;5
 JOINT;j2;40;10
 JOINT;j2;100;10
 CIRCLES;3
-TABLE;.\TEMPLATES\examples\wantedJoints.txt
+TABLE;D:\intellij-idea-workspace\qdc-2d\TEMPLATES\examples\wantedJoints.txt
