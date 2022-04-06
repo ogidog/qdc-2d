@@ -1,6 +1,8 @@
 import numpy as np
 import cmath
 
+from utils import test_dict
+
 
 def readJoints(matrix_joints):
     iD = np.unique(matrix_joints[:, 0])
@@ -20,7 +22,7 @@ def readJoints(matrix_joints):
     edges = [*range(0, 182, 2)]
     for i in range(len(iD)):
         row = np.where(matrix_joints[:, 0] == iD[i])  # all lines of iD i
-        nodes['iD'][i] = iD[i]
+        nodes['iD'][i] = [iD[i]]
         nodes['x'][i] = matrix_joints[row, 1]
         nodes['y'][i] = matrix_joints[row, 2]
 
@@ -44,5 +46,10 @@ def readJoints(matrix_joints):
         nodes['ori_mean_deg'][i] = np.rad2deg(nodes['ori_mean'][i])
         [N, _] = np.histogram(nodes['ori_mean_deg'][0:(i + 1)], edges)
         nodes['oriHisto'] = N.reshape(-1, 1);
+
+    del row
+
+    # TODO: test
+    # test_dict("D:\\Temp\\-QDC-2D-test\\nodes.mat", nodes, "nodes")
 
     return nodes

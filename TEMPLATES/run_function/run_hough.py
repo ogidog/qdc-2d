@@ -3,6 +3,7 @@ import csv
 import numpy as np
 
 from read_write_joints.readJoints import readJoints
+from houghAnalysis.houghAnalysis import houghAnalysis
 
 
 def run_hough(template):
@@ -19,7 +20,8 @@ def run_hough(template):
             joints = np.append(joints, np.array(row))
     joints = np.array(np.split(joints, reader.line_num), dtype=np.float64)
     nodes = readJoints(joints)
-    # nodes = houghAnalysis(nodes);
+    nodes = houghAnalysis(nodes)
+
     # fprintf('Real spacing - Hough frame : %f\n', mean((nodes.real_spacing_hough)))
 
     print()
