@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+from read_write_joints.nodes2vector import nodes2vector
+
 
 def polylines_to_lines(nodes):
     id_x1x2y1y2_matrice = np.empty((len(nodes['iD']), 5))
@@ -23,5 +25,20 @@ def polylines_to_lines(nodes):
 
         plt.plot(Xl, Yl, "b-")
 
+    # Extend of the window
+    vector = nodes2vector(nodes)
+    xmoy = (np.min(vector['x']) + np.max(vector['x'])) / 2
+    ymoy = (np.min(vector['y']) + np.max(vector['y'])) / 2
+    # Find the max trace length
+    # the extend will be the 1/2 of max trace length
+    norm = nodes['norm']
+    sortedX = sorted(norm[:], reverse=True)
+    top3 = sortedX[2]
+    max_extend = top3/2
+    n = 2
+    plt.xlim([xmoy-max_extend/n, xmoy+max_extend/n])
+    plt.ylim([ymoy-max_extend/n, ymoy+max_extend/n])
+
     plt.show()
-    pass
+
+    return [nodes, id_x1x2y1y2_matrice]
