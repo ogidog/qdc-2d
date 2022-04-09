@@ -26,7 +26,14 @@ def houghAnalysis(nodes):
         real_spacing[0, s] = np.mean([r2, r1])
 
     nodes['real_spacing_hough'] = real_spacing
-    nodes['app_spacing_hough']  = app_spacing
+    nodes['app_spacing_hough'] = app_spacing
 
-
-    pass
+    nbins = 10
+    plt.subplots(constrained_layout=True)
+    ax1 = plt.subplot(311, xlabel='Trace lengths (m)', ylabel='Counts')
+    ax1.hist(np.array(nodes['norm']), nbins, edgecolor="black")
+    ax2 = plt.subplot(312, xlabel='Apparent spacing (m)', ylabel='Counts')
+    ax2.hist(np.array(app_spacing).flatten(), nbins, edgecolor="black")
+    ax3 = plt.subplot(313, xlabel='Real spacing (m)', ylabel='Counts')
+    ax3.hist(np.array(real_spacing).flatten(), nbins, edgecolor="black")
+    plt.show()
