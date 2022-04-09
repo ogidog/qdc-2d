@@ -14,7 +14,7 @@ def houghAnalysis(nodes):
     # Apparent spacing
     app_spacing = np.empty((1, len(nodes['r']) - 1))
     app_spacing[:] = np.NaN
-    r_theta = np.hstack((np.array(nodes['r']).reshape(-1,1), np.array(nodes['ori_mean']).reshape(-1,1)))
-    r_theta = r_theta[np.argsort(r_theta[:,0])]
+    r_theta = np.hstack((np.array(nodes['r']).reshape(-1, 1), np.array(nodes['ori_mean']).reshape(-1, 1)))
+    r_theta = r_theta[np.argsort(r_theta[:, 0])]
 
     pass
