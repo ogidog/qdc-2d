@@ -37,3 +37,5 @@ def houghAnalysis(nodes):
     ax3 = plt.subplot(313, xlabel='Real spacing (m)', ylabel='Counts')
     ax3.hist(np.array(real_spacing).flatten(), nbins, edgecolor="black")
     plt.show()
+
+    return nodes

@@ -21,7 +21,4 @@ def run_hough(template):
     joints = np.array(np.split(joints, reader.line_num), dtype=np.float64)
     nodes = readJoints(joints)
     nodes = houghAnalysis(nodes)
-
-    # fprintf('Real spacing - Hough frame : %f\n', mean((nodes.real_spacing_hough)))
-
-    print()
+    print('Real spacing - Hough frame : {}\n'.format(np.mean(nodes['real_spacing_hough'])))
