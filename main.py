@@ -2,6 +2,7 @@ import sys
 import numpy as np
 
 from TEMPLATES.run_function.run_hough import run_hough
+from TEMPLATES.run_function.run_linear import run_linear
 
 template = {}
 
@@ -104,7 +105,7 @@ def main(template_file="TEMPLATE.txt"):
                     run_hough(template)
                 elif template['METHOD'] == "linear":
                     print('Analyse with linear scanline')
-                    # run_linear(template)
+                    run_linear(template)
                 elif template['METHOD'] == "persistence":
                     print('Analyse the persistence')
                     # run_persistence(template)
