@@ -69,7 +69,7 @@ def read_template_file(file):
         else:
             print('{}: Not used\n'.format(line[0]))
 
-    f = open(template_file)
+    f = open(file)
 
     while True:
         line = f.readline()
