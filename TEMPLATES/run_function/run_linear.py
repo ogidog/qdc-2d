@@ -3,12 +3,13 @@ def run_linear(template):
         joint_file= template['INPUT']
     else:
         print('Missing arguments : INPUT (mandatory)')
-        return;
-
+        return
+    """
     if isfield(template,'NORTH')
         info_scanline.north    = template.NORTH;
         disp('North orientation given. Joints rotation');
     else
         info_scanline.north = 0;
     end
+    """
     pass
