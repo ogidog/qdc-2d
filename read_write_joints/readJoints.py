@@ -6,6 +6,7 @@ from utils import test_dict
 
 
 def readJoints(joint_file):
+
     matrix_joints = np.array([])
     with open(joint_file, 'r') as f:
         reader = csv.reader(f)

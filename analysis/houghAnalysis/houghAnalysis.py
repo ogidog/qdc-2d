@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.stats import norm
 import matplotlib.pyplot as plt
-from houghAnalysis.plot_inHoughFrame import plot_inHoughFrame
+from analysis.houghAnalysis.plot_inHoughFrame import plot_inHoughFrame
 
 
 def houghAnalysis(nodes):

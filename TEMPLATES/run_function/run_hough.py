@@ -1,7 +1,7 @@
 import numpy as np
 
 from read_write_joints.readJoints import readJoints
-from houghAnalysis.houghAnalysis import houghAnalysis
+from analysis.houghAnalysis.houghAnalysis import houghAnalysis
 
 
 def run_hough(template):

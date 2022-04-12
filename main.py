@@ -6,7 +6,6 @@ from TEMPLATES.run_function.run_linear import run_linear
 
 template = {}
 
-
 def read_template_file(file):
     template['jNAME'] = []
     template['jORIENTATION'] = []
@@ -71,6 +70,7 @@ def read_template_file(file):
             print('{}: Not used\n'.format(line[0]))
 
     f = open(file)
+    template['SYNTHETIC'] = 0
 
     while True:
         line = f.readline()
