@@ -1,5 +1,3 @@
-import csv
-
 import numpy as np
 
 from read_write_joints.readJoints import readJoints
@@ -13,12 +11,6 @@ def run_hough(template):
         print('Missing arguments : INPUT')
         return
 
-    joints = np.array([])
-    with open(joint_file, 'r') as f:
-        reader = csv.reader(f)
-        for row in reader:
-            joints = np.append(joints, np.array(row))
-    joints = np.array(np.split(joints, reader.line_num), dtype=np.float64)
-    nodes = readJoints(joints)
+    nodes = readJoints(joint_file)
     nodes = houghAnalysis(nodes)
     print('Real spacing - Hough frame : {}\n'.format(np.mean(nodes['real_spacing_hough'])))

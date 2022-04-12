@@ -1,10 +1,18 @@
 import numpy as np
 import cmath
+import csv
 
 from utils import test_dict
 
 
-def readJoints(matrix_joints):
+def readJoints(joint_file):
+    matrix_joints = np.array([])
+    with open(joint_file, 'r') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            matrix_joints = np.append(matrix_joints, np.array(row))
+    matrix_joints = np.array(np.split(matrix_joints, reader.line_num), dtype=np.float64)
+
     iD = np.unique(matrix_joints[:, 0])
     nodes = dict([
         ('iD', [*range(len(iD))]),
