@@ -15,6 +15,8 @@ def find_best_scanline(nodes, scanline_iterations):
 
     nb_cross = 0
     best_scanline = 0
+    best_intersection_x = []
+    best_intersection_y = []
 
     linesCoord = list(np.zeros((len(x_joint) - 1, 1)))
     for i in range(len(x_joint) - 1):
@@ -28,10 +30,12 @@ def find_best_scanline(nodes, scanline_iterations):
 
         scanline = LineString([(random_scanline['Xsl'][0][0], random_scanline['Ysl'][0][0]),
                                (random_scanline['Xsl'][1][0], random_scanline['Ysl'][1][0])])
-
-        intersection_length = len(jointLines.intersection(scanline).geoms)
+        intersection = jointLines.intersection(scanline)
+        intersection_length = len(jointLines.geoms)
         if intersection_length > nb_cross:
             nb_cross = intersection_length
             best_scanline = random_scanline
+            best_intersection_x = [intersection.geoms[i].coords[0][0] for i in range(len(intersection.geoms))]
+            best_intersection_y = [intersection.geoms[i].coords[0][1] for i in range(len(intersection.geoms))]
 
-    return best_scanline
+    return [best_scanline, best_intersection_x, best_intersection_y]

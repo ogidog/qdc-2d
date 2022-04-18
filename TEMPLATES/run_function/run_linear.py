@@ -23,9 +23,10 @@ def run_linear(template):
 
     info_scanline['nbScan'] = 30
 
-    [_, spacing_real, THETA] = linearScanline(nodes, info_scanline)
-    print("\nReal spacing : {}\n".format(np.mean(spacing_real)))
-    print("\nMean orientation : {}\n".format(np.mean(np.rad2deg(THETA))))
-    print("\nTrace length : {}\n".format(np.mean(nodes['norm'])))
+    linearScanline(nodes, info_scanline)
+    #[_, spacing_real, THETA] = linearScanline(nodes, info_scanline)
+    #print("\nReal spacing : {}\n".format(np.mean(spacing_real)))
+    #print("\nMean orientation : {}\n".format(np.mean(np.rad2deg(THETA))))
+    #print("\nTrace length : {}\n".format(np.mean(nodes['norm'])))
 
     pass

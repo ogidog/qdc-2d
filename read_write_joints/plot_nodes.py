@@ -1,9 +1,6 @@
-import matplotlib.pyplot as plt
 
-def plot_nodes(nodes):
-    for i in range(nodes['iD']):
-        Xl = nodes['x'][i] # x-coordinate
-        Yl = nodes['y'][i] # y-coordinate
-        plot = plt.plot(Xl,Yl,'-','-b')
-
-    plt.show()
+def plot_nodes(nodes, plt):
+    for i in range(len(nodes['iD'])):
+        Xl = nodes['x'][i].flatten()  # x-coordinate
+        Yl = nodes['y'][i].flatten()  # y-coordinate
+        plt.plot(Xl, Yl, "b-")
