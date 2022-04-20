@@ -6,7 +6,7 @@ def scanlineSelection(selectNB, nodes, nbScan):
     # Scanline-PROCESSING
     if selectNB == 0:
         print("-- Scanline AUTO --")
-        [scanline, intersection_x, intersection_y] = find_best_scanline(nodes, nbScan) # automatic scanline selection
+        scanline = find_best_scanline(nodes, nbScan) # automatic scanline selection
     elif selectNB == 1:
         print('-- Draw scanline extremity --')
         #figure(1)
@@ -35,4 +35,4 @@ def scanlineSelection(selectNB, nodes, nbScan):
     else:
         print('Accepted value : 0 - 1 - 2')
 
-    return [scanline, intersection_x, intersection_y]
+    return scanline

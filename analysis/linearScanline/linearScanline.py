@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from shapely.geometry import MultiLineString, LineString
 
 from analysis.linearScanline.scanlineSelection import scanlineSelection
 from read_write_joints.nodes2vector import nodes2vector
@@ -15,25 +16,34 @@ def linearScanline(nodes, info_scanline):
     # autoScanline_bool = input(prompt)
     autoScanline_bool = 0
 
-    # [best_scanline, intersection_x, intersection_y] = scanlineSelection(autoScanline_bool, nodes,
-    #                                                                   info_scanline['nbScan'])
-    # Xsl = np.array(best_scanline['Xsl']).flatten()
-    # Ysl = np.array(best_scanline['Ysl']).flatten()
-    # Xb = np.array(best_scanline['Xb']).flatten()
-    # Yb = np.array(best_scanline['Yb']).flatten()
+    best_scanline = scanlineSelection(autoScanline_bool, nodes, info_scanline['nbScan'])
+    Xsl = np.array(best_scanline['Xsl']).flatten()
+    Ysl = np.array(best_scanline['Ysl']).flatten()
+    Xb = np.array(best_scanline['Xb']).flatten()
+    Yb = np.array(best_scanline['Yb']).flatten()
 
-    # plot_nodes(nodes, plt)
-    # plt.plot(Xsl, Ysl, 'k--', linewidth=1)  # plot scanline
-    # plt.plot(Xb, Yb, 'g-.', linewidth=1)  # plot scanline extend
-    # plt.plot(intersection_x, intersection_y, 'rx')  # plot intersection scanline and joints
+    polyline_coord = list(np.zeros((len(nodes['x']) - 1, 1)))
+    for i in range(len(nodes['x']) - 1):
+        polyline_coord[i] = ((nodes['x'][i].flatten()[0], nodes['y'][i].flatten()[0]), (nodes['x'][i].flatten()[1], nodes['y'][i].flatten()[1]))
+    polyline = MultiLineString(polyline_coord)
+    scanline = LineString([(Xsl[0], Ysl[0]),(Xsl[1],Ysl[1])])
+    intersection = polyline.intersection(scanline)
+    xi = [intersection.geoms[i].coords[0][0] for i in range(len(intersection.geoms))]
+    yi = [intersection.geoms[i].coords[0][1] for i in range(len(intersection.geoms))]
+    XYi = np.vstack((xi, yi)).T
+
+    plot_nodes(nodes, plt)
+    plt.plot(Xsl, Ysl, 'k--', linewidth=1)  # plot scanline
+    plt.plot(Xb, Yb, 'g-.', linewidth=1)  # plot scanline extend
+    plt.plot(xi, yi, 'rx')  # plot intersection scanline and joints
 
     # Observation window for synthetic joints
-    # if nodes['synthetic'] == 1:
-    #    [_, window, nodes] = selectExtends(nodes, 0.1)
-    #    plt.xlim([window['minX'], window['maxX']])
-    #    plt.ylim([window['minY'], window['maxY']])
+    if nodes['synthetic'] == 1:
+       [_, window, nodes] = selectExtends(nodes, 0.1)
+       plt.xlim([window['minX'], window['maxX']])
+       plt.ylim([window['minY'], window['maxY']])
 
-    # plt.show()
+    plt.show()
 
     # POST-PROCESSING
     # -- joint direction
@@ -57,5 +67,8 @@ def linearScanline(nodes, info_scanline):
     ax.set_theta_zero_location('N')
     ax.title.set_text('Rose diagram (°)')
     plt.show()
+
+    # -- joint tracelength and spacing
+    coord_cross = np.sort((np.vstack((XYi,np.vstack((Xsl,Ysl)).T))),0)
 
 # return [frequency, spacing_real, THETA]

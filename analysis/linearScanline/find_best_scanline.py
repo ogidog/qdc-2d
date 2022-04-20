@@ -25,7 +25,7 @@ def find_best_scanline(nodes, scanline_iterations):
 
     for scan in range(scanline_iterations):
         # create random scanline
-        theta_scanline = np.random.random() * 0.99 * np.pi
+        theta_scanline = 0.8664 # np.random.random() * 0.99 * np.pi
         random_scanline = create_scanline(xminmax, yminmax, theta_scanline)
 
         scanline = LineString([(random_scanline['Xsl'][0][0], random_scanline['Ysl'][0][0]),
@@ -35,7 +35,5 @@ def find_best_scanline(nodes, scanline_iterations):
         if intersection_length > nb_cross:
             nb_cross = intersection_length
             best_scanline = random_scanline
-            best_intersection_x = [intersection.geoms[i].coords[0][0] for i in range(len(intersection.geoms))]
-            best_intersection_y = [intersection.geoms[i].coords[0][1] for i in range(len(intersection.geoms))]
 
-    return [best_scanline, best_intersection_x, best_intersection_y]
+    return best_scanline
