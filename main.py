@@ -91,7 +91,7 @@ def main(template_file="TEMPLATE.txt"):
                 line = f.readline()
                 if line == "":
                     f.close()
-                    break;
+                    break
                 print(line)
 
             return

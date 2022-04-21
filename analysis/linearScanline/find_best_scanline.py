@@ -31,7 +31,7 @@ def find_best_scanline(nodes, scanline_iterations):
         scanline = LineString([(random_scanline['Xsl'][0][0], random_scanline['Ysl'][0][0]),
                                (random_scanline['Xsl'][1][0], random_scanline['Ysl'][1][0])])
         intersection = jointLines.intersection(scanline)
-        intersection_length = len(jointLines.geoms)
+        intersection_length = len(intersection.geoms)
         if intersection_length > nb_cross:
             nb_cross = intersection_length
             best_scanline = random_scanline

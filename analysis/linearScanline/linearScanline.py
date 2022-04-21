@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.stats import norm
+import seaborn as sns
 from shapely.geometry import MultiLineString, LineString
 
 from analysis.linearScanline.scanlineSelection import scanlineSelection
@@ -24,9 +26,10 @@ def linearScanline(nodes, info_scanline):
 
     polyline_coord = list(np.zeros((len(nodes['x']) - 1, 1)))
     for i in range(len(nodes['x']) - 1):
-        polyline_coord[i] = ((nodes['x'][i].flatten()[0], nodes['y'][i].flatten()[0]), (nodes['x'][i].flatten()[1], nodes['y'][i].flatten()[1]))
+        polyline_coord[i] = ((nodes['x'][i].flatten()[0], nodes['y'][i].flatten()[0]),
+                             (nodes['x'][i].flatten()[1], nodes['y'][i].flatten()[1]))
     polyline = MultiLineString(polyline_coord)
-    scanline = LineString([(Xsl[0], Ysl[0]),(Xsl[1],Ysl[1])])
+    scanline = LineString([(Xsl[0], Ysl[0]), (Xsl[1], Ysl[1])])
     intersection = polyline.intersection(scanline)
     xi = [intersection.geoms[i].coords[0][0] for i in range(len(intersection.geoms))]
     yi = [intersection.geoms[i].coords[0][1] for i in range(len(intersection.geoms))]
@@ -39,11 +42,12 @@ def linearScanline(nodes, info_scanline):
 
     # Observation window for synthetic joints
     if nodes['synthetic'] == 1:
-       [_, window, nodes] = selectExtends(nodes, 0.1)
-       plt.xlim([window['minX'], window['maxX']])
-       plt.ylim([window['minY'], window['maxY']])
+        [_, window, nodes] = selectExtends(nodes, 0.1)
+        plt.xlim([window['minX'], window['maxX']])
+        plt.ylim([window['minY'], window['maxY']])
 
     plt.show()
+
 
     # POST-PROCESSING
     # -- joint direction
@@ -69,6 +73,31 @@ def linearScanline(nodes, info_scanline):
     plt.show()
 
     # -- joint tracelength and spacing
-    coord_cross = np.sort((np.vstack((XYi,np.vstack((Xsl,Ysl)).T))),0)
+    coord_cross = np.sort((np.vstack((XYi, np.vstack((Xsl, Ysl)).T))), 0)
+    spacing_app = np.sqrt(np.diff(coord_cross[:, 0]) ** 2 + np.diff(coord_cross[:, 1]) ** 2)
+    spacing_real = spacing_app * np.abs(np.sin(np.pi / 2 - np.mean(THETA) - best_scanline['theta_scanline']))
+    frequency = 1 / np.mean(spacing_real)
+    print('Spacing frequency : {}'.format(frequency))
 
-# return [frequency, spacing_real, THETA]
+    nbins = 10
+    plt.subplots(constrained_layout=True)
+    ax1 = plt.subplot(311, xlabel="Trace lengths (m)", ylabel="Counts", title="Histogram - Trace length")
+    ax1.hist(nodes['norm'], nbins, edgecolor="black")
+    ax2 = plt.subplot(312, xlabel="Apparent spacing (m)", ylabel="Counts", title="Histogram - Apparent spacing")
+    ax2.hist(spacing_app, nbins, edgecolor="black")
+    ax3 = plt.subplot(313, xlabel="Real spacing (m)", ylabel="Counts", title="Histogram - Real spacing")
+    ax3.hist(spacing_real, nbins, edgecolor="black")
+    plt.show()
+
+    plt.subplots(constrained_layout=True)
+    ax1 = plt.subplot(311, xlabel="Orientation (°)", ylabel="CDF", title="Cumulative distribution - Orientation")
+    ori = np.rad2deg(THETA)
+    sns.ecdfplot(data=ori, ax=ax1)
+    ax2 = plt.subplot(312, xlabel="Real spacing (m)", ylabel="CDF", title="Cumulative distribution - Spacing")
+    sns.ecdfplot(data=spacing_real, ax=ax2)
+    ax3 = plt.subplot(313, xlabel="Trace length (m)", ylabel="CDF", title="Cumulative distribution - Trace length")
+    sns.ecdfplot(data=nodes['norm'], ax=ax3)
+
+    plt.show()
+
+    return [frequency, spacing_real, THETA]
