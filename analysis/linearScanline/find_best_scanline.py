@@ -25,7 +25,7 @@ def find_best_scanline(nodes, scanline_iterations):
 
     for scan in range(scanline_iterations):
         # create random scanline
-        theta_scanline = 0.8664 # np.random.random() * 0.99 * np.pi
+        theta_scanline = np.random.random() * 0.99 * np.pi
         random_scanline = create_scanline(xminmax, yminmax, theta_scanline)
 
         scanline = LineString([(random_scanline['Xsl'][0][0], random_scanline['Ysl'][0][0]),
