@@ -12,7 +12,7 @@ def polylines_to_lines(nodes):
     for i in range(len(nodes['iD'])):
         x = nodes['x'][i]
         y = nodes['y'][i]
-        p = np.polyfit(x[0], y[0], 1)
+        p = np.polyfit(x, y, 1)
         x_1 = np.min(x)
         x_2 = np.max(x)
         y_1 = p[0] * x_1 + p[1]
@@ -38,7 +38,5 @@ def polylines_to_lines(nodes):
     n = 2
     plt.xlim([xmoy-max_extend/n, xmoy+max_extend/n])
     plt.ylim([ymoy-max_extend/n, ymoy+max_extend/n])
-
-    plt.show()
 
     return [nodes, id_x1x2y1y2_matrice]

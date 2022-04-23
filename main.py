@@ -3,6 +3,7 @@ import numpy as np
 
 from TEMPLATES.run_function.run_hough import run_hough
 from TEMPLATES.run_function.run_linear import run_linear
+from TEMPLATES.run_function.run_persistence import run_persistence
 
 template = {}
 
@@ -108,7 +109,7 @@ def main(template_file="TEMPLATE.txt"):
                     run_linear(template)
                 elif template['METHOD'] == "persistence":
                     print('Analyse the persistence')
-                    # run_persistence(template)
+                    run_persistence(template)
                 elif template['METHOD'] == "wavelet":
                     print('Analyse spacing with wavelet transform')
                     # run_wavelet(template)

@@ -16,7 +16,7 @@ def readJoints(joint_file):
 
     iD = np.unique(matrix_joints[:, 0])
     nodes = dict([
-        ('iD', [*range(len(iD))]),
+        ('iD', np.array([*range(len(iD))])),
         ('x', [*range(len(iD))]),
         ('y', [*range(len(iD))]),
         ('nseg', [*range(len(iD))]),
@@ -31,9 +31,9 @@ def readJoints(joint_file):
     edges = [*range(0, 182, 2)]
     for i in range(len(iD)):
         row = np.where(matrix_joints[:, 0] == iD[i])  # all lines of iD i
-        nodes['iD'][i] = [iD[i]]
-        nodes['x'][i] = matrix_joints[row, 1]
-        nodes['y'][i] = matrix_joints[row, 2]
+        nodes['iD'][i] = iD[i]
+        nodes['x'][i] = matrix_joints[row, 1].flatten()
+        nodes['y'][i] = matrix_joints[row, 2].flatten()
 
         dx = np.diff(nodes['x'][i])  # x-dimension of segment
         dy = np.diff(nodes['y'][i])  # y-dimension of segment
@@ -54,9 +54,13 @@ def readJoints(joint_file):
         nodes['ori_mean'][i] = sum(nodes['ori_w'][i]) / sum(nodes['wi'][i])
         nodes['ori_mean_deg'][i] = np.rad2deg(nodes['ori_mean'][i])
         [N, _] = np.histogram(nodes['ori_mean_deg'][0:(i + 1)], edges)
-        nodes['oriHisto'] = N.reshape(-1, 1);
+        nodes['oriHisto'] = N
+
+    nodes['x'] = np.array(nodes['x'])
+    nodes['y'] = np.array(nodes['y'])
 
     del row
+
 
     # TODO: test
     # test_dict("D:\\Temp\\-QDC-2D-test\\nodes.mat", nodes, "nodes")

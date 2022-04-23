@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import numpy as np
 
 from analysis.linearScanline.linearScanline import linearScanline
@@ -5,6 +6,8 @@ from read_write_joints.readJoints import readJoints
 
 
 def run_linear(template):
+    plt.close()
+
     if 'INPUT' in template.keys():
         joint_file = template['INPUT']
     else:
@@ -27,4 +30,3 @@ def run_linear(template):
     print("Real spacing : {}".format(np.mean(spacing_real)))
     print("Mean orientation : {}".format(np.mean(np.rad2deg(THETA))))
     print("Trace length : {}".format(np.mean(nodes['norm'])))
-

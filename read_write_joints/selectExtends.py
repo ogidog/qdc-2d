@@ -9,8 +9,8 @@ def selectExtends(nodes, extend):
 
     nodes['middle'] = np.zeros((len(nodes['iD']), 2))
     for i in range(len(nodes['iD'])):
-        x = nodes['x'][i][0]
-        y = nodes['y'][i][0]
+        x = nodes['x'][i]
+        y = nodes['y'][i]
         p = np.polyfit(x, y, 1)
         x_1 = np.min(x)
         x_2 = np.max(x)

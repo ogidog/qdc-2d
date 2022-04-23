@@ -5,7 +5,6 @@ from analysis.houghAnalysis.plot_inHoughFrame import plot_inHoughFrame
 
 
 def houghAnalysis(nodes):
-    plt.close()
 
     nodes = plot_inHoughFrame(nodes)
     [mu, sigma] = norm.fit(np.array(nodes['ori_mean_deg']).reshape(-1, 1))
@@ -28,6 +27,7 @@ def houghAnalysis(nodes):
     nodes['real_spacing_hough'] = real_spacing
     nodes['app_spacing_hough'] = app_spacing
 
+    plt.figure(3)
     nbins = 10
     plt.subplots(constrained_layout=True)
     ax1 = plt.subplot(311, xlabel='Trace lengths (m)', ylabel='Counts')

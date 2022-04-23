@@ -1,5 +1,5 @@
 STEP;3
-METHOD;linear
+METHOD;persistence
 INPUT;D:\Temp\-QDC-2D-main\TEMPLATES\examples\createdJoints1_1classif.txt
 THETA;10
 SCALE;10
