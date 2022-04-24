@@ -1,5 +1,5 @@
 import numpy as np
-from shapely.geometry import LineString, Point, MultiLineString
+from shapely.geometry import LineString, MultiLineString
 
 from analysis.linearScanline.create_scanline import create_scanline
 from read_write_joints.nodes2vector import nodes2vector
