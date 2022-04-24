@@ -1,3 +1,4 @@
+from analysis.persistance.computePersistanceMap import computePersistanceMap
 from analysis.persistance.computePersistence import computePersistence
 from read_write_joints.readJoints import readJoints
 import matplotlib.pyplot as plt
@@ -33,9 +34,17 @@ def run_persistence(template):
                 plt.figure(1)
                 plt.title('I-- Persistence over the entire window')
                 print('I-- Persistence over the entire window')
-                persistance = computePersistence(nodes, cover)
-                plt.show()
+                computePersistence(nodes, cover)
+                #plt.show()
                 print('')
 
                 # Persistence map
                 plt.figure(2)
+                plt.title('II-- Persistence MAP')
+                print('II-- Persistence MAP')
+                # TODO: сделать выбор позже
+                # prompt = 'How many squares to run persistence ?';
+                # squares = input(prompt);
+                squares = 5
+                computePersistanceMap(nodes, squares)
+                print('')

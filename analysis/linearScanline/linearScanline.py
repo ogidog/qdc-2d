@@ -13,7 +13,7 @@ from read_write_joints.selectExtends import selectExtends
 def linearScanline(nodes, info_scanline):
     vector = nodes2vector(nodes)
 
-    # TODO: uncomment
+    # TODO: # TODO: сделать выбор позже
     # prompt = 'Automatic scanline estimation? \n -- 0:automatic \n -- 1:click 2 points  \n -- 2:1point and 1 orientation \n'
     # autoScanline_bool = input(prompt)
     autoScanline_bool = 0
