@@ -47,4 +47,5 @@ def run_persistence(template):
                 # squares = input(prompt);
                 squares = 5
                 computePersistanceMap(nodes, squares)
+                plt.show()
                 print('')
