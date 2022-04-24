@@ -28,11 +28,14 @@ def run_persistence(template):
             else:
                 nodes = readJoints(joint_file);
                 nodes['synthetic'] = template['SYNTHETIC']
+
                 # Persistence on overall area
                 plt.figure(1)
                 plt.title('I-- Persistence over the entire window')
                 print('I-- Persistence over the entire window')
                 persistance = computePersistence(nodes, cover)
                 plt.show()
-
                 print('')
+
+                # Persistence map
+                plt.figure(2)
