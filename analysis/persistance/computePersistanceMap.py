@@ -98,23 +98,30 @@ def computePersistanceMap(nodes, nbRectangles):
 
                 if x_min > np.min(x_Square) and x_max < np.max(x_Square) and y_min > np.min(
                         y_Square) and y_max < np.max(
-                        y_Square):
+                    y_Square):
                     n_tot_cc = n_tot_cc + 1
                     n_inter_cc = n_inter_cc + 1
 
         if (n_tot_cc - n_trans_cc + n_inter_cc) >= 0:
             persistance = L * h / (h * np.sin(math.radians(MEAN_ori)) + L * np.cos(math.radians(MEAN_ori))) * (
-                        n_tot_cc + n_trans_cc - n_inter_cc) / (n_tot_cc - n_trans_cc + n_inter_cc)
+                    n_tot_cc + n_trans_cc - n_inter_cc) / (n_tot_cc - n_trans_cc + n_inter_cc)
             n_tot = n_tot_cc
             n_trans = n_trans_cc
             n_inter = n_inter_cc
             persistence_vect[i] = persistance
 
     mean_persistence = np.mean(persistence_vect)
-    std_persistence  = np.std(persistence_vect)
+    std_persistence = np.std(persistence_vect)
 
     # Density map plot
     plt.figure(3)
-    plt.plot([0,0],[1,1], "r*")
+    xw_uniq = np.unique(xw)
+    yw_uniq = np.unique(yw)
+    plt.imshow(np.rot90(persistence_vect.reshape(len(xw_uniq), len(np.unique(yw_uniq))), k=2),
+               extent=[np.min(xw_uniq), np.max(xw_uniq), np.max(yw_uniq), np.min(yw_uniq)])
+    plt.colorbar()
+    ax = plt.gca()
+    ax.invert_yaxis()
+    plt.show()
 
     pass
