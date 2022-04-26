@@ -4,6 +4,7 @@ import numpy as np
 from TEMPLATES.run_function.run_hough import run_hough
 from TEMPLATES.run_function.run_linear import run_linear
 from TEMPLATES.run_function.run_persistence import run_persistence
+from TEMPLATES.run_function.run_wavelet import run_wavelet
 
 template = {}
 
@@ -112,7 +113,7 @@ def main(template_file="TEMPLATE.txt"):
                     run_persistence(template)
                 elif template['METHOD'] == "wavelet":
                     print('Analyse spacing with wavelet transform')
-                    # run_wavelet(template)
+                    run_wavelet(template)
                 elif template['METHOD'] == "circular":
                     print('Analyse with circular scanline')
                     # run_circular(template)
