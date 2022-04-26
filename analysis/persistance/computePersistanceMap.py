@@ -1,3 +1,4 @@
+import matplotlib
 import numpy as np
 import matplotlib.pyplot as plt
 import math
@@ -114,7 +115,7 @@ def computePersistanceMap(nodes, nbRectangles):
     std_persistence = np.std(persistence_vect)
 
     # Density map plot
-    plt.figure(3)
+    fig3 = plt.figure(3)
     xw_uniq = np.unique(xw)
     yw_uniq = np.unique(yw)
     plt.imshow(np.rot90(persistence_vect.reshape(len(xw_uniq), len(np.unique(yw_uniq))), k=2),
@@ -122,6 +123,7 @@ def computePersistanceMap(nodes, nbRectangles):
     plt.colorbar()
     ax = plt.gca()
     ax.invert_yaxis()
-    plt.show()
-
-    pass
+    str_titleMap = 'Persistence map\nMean persistence : {}\nStd persistence : {}'.format(mean_persistence,
+                                                                                         std_persistence)
+    plt.title(str_titleMap)
+    fig3.tight_layout()
