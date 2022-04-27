@@ -1,6 +1,6 @@
 STEP;3
 METHOD;persistence
-INPUT;D:\Temp\-QDC-2D-main\TEMPLATES\examples\createdJoints1_1classif.txt
+INPUT;D:\intellij-idea-workspace\qdc-2d\TEMPLATES\examples\createdJoints1_1classif.txt
 THETA;10
 SCALE;10
 OUTPUT;test.txt
