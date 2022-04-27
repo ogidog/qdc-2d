@@ -42,10 +42,10 @@ def run_persistence(template):
                 plt.title('II-- Persistence MAP')
                 print('II-- Persistence MAP')
                 # TODO: сделать выбор позже
-                # prompt = 'How many squares to run persistence ?';
-                # squares = input(prompt);
-                squares = 5
-                computePersistanceMap(nodes, squares)
+                prompt = 'How many squares to run persistence ?: ';
+                #squares = input(prompt);
+                squares = 10
+                computePersistanceMap(nodes, int(squares))
                 plt.show()
 
                 print('')

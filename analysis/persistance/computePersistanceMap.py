@@ -103,13 +103,15 @@ def computePersistanceMap(nodes, nbRectangles):
                     n_tot_cc = n_tot_cc + 1
                     n_inter_cc = n_inter_cc + 1
 
-        if (n_tot_cc - n_trans_cc + n_inter_cc) >= 0:
+        if (n_tot_cc - n_trans_cc + n_inter_cc) > 0:
             persistance = L * h / (h * np.sin(math.radians(MEAN_ori)) + L * np.cos(math.radians(MEAN_ori))) * (
                     n_tot_cc + n_trans_cc - n_inter_cc) / (n_tot_cc - n_trans_cc + n_inter_cc)
             n_tot = n_tot_cc
             n_trans = n_trans_cc
             n_inter = n_inter_cc
             persistence_vect[i] = persistance
+        else:
+            persistence_vect[i] = 0
 
     mean_persistence = np.mean(persistence_vect)
     std_persistence = np.std(persistence_vect)
