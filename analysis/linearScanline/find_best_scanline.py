@@ -15,8 +15,6 @@ def find_best_scanline(nodes, scanline_iterations):
 
     nb_cross = 0
     best_scanline = 0
-    best_intersection_x = []
-    best_intersection_y = []
 
     linesCoord = list(np.zeros((len(x_joint) - 1, 1)))
     for i in range(len(x_joint) - 1):

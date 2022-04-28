@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+from analysis.wavelet.createScanlines import createScanlines
 from read_write_joints.readJoints import readJoints
 
 
@@ -38,5 +39,5 @@ def run_wavelet(template):
     scanlines = createScanlines(nodes, scanline_info)
 
     # Wavelet analyse
-    computeWavelet(scanlines)
+    #computeWavelet(scanlines)
 
