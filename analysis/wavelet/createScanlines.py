@@ -1,5 +1,6 @@
 from matplotlib import pyplot as plt
 import numpy as np
+from shapely.geometry import LineString
 
 from analysis.linearScanline.create_scanline import create_scanline
 from analysis.linearScanline.find_best_scanline import find_best_scanline
@@ -39,7 +40,32 @@ def createScanlines(nodes, scanline_info, **kwargs):
     X = []
     Y = []
     X_trans = []
+    line1 = LineString([(Xsl[0][0], Ysl[0][0]), (Xsl[1][0], Ysl[1][0])])
     for i in range(len(nodes['iD'])):
-        intersection = polyxpoly(nodes['x'][i], nodes['y'][i], Xsl[0],Ysl[0]) # find intersection between polyline and scanline
+        line2 = LineString([(nodes['x'][i][0], nodes['y'][i][0]), (nodes['x'][i][1], nodes['y'][i][1])])
+        intersection = line1.intersection(line2)  # find intersection between polyline and scanline
+        if intersection.geom_type == "LineString": continue
+        # scanline['cross'] = [xi,yi]
+        [xi, yi] = [intersection.x, intersection.y]
+        X.append(xi)
+        Y.append(yi)
+        X_trans.append(np.sqrt((xi - minX_scanline) ** 2 + (yi - np.min(Ysl)) ** 2))
+
+    scanline['X'] = X
+    scanline['Y'] = Y
+    scanline['X_trans'] = X_trans
+    scanline['minY'] = np.min(Ysl)
+    scanline['maxY'] = np.max(Ysl)
+    scanline['minX'] = np.min(Xsl)
+    scanline['maxX'] = np.max(Xsl)
+
+    # Secondary scanline
+    for line in range(1, int(nb_lines) + 1):
+        scanline['iD'].append(-1 * line)
+        scanline['dX'].append(line * deltaX)
+        scanline['dY'].append(-1 * line * deltaY)
+        scanline['iD'].append(line)
+        scanline['dX'].append(-1 * line * deltaX)
+        scanline['dY'].append(line * deltaY)
 
     pass
