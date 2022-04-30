@@ -36,7 +36,9 @@ def run_wavelet(template):
     scanline_info['dX'] = deltaX
     scanline_info['dY'] = deltaY
     scanline_info['theta'] = np.deg2rad(THETA)
-    scanlines = createScanlines(nodes, scanline_info)
+    plt.figure(1)
+    createScanlines(nodes, scanline_info)
+    plt.show()
 
     # Wavelet analyse
     #computeWavelet(scanlines)

@@ -22,14 +22,12 @@ def createScanlines(nodes, scanline_info, **kwargs):
         yminmax = [min(vector['y']), max(vector['y'])]
         best_scanline = create_scanline(xminmax, yminmax, scanline_info['theta'])
 
-    Xsl = best_scanline['Xsl']
-    Ysl = best_scanline['Ysl']
-    Xb = best_scanline['Xb']
-    Yb = best_scanline['Yb']
+    Xsl = np.array(best_scanline['Xsl']).flatten()
+    Ysl = np.array(best_scanline['Ysl']).flatten()
+    Xb = np.array(best_scanline['Xb']).flatten()
+    Yb = np.array(best_scanline['Yb']).flatten()
 
-    plt.figure(1)
-    plt.plot(Xsl[0], Ysl[0], 'k--', linewidth=1)  # plot scanline
-    plt.legend(title="Main scanline")
+    plt.plot(Xsl, Ysl, 'k--', linewidth=1, label="Main scanline")  # plot scanline
     minX_scanline = np.min(Xsl[1])
 
     scanline = {"iD": [], "dX": [], "dY": []}
@@ -40,7 +38,7 @@ def createScanlines(nodes, scanline_info, **kwargs):
     X = []
     Y = []
     X_trans = []
-    line1 = LineString([(Xsl[0][0], Ysl[0][0]), (Xsl[1][0], Ysl[1][0])])
+    line1 = LineString([(Xsl[0], Ysl[0]), (Xsl[1], Ysl[1])])
     for i in range(len(nodes['iD'])):
         line2 = LineString([(nodes['x'][i][0], nodes['y'][i][0]), (nodes['x'][i][1], nodes['y'][i][1])])
         intersection = line1.intersection(line2)  # find intersection between polyline and scanline
@@ -54,10 +52,10 @@ def createScanlines(nodes, scanline_info, **kwargs):
     scanline['X'] = X
     scanline['Y'] = Y
     scanline['X_trans'] = X_trans
-    scanline['minY'] = np.min(Ysl)
-    scanline['maxY'] = np.max(Ysl)
-    scanline['minX'] = np.min(Xsl)
-    scanline['maxX'] = np.max(Xsl)
+    scanline['minY'] = [np.min(Ysl)]
+    scanline['maxY'] = [np.max(Ysl)]
+    scanline['minX'] = [np.min(Xsl)]
+    scanline['maxX'] = [np.max(Xsl)]
 
     # Secondary scanline
     for line in range(1, int(nb_lines) + 1):
@@ -68,4 +66,38 @@ def createScanlines(nodes, scanline_info, **kwargs):
         scanline['dX'].append(-1 * line * deltaX)
         scanline['dY'].append(line * deltaY)
 
-    pass
+        # Y translate
+        minY_scanline_up = np.min(Ysl) + line * deltaY
+        minY_scanline_down = np.min(Ysl) - line * deltaY
+        maxY_scanline_up = np.max(Ysl) + line * deltaY
+        maxY_scanline_down = np.max(Ysl) - line * deltaY
+        scanline['minY'].append(minY_scanline_down)
+        scanline['minY'].append(minY_scanline_up)
+        scanline['maxY'].append(maxY_scanline_down)
+        scanline['maxY'].append(maxY_scanline_up)
+
+        # X translate
+        minX_scanline_up = np.min(Xsl) + line * deltaX
+        minX_scanline_down = np.min(Xsl) - line * deltaX
+        maxX_scanline_up = np.max(Xsl) + line * deltaX
+        maxX_scanline_down = np.max(Xsl) - line * deltaX
+        scanline['minX'].append(minX_scanline_down)
+        scanline['minX'].append(minX_scanline_up)
+        scanline['maxX'].append(maxX_scanline_down)
+        scanline['maxX'].append(maxX_scanline_up)
+
+        X_up = []
+        Y_up = []
+        X_trans_up = []
+        X_down = []
+        Y_down = []
+        X_trans_down = []
+
+        txt_up = 'dX : -{} ---- dY: {}'.format(line * deltaX, line * deltaY)
+        txt_down = 'dX : {} ---- dY: -{}'.format(line * deltaX, line * deltaY)
+        plt.plot(Xsl - line * deltaX, Ysl + line * deltaY, '--', linewidth=1, label=txt_up)  # plot scanlines
+        plt.plot(Xsl + line * deltaX, Ysl - line * deltaY, '--', linewidth=1, label=txt_down)  # plot scanlines
+
+        pass
+
+    plt.legend()
