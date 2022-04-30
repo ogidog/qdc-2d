@@ -49,9 +49,9 @@ def createScanlines(nodes, scanline_info, **kwargs):
         Y.append(yi)
         X_trans.append(np.sqrt((xi - minX_scanline) ** 2 + (yi - np.min(Ysl)) ** 2))
 
-    scanline['X'] = X
-    scanline['Y'] = Y
-    scanline['X_trans'] = X_trans
+    scanline['X'] = [X]
+    scanline['Y'] = [Y]
+    scanline['X_trans'] = [X_trans]
     scanline['minY'] = [np.min(Ysl)]
     scanline['maxY'] = [np.max(Ysl)]
     scanline['minX'] = [np.min(Xsl)]
@@ -97,7 +97,31 @@ def createScanlines(nodes, scanline_info, **kwargs):
         txt_down = 'dX : {} ---- dY: -{}'.format(line * deltaX, line * deltaY)
         plt.plot(Xsl - line * deltaX, Ysl + line * deltaY, '--', linewidth=1, label=txt_up)  # plot scanlines
         plt.plot(Xsl + line * deltaX, Ysl - line * deltaY, '--', linewidth=1, label=txt_down)  # plot scanlines
+        line1 = LineString(
+            [(Xsl[0] - line * deltaX, Ysl[0] + line * deltaY), (Xsl[1] - line * deltaX, Ysl[1]) + line * deltaY])
+        line2 = LineString(
+            [(Xsl[0] + line * deltaX, Ysl[0] - line * deltaY), (Xsl[1] + line * deltaX, Ysl[1]) - line * deltaY])
+        for i in range(nodes['iD']):
+            line3 = LineString([(nodes['x'][i][0], nodes['y'][i][0]), (nodes['x'][i][1], nodes['y'][i][1])])
+
+            intersection = line2.intersection(line3)  # find intersection between polyline and scanline
+            #X_down       = [X_down xi]
+            #Y_down       = [Y_down yi]
+            #X_trans_down = [X_trans_down sqrt((xi-minX_scanline).^2 + (yi-minY_scanline_down).^2)]; %#ok<AGROW>
+            #scanline.X{2*line}       = X_down;
+            #scanline.Y{2*line}       = Y_down;
+            #scanline.X_trans{2*line} = X_trans_down;
+
+            intersection = line1.intersection(line3)  # find intersection between polyline and scanline
+            if intersection.geom_type == "Point":
+                [xi, yi] = [intersection.x, intersection.y]
+                X_up.append(xi)
+                Y_up.append(yi)
+                X_trans_up.append(np.sqrt((xi - minX_scanline) ** 2 + (yi - minY_scanline_up) ** 2))
+                scanline['X'].append(X_up)
+                scanline['Y'].append(Y_up)
+                scanline['X_trans'].append(X_trans_up)
 
         pass
 
-    plt.legend()
+    plt.legend(loc="best")
