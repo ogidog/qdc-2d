@@ -98,30 +98,30 @@ def createScanlines(nodes, scanline_info, **kwargs):
         plt.plot(Xsl - line * deltaX, Ysl + line * deltaY, '--', linewidth=1, label=txt_up)  # plot scanlines
         plt.plot(Xsl + line * deltaX, Ysl - line * deltaY, '--', linewidth=1, label=txt_down)  # plot scanlines
         line1 = LineString(
-            [(Xsl[0] - line * deltaX, Ysl[0] + line * deltaY), (Xsl[1] - line * deltaX, Ysl[1]) + line * deltaY])
+            [(Xsl[0] - line * deltaX, Ysl[0] + line * deltaY), (Xsl[1] - line * deltaX, Ysl[1] + line * deltaY)])
         line2 = LineString(
-            [(Xsl[0] + line * deltaX, Ysl[0] - line * deltaY), (Xsl[1] + line * deltaX, Ysl[1]) - line * deltaY])
-        for i in range(nodes['iD']):
+            [(Xsl[0] + line * deltaX, Ysl[0] - line * deltaY), (Xsl[1] + line * deltaX, Ysl[1] - line * deltaY)])
+        for i in range(len(nodes['iD'])):
             line3 = LineString([(nodes['x'][i][0], nodes['y'][i][0]), (nodes['x'][i][1], nodes['y'][i][1])])
+            intersection1 = line1.intersection(line3)  # find intersection between polyline and scanline
+            if intersection1.geom_type == "Point":
+                [xi1, yi1] = [intersection1.x, intersection1.y]
+                X_up.append(xi1)
+                Y_up.append(yi1)
+                X_trans_up.append(np.sqrt((xi1 - minX_scanline) ** 2 + (yi1 - minY_scanline_up) ** 2))
 
-            intersection = line2.intersection(line3)  # find intersection between polyline and scanline
-            #X_down       = [X_down xi]
-            #Y_down       = [Y_down yi]
-            #X_trans_down = [X_trans_down sqrt((xi-minX_scanline).^2 + (yi-minY_scanline_down).^2)]; %#ok<AGROW>
-            #scanline.X{2*line}       = X_down;
-            #scanline.Y{2*line}       = Y_down;
-            #scanline.X_trans{2*line} = X_trans_down;
+            intersection2 = line2.intersection(line3)
+            if intersection2.geom_type == "Point":
+                [xi2, yi2] = [intersection2.x, intersection2.y]
+                X_down.append(xi2)
+                Y_down.append(yi2)
+                X_trans_down.append(np.sqrt((xi2 - minX_scanline) ** 2 + (yi2 - minY_scanline_down) ** 2))
 
-            intersection = line1.intersection(line3)  # find intersection between polyline and scanline
-            if intersection.geom_type == "Point":
-                [xi, yi] = [intersection.x, intersection.y]
-                X_up.append(xi)
-                Y_up.append(yi)
-                X_trans_up.append(np.sqrt((xi - minX_scanline) ** 2 + (yi - minY_scanline_up) ** 2))
-                scanline['X'].append(X_up)
-                scanline['Y'].append(Y_up)
-                scanline['X_trans'].append(X_trans_up)
-
-        pass
+        scanline['X'].insert(2 * line - 1, X_down)
+        scanline['Y'].insert(2 * line - 1, Y_down)
+        scanline['X_trans'].insert(2 * line - 1, X_trans_down)
+        scanline['X'].insert(2 * line, X_up)
+        scanline['Y'].insert(2 * line, Y_up)
+        scanline['X_trans'].insert(2 * line, X_trans_up)
 
     plt.legend(loc="best")
