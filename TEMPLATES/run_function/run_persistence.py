@@ -1,5 +1,5 @@
-from analysis.persistance.computePersistanceMap import computePersistanceMap
-from analysis.persistance.computePersistence import computePersistence
+from analysis.persistence.computePersistenceMap import computePersistanceMap
+from analysis.persistence.computePersistence import computePersistence
 from read_write_joints.readJoints import readJoints
 import matplotlib.pyplot as plt
 

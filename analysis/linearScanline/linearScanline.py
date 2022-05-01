@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.stats import norm
 import seaborn as sns
 from shapely.geometry import MultiLineString, LineString
 
@@ -35,7 +34,7 @@ def linearScanline(nodes, info_scanline):
     yi = [intersection.geoms[i].coords[0][1] for i in range(len(intersection.geoms))]
     XYi = np.vstack((xi, yi)).T
 
-    plot_nodes(nodes, plt)
+    plot_nodes(nodes)
     plt.plot(Xsl, Ysl, 'k--', linewidth=1)  # plot scanline
     plt.plot(Xb, Yb, 'g-.', linewidth=1)  # plot scanline extend
     plt.plot(xi, yi, 'rx')  # plot intersection scanline and joints

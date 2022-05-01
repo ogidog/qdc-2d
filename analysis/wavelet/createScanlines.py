@@ -5,6 +5,7 @@ from shapely.geometry import LineString
 from analysis.linearScanline.create_scanline import create_scanline
 from analysis.linearScanline.find_best_scanline import find_best_scanline
 from read_write_joints.nodes2vector import nodes2vector
+from read_write_joints.plot_nodes import plot_nodes
 
 
 def createScanlines(nodes, scanline_info, **kwargs):
@@ -124,4 +125,12 @@ def createScanlines(nodes, scanline_info, **kwargs):
         scanline['Y'].insert(2 * line, Y_up)
         scanline['X_trans'].insert(2 * line, X_trans_up)
 
-    plt.legend(loc="best")
+    plt.legend(bbox_to_anchor=(1.05, 1.0), loc='upper left')
+    plt.tight_layout()
+    plt.plot(Xb, Yb, 'g-.', linewidth=1)  # plot scanline extend
+    plot_nodes(nodes)
+    for scan in range(len(scanline['iD'])):
+        if scanline['iD'][scan] == 0:
+            plt.plot(scanline['X'][scan], scanline['Y'][scan], 'rx')
+        else:
+            plt.plot(scanline['X'][scan], scanline['Y'][scan], 'yx')
