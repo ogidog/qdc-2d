@@ -134,3 +134,5 @@ def createScanlines(nodes, scanline_info, **kwargs):
             plt.plot(scanline['X'][scan], scanline['Y'][scan], 'rx')
         else:
             plt.plot(scanline['X'][scan], scanline['Y'][scan], 'yx')
+
+    return scanline

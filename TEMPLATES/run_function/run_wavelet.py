@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+from analysis.wavelet.computeWavelet import computeWavelet
 from analysis.wavelet.createScanlines import createScanlines
 from read_write_joints.readJoints import readJoints
 
@@ -37,9 +38,9 @@ def run_wavelet(template):
     scanline_info['dY'] = deltaY
     scanline_info['theta'] = np.deg2rad(THETA)
     plt.figure(1)
-    createScanlines(nodes, scanline_info)
-    plt.show()
+    scanlines = createScanlines(nodes, scanline_info)
+    # plt.show()
 
     # Wavelet analyse
-    #computeWavelet(scanlines)
+    computeWavelet(scanlines)
 
