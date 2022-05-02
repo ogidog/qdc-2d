@@ -39,7 +39,7 @@ def run_wavelet(template):
     scanline_info['theta'] = np.deg2rad(THETA)
     plt.figure(1)
     scanlines = createScanlines(nodes, scanline_info)
-    # plt.show()
+    plt.show()
 
     # Wavelet analyse
     computeWavelet(scanlines)
