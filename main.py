@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 
+from TEMPLATES.run_function.run_circular import run_circular
 from TEMPLATES.run_function.run_hough import run_hough
 from TEMPLATES.run_function.run_linear import run_linear
 from TEMPLATES.run_function.run_persistence import run_persistence
@@ -116,7 +117,7 @@ def main(template_file="TEMPLATE.txt"):
                     run_wavelet(template)
                 elif template['METHOD'] == "circular":
                     print('Analyse with circular scanline')
-                    # run_circular(template)
+                    run_circular(template)
                 elif template['METHOD'] == "parallelLinear":
                     print()
                     # run_parallelLinear(template)

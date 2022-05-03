@@ -1,5 +1,4 @@
 import numpy as np
-import pywt
 from ghostipy.spectral import cwt, MorseWavelet
 from matplotlib import pyplot as plt
 
