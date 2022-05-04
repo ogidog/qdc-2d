@@ -15,10 +15,9 @@ def intersectCT(x_1, x_2, y_1, y_2, r, lT, xTC, yTC, k, _int):
         if np.isreal(x[i]):
             # distance intersection point/middle of segment
             d = np.sqrt(
-                (np.real(x[i]) - np.mean([x_2[i], x_1[i]])) ** 2 + (np.real(y[i]) - np.mean([y_2(i), y_1(i)])) ** 2)
+                (np.real(x[i]) - np.mean([x_2[i], x_1[i]])) ** 2 + (np.real(y[i]) - np.mean([y_2[i], y_1[i]])) ** 2)
             if (d < 0.5 * lT[i]):  # the intersection point is on the segment
-                xTC[k] = np.real(x[i])
-                yTC[k] = np.real(y[i])
-                k = k + 1
+                xTC.append(np.real(x[i]))
+                yTC.append(np.real(y[i]))
 
     return [xTC, yTC, k]
