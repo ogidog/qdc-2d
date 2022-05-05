@@ -13,10 +13,8 @@ def run_circular(template):
         print('Missing arguments : INPUT')
         return
 
-    # TODO:раскомментирвать
-    # prompt = 'Number of horizontal circles? : '
-    # circles = input(prompt)
-    circles = 3
+    prompt = 'Number of horizontal circles? : '
+    circles = input(prompt)
 
     nodes = readJoints(joint_file)
-    circularScanline(nodes, circles)
+    circularScanline(nodes, int(circles))

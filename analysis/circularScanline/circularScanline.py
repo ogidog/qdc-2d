@@ -2,6 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 from analysis.circularScanline.intersectCT import intersectCT
+from analysis.circularScanline.plot_Map_densityIntensity import plot_Map_densityIntensity
 from read_write_joints.polylines_to_lines import polylines_to_lines
 from read_write_joints.selectExtends import selectExtends
 
@@ -93,16 +94,17 @@ def circularScanline(nodes, nbCircles):
             plt.plot(x[:, 0], x[:, 1], 'go', linewidth=2)  # plot points within circles
 
     # Window selection
-    plt.xlim([extends['minX'],extends['maxX']])
-    plt.ylim([extends['minY'],extends['maxY']])
+    plt.xlim([extends['minX'], extends['maxX']])
+    plt.ylim([extends['minY'], extends['maxY']])
+    plt.show()
 
-    m = m/c # mean points within circles
-    n = n/c # mean intersections
+    m = m / c  # mean points within circles
+    n = n / c  # mean intersections
 
     # -- Estimator calculation
-    intensity_estimator   = n/(4*R)  # n/4r
-    density_estimator     = m/(2*np.pi*R)  # m/2pr
-    traceLength_estimator = (n/m)*np.pi*R/2  # (n/m)pr/2
+    intensity_estimator = n / (4 * R)  # n/4r
+    density_estimator = m / (2 * np.pi * R)  # m/2pr
+    traceLength_estimator = (n / m) * np.pi * R / 2  # (n/m)pr/2
     print('\n-----------------------')
     print('Mean intensity estimator : {}'.format(intensity_estimator))
     print('Mean density estimator : {}'.format(density_estimator));
@@ -111,7 +113,6 @@ def circularScanline(nodes, nbCircles):
     print('Mean/std intensity : {} / {}'.format(np.mean(intensity_vect), np.std(intensity_vect)))
     print('Mean/std density : {} / {}'.format(np.mean(density_vect), np.std(density_vect)))
 
-    plt.show()
+    plot_Map_densityIntensity(xw, yw, intensity_vect, density_vect, dx)
 
-
-# return [intensity_estimator, density_estimator, traceLength_estimator]
+    return [intensity_estimator, density_estimator, traceLength_estimator]
