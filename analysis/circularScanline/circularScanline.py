@@ -73,8 +73,45 @@ def circularScanline(nodes, nbCircles):
 
     n = 0
     m = 0
+    density_vect = np.zeros(len(xw))
+    intensity_vect = np.zeros(len(xw))
+    for c in range(len(xw)):  # for each circle
+        if (len(s['xTC'][c]) > 0):  # if points within/intersect the circle
+            x = s['m'][c]  # points within
+            n = n + len(s['xTC'][c])  # nb of intersections joint/circles
+            m = m + np.size(x, 0)  # nb of points within the circle
+            density_vect[c] = np.size(x, 0)
+            intensity_vect[c] = len(s['xTC'][c])
+            if np.mod(c, 2) != 0:
+                plt.plot(s['xC'][c], s['yC'][c], 'y--', linewidth=0.5)
+                plt.plot(xw[c], yw[c], 'yx')  # plot circle center and plot circles
+            else:
+                plt.plot(s['xC'][c], s['yC'][c], 'k-')
+                plt.plot(xw[c], yw[c], 'kx')  # plot circle center
+            plt.plot(s['xT'][c].T, s['yT'][c].T, 'b-', linewidth=1.5)  # plot joints
+            plt.plot(s['xTC'][c], s['yTC'][c], 'rx', linewidth=2)  # plot intersections
+            plt.plot(x[:, 0], x[:, 1], 'go', linewidth=2)  # plot points within circles
 
+    # Window selection
+    plt.xlim([extends['minX'],extends['maxX']])
+    plt.ylim([extends['minY'],extends['maxY']])
 
-plt.show()
+    m = m/c # mean points within circles
+    n = n/c # mean intersections
+
+    # -- Estimator calculation
+    intensity_estimator   = n/(4*R)  # n/4r
+    density_estimator     = m/(2*np.pi*R)  # m/2pr
+    traceLength_estimator = (n/m)*np.pi*R/2  # (n/m)pr/2
+    print('\n-----------------------')
+    print('Mean intensity estimator : {}'.format(intensity_estimator))
+    print('Mean density estimator : {}'.format(density_estimator));
+    print('Mean trace length estimator : {}'.format(traceLength_estimator))
+    print('\n-----------------------')
+    print('Mean/std intensity : {} / {}'.format(np.mean(intensity_vect), np.std(intensity_vect)))
+    print('Mean/std density : {} / {}'.format(np.mean(density_vect), np.std(density_vect)))
+
+    plt.show()
+
 
 # return [intensity_estimator, density_estimator, traceLength_estimator]
