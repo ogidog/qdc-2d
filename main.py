@@ -5,6 +5,7 @@ from TEMPLATES.run_function.run_circular import run_circular
 from TEMPLATES.run_function.run_hough import run_hough
 from TEMPLATES.run_function.run_linear import run_linear
 from TEMPLATES.run_function.run_persistence import run_persistence
+from TEMPLATES.run_function.run_volume import run_volume
 from TEMPLATES.run_function.run_wavelet import run_wavelet
 
 template = {}
@@ -97,7 +98,6 @@ def main(template_file="TEMPLATE.txt"):
                     break
                 print(line)
 
-            return
 
         # -- Step 3 : Analysis 1 jointset
         if int(template['STEP']) == 3:
@@ -127,7 +127,22 @@ def main(template_file="TEMPLATE.txt"):
                 return
         else:
             print('No METHOD;hough/linear/persistence')
-            return
+
+        # -- Step 4 : Analysis all jointsets
+        if int(template['STEP']) == 4:
+            print('STEP 4 : Characterization of the jointing degree ')
+            if 'METHOD' in template.keys():
+                if template['METHOD'] == "circular":
+                    print('Analyse circular scanline')
+                    run_circular(template)
+                elif template['METHOD'] == "volume":
+                    print('Analyse block volume and volume joint count')
+                    run_volume(template)
+            else:
+                print('Available method for STEP 4 : circular or volume')
+                return
+        else:
+            print('No METHOD;circular/volume')
 
     except ValueError:
         print(ValueError)
