@@ -4,7 +4,7 @@ from PIL import Image
 
 
 def main():
-    nodes = {"lx1": [], "lx2": [], "ly1": [], "ly2": []}
+    lines_coord= {"lx1": [], "lx2": [], "ly1": [], "ly2": []}
     lines_file = "D:\\intellij-idea-workspace\\qdc-2d\\TEMPLATES\\examples2\\C1M.txt"
     img_file = "D:\\intellij-idea-workspace\\qdc-2d\\TEMPLATES\\examples2\\02-11-2019_cut_pwr_ql.png"
 
@@ -15,15 +15,15 @@ def main():
             f.close()
             break
         [lx1, ly1, lx2, ly2] = np.array(line.split(";"), dtype="int")
-        nodes['lx1'].append(lx1)
-        nodes['lx2'].append(lx2)
-        nodes['ly1'].append(ly1)
-        nodes['ly2'].append(ly2)
+        lines_coord['lx1'].append(lx1)
+        lines_coord['lx2'].append(lx2)
+        lines_coord['ly1'].append(ly1)
+        lines_coord['ly2'].append(ly2)
     f.close()
 
     plt.figure(1)
-    for i in range(len(nodes['lx1'])):
-        plt.plot([nodes['lx1'][i], nodes['lx2'][i]], [nodes['ly1'][i], nodes['ly2'][i]], "b-", linewidth=0.3)
+    for i in range(len(lines_coord['lx1'])):
+        plt.plot([lines_coord['lx1'][i], lines_coord['lx2'][i]], [lines_coord['ly1'][i], lines_coord['ly2'][i]], "b-", linewidth=0.3)
 
     im = Image.open(img_file)
     im_size = im.size
