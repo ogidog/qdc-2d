@@ -4,7 +4,7 @@ from PIL import Image
 
 
 def main():
-    lines_coord= {"lx1": [], "lx2": [], "ly1": [], "ly2": []}
+    lines_coord = {"lx1": [], "lx2": [], "ly1": [], "ly2": []}
     lines_file = "D:\\intellij-idea-workspace\\qdc-2d\\TEMPLATES\\examples2\\C1M.txt"
     img_file = "D:\\intellij-idea-workspace\\qdc-2d\\TEMPLATES\\examples2\\02-11-2019_cut_pwr_ql.png"
 
@@ -23,7 +23,8 @@ def main():
 
     plt.figure(1)
     for i in range(len(lines_coord['lx1'])):
-        plt.plot([lines_coord['lx1'][i], lines_coord['lx2'][i]], [lines_coord['ly1'][i], lines_coord['ly2'][i]], "b-", linewidth=0.3)
+        plt.plot([lines_coord['lx1'][i], lines_coord['lx2'][i]], [lines_coord['ly1'][i], lines_coord['ly2'][i]], "b-",
+                 linewidth=0.3)
 
     im = Image.open(img_file)
     im_size = im.size
