@@ -1,8 +1,6 @@
 import os
-
 import numpy as np
 from matplotlib import pyplot as plt
-from matplotlib.colors import LogNorm
 from PIL import Image
 
 
