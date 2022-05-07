@@ -16,4 +16,4 @@ def run_volume(template):
         return
 
     compute_volume(jointSetInfo)
-    # compute_Jv(jointSetInfo)
+    compute_Jv(jointSetInfo)
