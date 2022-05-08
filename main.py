@@ -98,6 +98,22 @@ def main(template_file="TEMPLATE.txt"):
                     break
                 print(line)
 
+        # -- Step 2 : Classify joints
+        if template['STEP'] == 2:
+            print('STEP 2 : Classify joints')
+            if 'METHOD' in template.keys():
+                if template.METHOD == "hough":
+                    print('Classify with Hough')
+                    #UI_classif_withHough()
+                elif template['METHOD'] == "histo":
+                    print('Classify with oriention histograms')
+                    #UI_classif_withGauss()
+                else:
+                    print('Available method for STEP 2 : histo or hough')
+                    return
+            else:
+                print('No METHOD:histo/hough')
+                return
 
         # -- Step 3 : Analysis 1 jointset
         if int(template['STEP']) == 3:
