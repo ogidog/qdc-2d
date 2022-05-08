@@ -1,6 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
+from analysis.blockVolume_estimation.compute_Jv import compute_Jv
 from analysis.blockVolume_estimation.compute_volume import compute_volume
 
 
