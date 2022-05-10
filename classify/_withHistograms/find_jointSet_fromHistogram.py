@@ -2,6 +2,7 @@ import numpy as np
 
 from matplotlib import pyplot as plt
 
+from classify._withHistograms.jointSet_estimation_byUser import jointSet_estimation_byUser
 from classify._withHistograms.smoothHisto import smoothHisto
 
 
@@ -31,6 +32,8 @@ def find_jointSet_fromHistogram(nodes):
     ax1.plot(theta_vector[:-1], theta_histogram_smoothed, '-', color=[1, 0, 0], label="Smoothed data")
     ax1.legend()
 
+    # -- USER estimation
+    gaussian_param_esti = jointSet_estimation_byUser()
 
     plt.show()
     pass
