@@ -1,6 +1,6 @@
 from matplotlib import pyplot as plt
 
-from classify.find_jointSet_fromHistogram import find_jointSet_fromHistogram
+from classify._withHistograms.find_jointSet_fromHistogram import find_jointSet_fromHistogram
 
 
 def workflow_classify_Analyse_withHistograms(nodes, outPath):
