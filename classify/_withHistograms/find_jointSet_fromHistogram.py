@@ -2,13 +2,12 @@ import numpy as np
 
 from matplotlib import pyplot as plt
 
+from classify._withHistograms.computeGaussians import computeGaussians
 from classify._withHistograms.jointSet_estimation_byUser import jointSet_estimation_byUser
 from classify._withHistograms.smoothHisto import smoothHisto
 
 
 def find_jointSet_fromHistogram(nodes):
-    global theta_vector
-    global theta_histogram
     theta_vector = [*range(0, 181, 2)]
 
     plt.figure(1)
@@ -35,7 +34,17 @@ def find_jointSet_fromHistogram(nodes):
     # -- USER estimation
     gaussian_param_esti = jointSet_estimation_byUser()
 
+    # Create Gaussian curves
+    gaussians = computeGaussians(gaussian_param_esti)
+
+    # Plot first estimation
+    for curve in range(np.size(gaussians['curves'],axis=1)):
+        plt.plot(np.array(theta_vector[:-1]), gaussians['curves'][:,curve].flatten())
+    plt.plot(theta_vector[:-1], gaussians['sum'],linewidth=2)
+
+    # -- Optimization
+    theta_histogram = nodes['oriHisto']
+
     plt.show()
-    pass
 
     # return gaussian_param_OPT

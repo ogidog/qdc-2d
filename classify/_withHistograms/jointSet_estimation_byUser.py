@@ -23,7 +23,7 @@ def jointSet_estimation_byUser():
         std = 3
         # question_N = 'Gaussian amplitude you estimate ? : '
         # N = input(question_N)
-        N = 150
+        N = 50
 
         jointsets['G_mean'].append(mean)
         jointsets['G_std'].append(std)
@@ -32,7 +32,7 @@ def jointSet_estimation_byUser():
     # Noise estimation
     # question_noise = 'Noise you estimate ? : ';
     # jointsets['noise'] = input(question_noise);
-    jointsets['noise'] = 200
+    jointsets['noise'] = 5
 
     # resume estimation :
     print('---------------------------------------')
