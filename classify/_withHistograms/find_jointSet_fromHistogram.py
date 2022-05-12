@@ -38,12 +38,18 @@ def find_jointSet_fromHistogram(nodes):
     gaussians = computeGaussians(gaussian_param_esti)
 
     # Plot first estimation
-    for curve in range(np.size(gaussians['curves'],axis=1)):
-        plt.plot(np.array(theta_vector[:-1]), gaussians['curves'][:,curve].flatten())
-    plt.plot(theta_vector[:-1], gaussians['sum'],linewidth=2)
+    for curve in range(np.size(gaussians['curves'], axis=1)):
+        plt.plot(np.array(theta_vector[:-1]), gaussians['curves'][:, curve].flatten())
+    plt.plot(theta_vector[:-1], gaussians['sum'], linewidth=2)
 
     # -- Optimization
     theta_histogram = nodes['oriHisto']
+    w0 = [gaussian_param_esti['noise']]
+    w0.extend(gaussian_param_esti['G_mean'])
+    w0.extend(gaussian_param_esti['G_std'])
+    w0.extend(gaussian_param_esti['G_N'])
+
+    #[w,~] = fminunc( @(x) minimizeFunction(x), w0);
 
     plt.show()
 
