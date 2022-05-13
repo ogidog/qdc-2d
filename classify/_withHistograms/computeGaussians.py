@@ -1,7 +1,6 @@
 import numpy as np
 from scipy.stats import norm
 
-
 def computeGaussians(jointset_info):
     gaussians = {}
 

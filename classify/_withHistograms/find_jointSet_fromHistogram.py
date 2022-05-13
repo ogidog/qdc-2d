@@ -1,14 +1,18 @@
 import numpy as np
-
+from scipy.optimize import fmin_bfgs
 from matplotlib import pyplot as plt
 
 from classify._withHistograms.computeGaussians import computeGaussians
 from classify._withHistograms.jointSet_estimation_byUser import jointSet_estimation_byUser
+from classify._withHistograms.minimizeFunction import minimizeFunction
 from classify._withHistograms.smoothHisto import smoothHisto
+
+global theta_vector
+global theta_histogram
 
 
 def find_jointSet_fromHistogram(nodes):
-    theta_vector = [*range(0, 181, 2)]
+    theta_vector = [*range(1, 181, 2)]
 
     plt.figure(1)
     theta = nodes['ori_mean']
@@ -20,15 +24,17 @@ def find_jointSet_fromHistogram(nodes):
     plt.show()
 
     plt.figure(2)
+    plt.subplots(constrained_layout=True)
     ax1 = plt.subplot(2, 1, 1)
     ax1.set_title('Estimated result')
     ax1.set_xlabel('Orientation (degrees)')
     ax1.set_ylabel('Counts')
-    ax1.plot(theta_vector[:-1], nodes['oriHisto'], '--', color=[0.5, 0.5, 0], label="Raw data")  # plot tracelength
-    ax1.set_xtick = np.arange(0, 190, 10)
+    ax1.plot(theta_vector, nodes['oriHisto'], '--', color=[0.5, 0.5, 0], label="Raw data")  # plot tracelength
+    XTick = np.arange(0, 190, 10)
+    ax1.set_xtick = XTick
     # Plot smoothed data
     theta_histogram_smoothed = smoothHisto(nodes['oriHisto'], 10)
-    ax1.plot(theta_vector[:-1], theta_histogram_smoothed, '-', color=[1, 0, 0], label="Smoothed data")
+    ax1.plot(theta_vector, theta_histogram_smoothed, '-', color=[1, 0, 0], label="Smoothed data")
     ax1.legend()
 
     # -- USER estimation
@@ -39,8 +45,8 @@ def find_jointSet_fromHistogram(nodes):
 
     # Plot first estimation
     for curve in range(np.size(gaussians['curves'], axis=1)):
-        plt.plot(np.array(theta_vector[:-1]), gaussians['curves'][:, curve].flatten())
-    plt.plot(theta_vector[:-1], gaussians['sum'], linewidth=2)
+        plt.plot(np.array(theta_vector), gaussians['curves'][:, curve].flatten())
+    plt.plot(theta_vector, gaussians['sum'], linewidth=2)
 
     # -- Optimization
     theta_histogram = nodes['oriHisto']
@@ -49,8 +55,14 @@ def find_jointSet_fromHistogram(nodes):
     w0.extend(gaussian_param_esti['G_std'])
     w0.extend(gaussian_param_esti['G_N'])
 
-    #[w,~] = fminunc( @(x) minimizeFunction(x), w0);
+    w = fmin_bfgs(minimizeFunction, w0, args=(theta_histogram,))
+    ax2 = plt.subplot(2, 1, 2)
+    ax2.set_title('Optimization result')
+    ax2.set_xlabel('Orientation (degrees)')
+    ax2.set_ylabel('Counts')
+    ax2.plot(theta_vector, theta_histogram, '-', color=[1, 0, 0])
+    ax2.set_xtick = XTick
 
     plt.show()
-
+    pass
     # return gaussian_param_OPT
