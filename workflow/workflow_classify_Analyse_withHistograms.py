@@ -9,7 +9,7 @@ def workflow_classify_Analyse_withHistograms(nodes, outPath):
 
     # -- Classification
     gaussianParams = find_jointSet_fromHistogram(nodes)
-    #limits = find_jointSetLimits(gaussianParams);
+    limits = find_jointSetLimits(gaussianParams)
     #classify_fromGaussians(limits, nodes, outPath);
 
     # return summarizeTable, files

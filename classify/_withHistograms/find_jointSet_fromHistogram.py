@@ -63,6 +63,27 @@ def find_jointSet_fromHistogram(nodes):
     ax2.plot(theta_vector, theta_histogram, '-', color=[1, 0, 0])
     ax2.set_xtick = XTick
 
+    gaussian_param_OPT = gaussian_param_esti
+    NBjointSet = gaussian_param_OPT['NBjointSet']
+    gaussian_param_OPT['G_mean'] = w[1:NBjointSet + 1]
+    gaussian_param_OPT['G_std'] = w[NBjointSet + 1:2 * NBjointSet + 1]
+    gaussian_param_OPT['G_N'] = w[2 * NBjointSet + 1:3 * NBjointSet + 1]
+    gaussian_param_OPT['noise'] = w[1]
+    gaussians_OPT = computeGaussians(gaussian_param_OPT)
+
+    for curve in range(np.size(gaussians_OPT['curves'], 1)):
+        ax2.plot(theta_vector, gaussians_OPT['curves'][:, curve])
+    ax2.plot(theta_vector, gaussians_OPT['sum'], linewidth=2)
+
     plt.show()
-    pass
-    # return gaussian_param_OPT
+
+    # --  RESUME
+    print('End of histogram optimization!\n -- \nResults are : \n')
+    print('Noise estimation : {}'.format(w[1]))
+    for j in range(NBjointSet):
+        print('Joint {}'.format(j))
+        print('Mean: {}  --  '.format(w[j + 1]))
+        print('Standard deviation : {}  --  '.format(w[NBjointSet + j + 1]))
+        print('Amplitude : {}'.format(w[2 * NBjointSet + j + 1]))
+
+    return gaussian_param_OPT
