@@ -1,7 +1,7 @@
 def splitNodes_per_setID(nodes, setID):
     n = 1
     split_nodes = {'iD': [], 'x': [], 'y': [], 'nseg': [], 'norm': [], 'theta': [], 'wi': [], 'ori_w': [],
-                   'ori_mean_deg': [], 'setiD': []}
+                   'ori_mean': [], 'ori_mean_deg': [], 'setiD': []}
 
     if 'setiD' in nodes.keys():
         for j in range(len(nodes['iD'])):

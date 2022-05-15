@@ -4,8 +4,8 @@ from read_write_joints.readJoints import readJoints
 from workflow.workflow_classify_Analyse_withHistograms import workflow_classify_Analyse_withHistograms
 
 
-def main(inputFile='D:\Temp\-QDC-2D-main\TEMPLATES\examples\createdJoints1.txt',
-         outputFolder='D:\Temp\-QDC-2D-main\TEMPLATES\examples\classif.txt'):
+def main(inputFile='D:\intellij-idea-workspace\qdc-2d\TEMPLATES\examples\createdJoints1.txt',
+         outputFolder='D:\intellij-idea-workspace\qdc-2d\TEMPLATES\examples\classif.txt'):
 
     plt.close()
 
