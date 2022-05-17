@@ -139,3 +139,5 @@ def computePersistence(nodes, covering):
 
     print('Total joints : {} --- Inter joints : {} --- Transection joints : {}'.format(n_tot, n_inter, n_trans))
     print('Mean persistance : {}'.format(np.mean(persistance)))
+
+    return persistance

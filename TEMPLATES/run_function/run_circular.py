@@ -13,8 +13,13 @@ def run_circular(template):
         print('Missing arguments : INPUT')
         return
 
-    prompt = 'Number of horizontal circles? : '
-    circles = input(prompt)
+    if 'CIRCLES' in template.keys():
+        circles = template['CIRCLES']
+    else:
+        prompt = 'Number of horizontal circles? : '
+        circles = input(prompt)
 
     nodes = readJoints(joint_file)
-    circularScanline(nodes, int(circles))
+    [intensity_estimator, density_estimator, traceLength_estimator] = circularScanline(nodes, int(circles))
+
+    return [intensity_estimator, density_estimator, traceLength_estimator]

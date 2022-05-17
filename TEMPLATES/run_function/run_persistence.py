@@ -8,7 +8,7 @@ def run_persistence(template):
     if 'INPUT' in template.keys():
         joint_file = template['INPUT']
         if 'COVER' in template.keys():
-            cover = template['COVER']
+            cover = float(template['COVER'])
             if cover > 1 or cover < 0:
                 print('Cover parameters must be [0:1]')
                 return
@@ -23,11 +23,14 @@ def run_persistence(template):
                 # Persistence map
                 plt.figure(2)
                 print('II-- Persistence MAP')
-                prompt = 'How many squares to run persistence MAP ?'
-                squares = input(prompt)
-                computePersistanceMap(nodes, squares);
+                if "SQUARES" in template.keys():
+                    squares = int(template['SQUARES'])
+                else:
+                    prompt = 'How many squares to run persistence MAP ?'
+                    squares = int(input(prompt))
+                computePersistanceMap(nodes, squares)
             else:
-                nodes = readJoints(joint_file);
+                nodes = readJoints(joint_file)
                 nodes['synthetic'] = template['SYNTHETIC']
 
                 # Persistence on overall area
@@ -41,8 +44,11 @@ def run_persistence(template):
                 plt.figure(2)
                 plt.title('II-- Persistence MAP')
                 print('II-- Persistence MAP')
-                prompt = 'How many squares to run persistence ?: ';
-                squares = input(prompt)
+                if "SQUARES" in template.keys():
+                    squares = int(template['SQUARES'])
+                else:
+                    prompt = 'How many squares to run persistence ?: ';
+                    squares = int(input(prompt))
                 computePersistanceMap(nodes, int(squares))
                 plt.show()
 
@@ -50,10 +56,16 @@ def run_persistence(template):
 
         else:  # no cover given
             nodes = readJoints(joint_file)
-            prompt = 'How many squares to run persistence ?'
-            squares = input(prompt)
+            if "SQUARES" in template.keys():
+                squares = int(template['SQUARES'])
+            else:
+                prompt = 'How many squares to run persistence ?'
+                squares = int(input(prompt))
             plt.figure(1)
             computePersistanceMap(nodes, squares)
+
+        return persistance
+
     else:
         print('Missing arguments : INPUT(mandatory) - COVER(optional)')
         return
