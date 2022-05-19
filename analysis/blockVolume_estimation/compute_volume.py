@@ -48,7 +48,7 @@ def compute_volume(w):
     # Do the actual plotting
     # im = plt.imread(
     #    os.getcwd() + os.path.sep + "analysis" + os.path.sep + "blockVolume_estimation" + os.path.sep + "img_blockShape.PNG")
-    img_file = os.getcwd() + os.path.sep + "analysis" + os.path.sep + "blockVolume_estimation" + os.path.sep + "img_blockShape.PNG"
+    img_file = os.path.dirname(__file__) + os.path.sep + "img_blockShape.PNG"
     im = Image.open(img_file)
     im_size = im.size
     im_data = np.array(im.getdata(0)).reshape(im_size)
