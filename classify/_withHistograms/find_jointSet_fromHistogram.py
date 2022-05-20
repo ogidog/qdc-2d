@@ -11,7 +11,8 @@ global theta_vector
 global theta_histogram
 
 
-def find_jointSet_fromHistogram(nodes):
+def find_jointSet_fromHistogram(nodes, template):
+
     theta_vector = [*range(1, 181, 2)]
 
     plt.figure(1)
@@ -38,7 +39,14 @@ def find_jointSet_fromHistogram(nodes):
     ax1.legend()
 
     # -- USER estimation
-    gaussian_param_esti = jointSet_estimation_byUser()
+    # gaussian_param_esti = jointSet_estimation_byUser()
+    # -- From template file
+    gaussian_param_esti = {}
+    gaussian_param_esti['G_mean'] = template['G_mean']
+    gaussian_param_esti['G_std'] = template['G_std']
+    gaussian_param_esti['G_N'] = template['G_N']
+    gaussian_param_esti['noise'] = template['G_noise']
+    gaussian_param_esti['NBjointSet'] = len(template['G_mean'])
 
     # Create Gaussian curves
     gaussians = computeGaussians(gaussian_param_esti)

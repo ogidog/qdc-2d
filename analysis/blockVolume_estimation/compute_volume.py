@@ -46,8 +46,6 @@ def compute_volume(w):
     print('Block shape factor : {}'.format(Beta))
 
     # Do the actual plotting
-    # im = plt.imread(
-    #    os.getcwd() + os.path.sep + "analysis" + os.path.sep + "blockVolume_estimation" + os.path.sep + "img_blockShape.PNG")
     img_file = os.path.dirname(__file__) + os.path.sep + "img_blockShape.PNG"
     im = Image.open(img_file)
     im_size = im.size

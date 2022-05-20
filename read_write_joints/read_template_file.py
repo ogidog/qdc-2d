@@ -5,6 +5,9 @@ def read_template_file(file):
     template['jNAME'] = []
     template['jORIENTATION'] = []
     template['jSPACING'] = []
+    template['G_mean'] = []
+    template['G_std'] = []
+    template['G_N'] = []
 
     def switch(line):
         if line[0] == 'SYNTHETIC':
@@ -55,6 +58,9 @@ def read_template_file(file):
         elif line[0] == 'SQUARES':
             template['SQUARES'] = int(str.strip(line[1]))
             return
+        elif line[0] == 'GAUSS_NOISE':
+            template['G_noise'] = int(str.strip(line[1]))
+            return
         elif line[0] == 'JOINT':
             if len(line) < 4:
                 print('Missing information. Needed : JOINT;name;orientation;spacing')
@@ -63,6 +69,15 @@ def read_template_file(file):
             template['jNAME'].append(str.strip(line[1]))
             template['jORIENTATION'].append(np.float64(str.strip(line[2])))
             template['jSPACING'].append(np.float64(str.strip(line[3])))
+            return
+        elif line[0] == 'GAUSS':
+            if len(line) < 4:
+                print('Missing information. Needed : JOINT;mean;std;amplitude')
+                return
+
+            template['G_mean'].append(np.float64(str.strip(line[1])))
+            template['G_std'].append(np.float64(str.strip(line[2])))
+            template['G_N'].append(np.float64(str.strip(line[3])))
             return
         else:
             print('{}: Not used\n'.format(line[0]))

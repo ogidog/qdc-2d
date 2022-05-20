@@ -47,20 +47,25 @@ def main(template_file="TEMPLATE.txt"):
                 if template['METHOD'] == "hough":
                     print('Analyse with Hough frame')
                     run_hough(template)
+                    return
                 elif template['METHOD'] == "linear":
                     print('Analyse with linear scanline')
                     run_linear(template)
+                    return
                 elif template['METHOD'] == "persistence":
                     print('Analyse the persistence')
                     run_persistence(template)
+                    return
                 elif template['METHOD'] == "wavelet":
                     print('Analyse spacing with wavelet transform')
                     run_wavelet(template)
+                    return
                 elif template['METHOD'] == "circular":
                     print('Analyse with circular scanline')
                     run_circular(template)
+                    return
                 elif template['METHOD'] == "parallelLinear":
-                    print()
+                    pass
                     # run_parallelLinear(template)
             else:
                 print(
@@ -76,9 +81,11 @@ def main(template_file="TEMPLATE.txt"):
                 if template['METHOD'] == "circular":
                     print('Analyse circular scanline')
                     run_circular(template)
+                    return
                 elif template['METHOD'] == "volume":
                     print('Analyse block volume and volume joint count')
                     run_volume(template)
+                    return
             else:
                 print('Available method for STEP 4 : circular or volume')
                 return
