@@ -42,14 +42,16 @@ def main(template_file="TEMPLATE.txt"):
 
         # -- Step 3 : Analysis 1 jointset
         if int(template['STEP']) == 3:
-            print('STEP 3 : Analyse jointset')
+            # print('STEP 3 : Analyse jointset')
+            print('Шаг 3 : Анализ набора линий\n')
             if 'METHOD' in template.keys():
                 if template['METHOD'] == "hough":
                     print('Analyse with Hough frame')
                     run_hough(template)
                     return
                 elif template['METHOD'] == "linear":
-                    print('Analyse with linear scanline')
+                    # print('Analyse with linear scanline')
+                    print('Анализ с линейной разверткой\n')
                     run_linear(template)
                     return
                 elif template['METHOD'] == "persistence":

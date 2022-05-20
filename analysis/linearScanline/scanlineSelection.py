@@ -5,7 +5,8 @@ def scanlineSelection(selectNB, nodes, nbScan):
 
     # Scanline-PROCESSING
     if selectNB == 0:
-        print("-- Scanline AUTO --")
+        # print("-- Scanline AUTO --")
+        print("-- Автоматическая линенйная развертка --")
         scanline = find_best_scanline(nodes, nbScan) # automatic scanline selection
     elif selectNB == 1:
         print('-- Draw scanline extremity --')
