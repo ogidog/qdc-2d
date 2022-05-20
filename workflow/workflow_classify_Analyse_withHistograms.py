@@ -89,4 +89,5 @@ def workflow_classify_Analyse_withHistograms(nodes, outPath, templatefile):
         resume['traceLength_estimator'].append(traceLength_estimator)
 
     summarizeTable = json.dumps(resume)
+
     return summarizeTable, files
