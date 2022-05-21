@@ -46,12 +46,13 @@ def main(template_file="TEMPLATE.txt"):
             print('Шаг 3 : Анализ набора линий\n')
             if 'METHOD' in template.keys():
                 if template['METHOD'] == "hough":
-                    print('Analyse with Hough frame')
+                    # print('Analyse with Hough frame')
+                    print('Анализ - Метод Хафа')
                     run_hough(template)
                     return
                 elif template['METHOD'] == "linear":
                     # print('Analyse with linear scanline')
-                    print('Анализ с линейной разверткой\n')
+                    print('Анализ - Линейная разверткой\n')
                     run_linear(template)
                     return
                 elif template['METHOD'] == "persistence":

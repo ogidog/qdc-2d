@@ -1,5 +1,5 @@
 STEP;3
-METHOD;linear
+METHOD;hough
 INPUT;D:\intellij-idea-workspace\qdc-2d\TEMPLATES\examples\classif_0classif.txt
 THETA;10
 SCALE;10

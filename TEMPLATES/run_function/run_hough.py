@@ -16,5 +16,6 @@ def run_hough(template):
 
     nodes = readJoints(joint_file)
     nodes = houghAnalysis(nodes)
-    print('Real spacing - Hough frame : {}\n'.format(np.mean(nodes['real_spacing_hough'])))
+    # print('Real spacing - Hough frame : {}\n'.format(np.mean(nodes['real_spacing_hough'])))
+    print('Реальный интервал - Метод Хафа : {}\n'.format(np.mean(nodes['real_spacing_hough'])))
     return nodes
