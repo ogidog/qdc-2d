@@ -1,4 +1,5 @@
 
+hough_brief = {}
 linear_brief = {}
 optimization_brief = {}
 template = {}

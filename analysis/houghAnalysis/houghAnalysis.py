@@ -1,14 +1,20 @@
+import os
 import numpy as np
 from scipy.stats import norm
 import matplotlib.pyplot as plt
+
 from analysis.houghAnalysis.plot_inHoughFrame import plot_inHoughFrame
+import workflow.lang as lang
+import workflow.workflow_config as wfc
 
 
 def houghAnalysis(nodes):
-
     nodes = plot_inHoughFrame(nodes)
     [mu, sigma] = norm.fit(np.array(nodes['ori_mean_deg']).reshape(-1, 1))
-    print('Gaussian distribution parameters for orientation: \n mu={} -- sigma={}\n'.format(mu, sigma))
+    print(
+        lang.select_locale('Gaussian distribution parameters for orientation: \n mu={} -- sigma={}\n'.format(mu, sigma),
+                           'Гауссовское распределение параметров угла наклона линии: \n mu={} -- sigma={}\n'.format(mu,
+                                                                                                                    sigma)))
 
     # Apparent spacing
     r = nodes['r']
@@ -30,12 +36,17 @@ def houghAnalysis(nodes):
     plt.figure(3)
     nbins = 10
     plt.subplots(constrained_layout=True)
-    ax1 = plt.subplot(311, xlabel='Trace lengths (m)', ylabel='Counts')
+    ax1 = plt.subplot(311, xlabel=lang.select_locale('Trace lengths (m)', 'Длина линии (м)'),
+                      ylabel=lang.select_locale('Counts', 'Кол-во'))
     ax1.hist(np.array(nodes['norm']), nbins, edgecolor="black")
-    ax2 = plt.subplot(312, xlabel='Apparent spacing (m)', ylabel='Counts')
+    ax2 = plt.subplot(312, xlabel=lang.select_locale('Apparent spacing (m)', 'Видимый интервал (м)'),
+                      ylabel=lang.select_locale('Counts', 'Кол-во'))
     ax2.hist(np.array(app_spacing).flatten(), nbins, edgecolor="black")
-    ax3 = plt.subplot(313, xlabel='Real spacing (m)', ylabel='Counts')
+    ax3 = plt.subplot(313, xlabel=lang.select_locale('Real spacing (m)', 'Реальный интервал (м)'),
+                      ylabel=lang.select_locale('Counts', 'Кол-во'))
     ax3.hist(np.array(real_spacing).flatten(), nbins, edgecolor="black")
+
+    plt.savefig(wfc.template['HOUGH_OUTPUT'] + os.path.sep + "fig3" + wfc.classif_joint_set_counter + ".png")
     plt.show()
 
     return nodes

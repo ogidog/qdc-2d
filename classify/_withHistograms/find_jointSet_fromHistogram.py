@@ -10,7 +10,6 @@ from classify._withHistograms.minimizeFunction import minimizeFunction
 from classify._withHistograms.smoothHisto import smoothHisto
 import workflow.workflow_config as wfc
 import workflow.lang as lang
-from read_write_joints.write_json import write_json
 
 
 def find_jointSet_fromHistogram():
@@ -118,7 +117,5 @@ def find_jointSet_fromHistogram():
         wfc.optimization_brief[lang.select_locale('Joints', 'Наборы линий')].append(optimized_joints)
 
         print(' ')
-
-    write_json(wfc.optimization_brief, wfc.template['OPTIMIZATION_OUTPUT'] + os.path.sep + 'brief.json')
 
     return gaussian_param_OPT

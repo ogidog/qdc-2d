@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.optimize import fmin
 from scipy.stats import norm
+import workflow.lang as lang
+import workflow.workflow_config as wfc
 
 
 def equation2solve(x, gaussians_params, gauss):
@@ -26,7 +28,8 @@ def find_jointSetLimits(gaussian_params):
         for gauss in range(len(intersection) - 1):
             # define equation to minimize and to solve
             equation2solve = lambda x: np.abs(
-                gaussians_params[gauss + 1][2] * norm.pdf(x, gaussians_params[gauss + 1][0], gaussians_params[gauss + 1][1])
+                gaussians_params[gauss + 1][2] * norm.pdf(x, gaussians_params[gauss + 1][0],
+                                                          gaussians_params[gauss + 1][1])
                 - gaussians_params[gauss][2] * norm.pdf(x, gaussians_params[gauss][0], gaussians_params[gauss][1]))
             inter = fmin(equation2solve, (gaussians_params[gauss][0] + gaussians_params[gauss + 1][0]) / 2)
             intersection[gauss] = inter
@@ -35,7 +38,7 @@ def find_jointSetLimits(gaussian_params):
         equation2solve = lambda x: np.abs(
             gaussians_params[-1][2] * norm.pdf(x, gaussians_params[-1][0], gaussians_params[-1][1]) -
             gaussians_params[0][2] * norm.pdf(x, gaussians_params[0][0] + 180, gaussians_params[0][1]))
-        inter = fmin(equation2solve, (gaussians_params[-1][0] + gaussians_params[0][0] + 180) / 2)
+        inter = fmin(equation2solve, (gaussians_params[-1][0] + gaussians_params[0][0] + 180) / 2, disp=False)
         intersection[-1] = inter
         # rescale intersection to have between (0-180)
         intersection[intersection > 180] = intersection[intersection > 180] - 180
@@ -43,6 +46,9 @@ def find_jointSetLimits(gaussian_params):
 
         # Sorting results and resume
         intersection = sorted(intersection)
-        print('The classification limits are : {}'.format(intersection))
+        print(lang.select_locale('The classification limits are : {}'.format(intersection),
+                                 'Ограничения классификации : {}'.format(intersection)))
+        wfc.optimization_brief[
+            lang.select_locale('The classification limits are', 'Ограничения классификации')] = intersection
 
     return intersection

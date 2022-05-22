@@ -3,6 +3,8 @@ import numpy as np
 
 from read_write_joints.readJoints import readJoints
 from analysis.houghAnalysis.houghAnalysis import houghAnalysis
+import workflow.lang as lang
+import workflow.workflow_config as wfc
 
 
 def run_hough(template):
@@ -16,6 +18,10 @@ def run_hough(template):
 
     nodes = readJoints(joint_file)
     nodes = houghAnalysis(nodes)
-    # print('Real spacing - Hough frame : {}\n'.format(np.mean(nodes['real_spacing_hough'])))
-    print('Реальный интервал - Метод Хафа : {}\n'.format(np.mean(nodes['real_spacing_hough'])))
+    print(lang.select_locale('Real spacing - Hough frame : {}\n'.format(np.mean(nodes['real_spacing_hough'])),
+                             'Реальный интервал - Метод Хафа : {}\n'.format(np.mean(nodes['real_spacing_hough']))))
+
+    wfc.hough_brief[lang.select_locale('Real spacing - Hough frame : {}\n'.format(np.mean(nodes['real_spacing_hough'])),
+                                       'Реальный интервал - Метод Хафа : {}\n'.format(np.mean(nodes['real_spacing_hough'])))]
+
     return nodes

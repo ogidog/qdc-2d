@@ -9,7 +9,6 @@ from analysis.linearScanline.scanlineSelection import scanlineSelection
 from read_write_joints.nodes2vector import nodes2vector
 from read_write_joints.plot_nodes import plot_nodes
 from read_write_joints.selectExtends import selectExtends
-# from workflow.workflow_config import linear_brief, template
 
 
 def linearScanline(nodes, info_scanline):

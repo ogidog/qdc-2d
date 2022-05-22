@@ -31,25 +31,38 @@ def workflow_classify_Analyse_withHistograms(template_file):
     classify_fromGaussians(limits)
 
     files = list(filter(lambda file: "classif" in file, os.listdir(wfc.template['OUTPUT'])))
-    resume = {lang.select_locale('SetId','Номер'): [], "nbTraces": [], 'orientation_mean': [],
-              'orientation_min': [], 'orientation_max': [], 'length_mean': [],
-              'length_min': [], 'length_max': [], 'spacing_mean_linearScanline': [],
-              'spacing_min_linearScanline': [], 'spacing_max_linearScanline': [],
-              'spacing_mean_houghAnalyse': [], 'spacing_min_houghAnalyse': [],
-              'spacing_max_houghAnalyse': [], 'persistence_mean': [], 'persistence_min': [],
-              'persistence_max': [], 'spacing_frequency': [], 'intensity_estimator': [],
-              'density_estimator': [], 'traceLength_estimator': []}
+    resume = {lang.select_locale('SetId', 'Номер'): [],
+              lang.select_locale("nbTraces", 'Кол-во линий'): [],
+              lang.select_locale('orientation_mean', 'Среднее значение угла наклона'): [],
+              lang.select_locale('orientation_min', 'Минимальное значение угла наклона'): [],
+              lang.select_locale('orientation_max', 'Максимальное значение угла наклона'): [],
+              lang.select_locale('length_mean', 'Средняя длина линии'): [],
+              lang.select_locale('length_min', 'Минимальная длина линии'): [],
+              lang.select_locale('length_max', 'Максимальная длина линии'): [],
+              lang.select_locale('spacing_mean_linearScanline', 'Средняя длина интервала - Линейная развертка'): [],
+              lang.select_locale('spacing_min_linearScanline', 'Минимальная длина интервала - Линейная развертка'): [],
+              lang.select_locale('spacing_max_linearScanline', 'Максимальная длина интервала - Линейная развертка'): [],
+              lang.select_locale('spacing_mean_houghAnalyse', 'Средняя длина интервала - Метод Хафа'): [],
+              lang.select_locale('spacing_min_houghAnalyse', 'Минимальная длина интервала - Метод Хафа'): [],
+              lang.select_locale('spacing_max_houghAnalyse', 'Максимальная длина интервала - Метод Хафа'): [],
+              lang.select_locale('persistence_mean', 'Средний коэффициент постоянства линий'): [],
+              lang.select_locale('persistence_min', 'Минимальный коэффициент постоянства линий'): [],
+              lang.select_locale('persistence_max', 'Максимальный коэффициент постоянства линий'): [],
+              lang.select_locale('spacing_frequency', 'Частота интервалов'): [],
+              lang.select_locale('intensity_estimator', 'Оценка интенсивность линий'): [],
+              lang.select_locale('density_estimator', 'Оценка плотности линий'): [],
+              lang.select_locale('traceLength_estimator', 'Оценка длин линий'): []}
 
-    print('---------STARTING ANALYSIS---------')
+    print(lang.select_locale('\n---------STARTING ANALYSIS---------\n', '\n---------ЗАПУСК АНАЛИЗА---------\n'))
     for j in range(len(files)):
         joint_file = wfc.template['OUTPUT'] + os.path.sep + files[j]
-        print('--- File : {}'.format(joint_file))
+        print(lang.select_locale('--- File : {}'.format(joint_file), '--- Файл : {}'.format(joint_file)))
         set_iD = int(files[j].split('_')[-1].split("classif")[0])
 
-        # template['INPUT'] = joint_file
-        #
-        # # hough analyse
-        # nodes = run_hough(template)
+        wfc.template['INPUT'] = joint_file
+
+        # hough analyse
+        nodes = run_hough(wfc.template)
         #
         # # linear analyse
         # [frequency, spacing_real] = run_linear(template)
