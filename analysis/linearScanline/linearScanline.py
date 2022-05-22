@@ -9,12 +9,15 @@ from analysis.linearScanline.scanlineSelection import scanlineSelection
 from read_write_joints.nodes2vector import nodes2vector
 from read_write_joints.plot_nodes import plot_nodes
 from read_write_joints.selectExtends import selectExtends
-from workflow.workflow_config import linear_path, linear_brief
+# from workflow.workflow_config import linear_brief, template
 
 
 def linearScanline(nodes, info_scanline):
 
+    linear_path = template['LINEAR_OUTPUT']
+
     vector = nodes2vector(nodes)
+
     autoScanline_bool = 0
     best_scanline = scanlineSelection(autoScanline_bool, nodes, info_scanline['nbScan'])
     Xsl = np.array(best_scanline['Xsl']).flatten()

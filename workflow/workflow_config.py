@@ -1,2 +1,6 @@
-linear_path = "D:\intellij-idea-workspace\qdc-2d\workflow_results\linear"
+
 linear_brief = {}
+optimization_brief = {}
+template = {}
+nodes = []
+classif_joint_set_counter = 0

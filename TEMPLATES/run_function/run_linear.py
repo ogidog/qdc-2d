@@ -6,11 +6,13 @@ import numpy as np
 from analysis.linearScanline.linearScanline import linearScanline
 from read_write_joints.readJoints import readJoints
 from read_write_joints.write_json import write_json
-from workflow.workflow_config import linear_path, linear_brief
+# from workflow.workflow_config import linear_brief, template
 
 
 def run_linear(template):
     plt.close()
+
+    linear_path = template['LINEAR_OUTPUT']
 
     if 'INPUT' in template.keys():
         joint_file = template['INPUT']

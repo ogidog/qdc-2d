@@ -1,9 +1,10 @@
 STEP;3
 METHOD;hough
-INPUT;D:\intellij-idea-workspace\qdc-2d\TEMPLATES\examples\classif_0classif.txt
+INPUT;D:\intellij-idea-workspace\qdc-2d\TEMPLATES\examples\createdJoints1.txt
+OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results
+LANG;ru
 THETA;10
 SCALE;10
-OUTPUT;test.txt
 COVER;0.9
 JOINT;j1;10;5
 JOINT;j2;40;10
@@ -17,3 +18,6 @@ GAUSS_NOISE;2
 DX;2
 DY;2
 TABLE;D:\intellij-idea-workspace\qdc-2d\TEMPLATES\examples\wantedJoints.txt
+LINEAR_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\linear
+HOUGH_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\hough
+OPTIMIZATION_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\optimization

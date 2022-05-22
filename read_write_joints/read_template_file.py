@@ -5,8 +5,8 @@ def read_template_file(file):
     template['jNAME'] = []
     template['jORIENTATION'] = []
     template['jSPACING'] = []
-    template['G_mean'] = []
-    template['G_std'] = []
+    template['G_MEAN'] = []
+    template['G_STD'] = []
     template['G_N'] = []
 
     def switch(line):
@@ -18,6 +18,9 @@ def read_template_file(file):
             return
         elif line[0] == 'METHOD':
             template['METHOD'] = str.strip(line[1])
+            return
+        elif line[0] == 'LANG':
+            template['LANG'] = str.strip(line[1])
             return
         elif line[0] == 'INPUT':
             template['INPUT'] = str.strip(line[1])
@@ -59,7 +62,19 @@ def read_template_file(file):
             template['SQUARES'] = int(str.strip(line[1]))
             return
         elif line[0] == 'GAUSS_NOISE':
-            template['G_noise'] = int(str.strip(line[1]))
+            template['G_NOISE'] = int(str.strip(line[1]))
+            return
+        elif line[0] == 'OUTPUT':
+            template['OUTPUT_PATH'] = str.strip(line[1])
+            return
+        elif line[0] == 'LINEAR_OUTPUT':
+            template['LINEAR_OUTPUT'] = str.strip(line[1])
+            return
+        elif line[0] == 'HOUGH_OUTPUT':
+            template['HOUGH_OUTPUT'] = str.strip(line[1])
+            return
+        elif line[0] == 'OPTIMIZATION_OUTPUT':
+            template['OPTIMIZATION_OUTPUT'] = str.strip(line[1])
             return
         elif line[0] == 'JOINT':
             if len(line) < 4:
@@ -75,8 +90,8 @@ def read_template_file(file):
                 print('Missing information. Needed : JOINT;mean;std;amplitude')
                 return
 
-            template['G_mean'].append(np.float64(str.strip(line[1])))
-            template['G_std'].append(np.float64(str.strip(line[2])))
+            template['G_MEAN'].append(np.float64(str.strip(line[1])))
+            template['G_STD'].append(np.float64(str.strip(line[2])))
             template['G_N'].append(np.float64(str.strip(line[3])))
             return
         else:
