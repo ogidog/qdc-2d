@@ -61,16 +61,16 @@ def workflow_classify_Analyse_withHistograms(template_file):
 
     for j in range(len(files)):
         joint_file = wfc.template['OUTPUT'] + os.path.sep + files[j]
-        print(lang.select_locale('--- File : {}'.format(joint_file), '--- Файл : {}'.format(joint_file)))
+        print(lang.select_locale('--- File : {}', '--- Файл : {}').format(joint_file))
         set_iD = int(files[j].split('_')[-1].split("classif")[0])
 
         wfc.template['INPUT'] = joint_file
 
         # hough analyse
-        nodes = run_hough(wfc.template)
+        # nodes = run_hough(wfc.template)
         #
         # # linear analyse
-        # [frequency, spacing_real] = run_linear(template)
+        [frequency, spacing_real] = run_linear(wfc.template)
         #
         # # circular scanline
         # [intensity_estimator, density_estimator, traceLength_estimator] = run_circular(template)

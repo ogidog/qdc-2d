@@ -9,12 +9,11 @@ from analysis.linearScanline.scanlineSelection import scanlineSelection
 from read_write_joints.nodes2vector import nodes2vector
 from read_write_joints.plot_nodes import plot_nodes
 from read_write_joints.selectExtends import selectExtends
+import workflow.lang as lang
+import workflow.workflow_config as wfc
 
 
 def linearScanline(nodes, info_scanline):
-
-    linear_path = template['LINEAR_OUTPUT']
-
     vector = nodes2vector(nodes)
 
     autoScanline_bool = 0
@@ -48,8 +47,9 @@ def linearScanline(nodes, info_scanline):
         plt.ylim([window['minY'], window['maxY']])
 
     # plt.title("Aux Scanline")
-    plt.title("Линейная развертка")
-    plt.savefig(linear_path + os.path.sep + "fig1.png", dpi=300)
+    plt.title(lang.select_locale("Aux Scanline", "Вспомогательная сканирующая линия"))
+    plt.savefig(wfc.template['LINEAR_OUTPUT'] + os.path.sep + "fig1_" + str(wfc.classif_joint_set_counter) + ".png",
+                dpi=300)
     plt.show()
 
     # POST-PROCESSING
@@ -74,9 +74,10 @@ def linearScanline(nodes, info_scanline):
     ax.set_theta_offset(np.pi / 2)
     ax.set_theta_direction(-1)
     ax.set_theta_zero_location('N')
-    # ax.title.set_text('Rose diagram (°)')
-    ax.title.set_text('Роза-диаграмма \n Угол наклона линии (°)')
-    plt.savefig(linear_path + os.path.sep + "fig2.png", dpi=300)
+    ax.title.set_text(
+        lang.select_locale('Rose diagram\n Scanline orientation (°)', 'Роза-диаграмма\n Угол наклона линии (°)'))
+    plt.savefig(wfc.template['LINEAR_OUTPUT'] + os.path.sep + "fig2_" + str(wfc.classif_joint_set_counter) + ".png",
+                dpi=300)
     plt.show()
 
     # -- joint tracelength and spacing
@@ -84,22 +85,24 @@ def linearScanline(nodes, info_scanline):
     spacing_app = np.sqrt(np.diff(coord_cross[:, 0]) ** 2 + np.diff(coord_cross[:, 1]) ** 2)
     spacing_real = spacing_app * np.abs(np.sin(np.pi / 2 - np.mean(THETA) - best_scanline['theta_scanline']))
     frequency = 1 / np.mean(spacing_real)
-    # print('Spacing frequency : {}'.format(frequency))
-    # linear_brief['Spacing frequency'] = frequency
-    print('Частота интервалов : {}'.format(frequency))
-    linear_brief['Частота интервалов'] = frequency
+
+    print(lang.select_locale('Spacing frequency : {}', 'Частота интервалов : {}').format(frequency))
+    wfc.linear_brief['Spacing frequency', 'Частота интервалов'] = frequency
 
     plt.figure(3)
     nbins = 10
     plt.subplots(constrained_layout=True)
-    # ax1 = plt.subplot(311, xlabel="Trace lengths (m)", ylabel="Counts", title="Histogram - Trace length")
-    ax1 = plt.subplot(311, xlabel="Длина линии (м)", ylabel="Кол-во", title="Гистограмма - Длина линии")
+    ax1 = plt.subplot(311, xlabel=lang.select_locale("Trace lengths (m)", "Длина линии (м)"),
+                      ylabel=lang.select_locale("Counts", "Кол-во"),
+                      title=lang.select_locale("Histogram - Trace length", "Гистограмма - Длина линии"))
     ax1.hist(nodes['norm'], nbins, edgecolor="black")
-    # ax2 = plt.subplot(312, xlabel="Apparent spacing (m)", ylabel="Counts", title="Histogram - Apparent spacing")
-    ax2 = plt.subplot(312, xlabel="Видимый интервал (м)", ylabel="Кол-во", title="Гистограмма - Видимый интервал")
+    ax2 = plt.subplot(312, xlabel=lang.select_locale("Apparent spacing (m)", "Видимый интервал (м)"),
+                      ylabel=lang.select_locale("Counts", "Кол-во"),
+                      title=lang.select_locale("Histogram - Apparent spacing", "Гистограмма - Видимый интервал"))
     ax2.hist(spacing_app, nbins, edgecolor="black")
     # ax3 = plt.subplot(313, xlabel="Real spacing (m)", ylabel="Counts", title="Histogram - Real spacing")
-    ax3 = plt.subplot(313, xlabel="Реальный интервал (м)", ylabel="Кол-во", title="Гистограмма - Реальный интервал")
+    ax3 = plt.subplot(313, xlabel=lang.select_locale("Real spacing (m)","Реальный интервал (м)"), ylabel=lang.select_locale("Counts", "Кол-во"),
+                      title=lang.select_locale("Histogram - Real spacing", "Гистограмма - Реальный интервал"))
     ax3.hist(spacing_real, nbins, edgecolor="black")
     plt.savefig(linear_path + os.path.sep + "fig3.png", dpi=300)
     plt.show()

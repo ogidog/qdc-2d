@@ -92,7 +92,7 @@ def find_jointSet_fromHistogram():
     print(lang.select_locale('End of histogram optimization!\n', 'Оптимизация завершена\n'))
     print(lang.select_locale('-- Results are : \n', '-- Результаты : \n'))
 
-    print(lang.select_locale('Noise estimation : {}\n'.format(w[1]), 'Оценка шума : {}\n'.format(w[1])))
+    print(lang.select_locale('Noise estimation : {}\n', 'Оценка шума : {}\n').format(w[1]))
     wfc.optimization_brief[lang.select_locale('Noise estimation', 'Оценка шума')] = w[1]
 
     wfc.optimization_brief[lang.select_locale('Joints', 'Наборы линий')] = []
@@ -100,18 +100,16 @@ def find_jointSet_fromHistogram():
     for j in range(NBjointSet):
         optimized_joints = {}
 
-        print(lang.select_locale('Joint #{}'.format(j), 'Набор линий №{}'.format(j + 1)))
+        print(lang.select_locale('Joint #{}', 'Набор линий №{}').format(j + 1))
         optimized_joints[lang.select_locale('Joint', 'Набор линий №')] = j + 1
 
-        print(lang.select_locale('Mean: {}  --  '.format(w[j + 1]), 'Среднее: {}  --  '.format(w[j + 1])))
+        print(lang.select_locale('Mean: {}  --  ', 'Среднее: {}  --  ').format(w[j + 1]))
         optimized_joints[lang.select_locale('Mean', 'Среднее')] = w[j + 1]
 
-        print(lang.select_locale('Standard deviation : {}  --  '.format(w[NBjointSet + j + 1]),
-                                 'Дисперсия : {}  --  '.format(w[NBjointSet + j + 1])))
+        print(lang.select_locale('Standard deviation : {}  --  ', 'Дисперсия : {}  --  ').format(w[NBjointSet + j + 1]))
         optimized_joints[lang.select_locale('Standard deviation', 'Дисперсия')] = w[NBjointSet + j + 1]
 
-        print(lang.select_locale('Amplitude : {}'.format(w[2 * NBjointSet + j + 1]),
-                                 'Средняя амплитуда : {}'.format(w[2 * NBjointSet + j + 1])))
+        print(lang.select_locale('Amplitude : {}','Средняя амплитуда : {}').format(w[2 * NBjointSet + j + 1]))
         optimized_joints[lang.select_locale('Amplitude', 'Средняя амплитуда')] = w[2 * NBjointSet + j + 1]
 
         wfc.optimization_brief[lang.select_locale('Joints', 'Наборы линий')].append(optimized_joints)

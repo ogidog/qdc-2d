@@ -11,10 +11,9 @@ import workflow.workflow_config as wfc
 def houghAnalysis(nodes):
     nodes = plot_inHoughFrame(nodes)
     [mu, sigma] = norm.fit(np.array(nodes['ori_mean_deg']).reshape(-1, 1))
-    print(
-        lang.select_locale('Gaussian distribution parameters for orientation: \n mu={} -- sigma={}\n'.format(mu, sigma),
-                           'Гауссовское распределение параметров угла наклона линии: \n mu={} -- sigma={}\n'.format(mu,
-                                                                                                                    sigma)))
+    print(lang.select_locale('Gaussian distribution parameters for orientation: \n mu={} -- sigma={}\n',
+                             'Гауссовское распределение параметров угла наклона линии: \n mu={} -- sigma={}\n').format(
+        mu, sigma))
     wfc.hough_brief[lang.select_locale('Gaussian distribution parameters for orientation',
                                        'Гауссовское распределение параметров угла наклона линии')] = {'mu': 0,
                                                                                                       'sigma': 0}

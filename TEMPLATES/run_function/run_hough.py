@@ -24,12 +24,12 @@ def run_hough(template):
 
     nodes = readJoints(joint_file)
     nodes = houghAnalysis(nodes)
-    print(lang.select_locale('Real spacing - Hough frame : {}\n'.format(np.mean(nodes['real_spacing_hough'])),
-                             'Реальный интервал - Метод Хафа : {}\n'.format(np.mean(nodes['real_spacing_hough']))))
+    # print(lang.select_locale('Real spacing - Hough frame : {}\n'.format(np.mean(nodes['real_spacing_hough'])),
+    #                          'Реальный интервал - Метод Хафа : {}\n'.format(np.mean(nodes['real_spacing_hough']))))
 
-    wfc.hough_brief[lang.select_locale('Real spacing - Hough frame', 'Реальный интервал - Метод Хафа')] = np.mean(
-        nodes['real_spacing_hough'])
-    write_json(wfc.hough_brief,
-               wfc.template['HOUGH_OUTPUT'] + os.path.sep + "brief_" + str(wfc.classif_joint_set_counter) + ".json")
+    print(lang.select_locale('Real spacing - Hough frame : {}\n','Реальный интервал - Метод Хафа : {}\n').format(np.mean(nodes['real_spacing_hough'])))
+
+    wfc.hough_brief[lang.select_locale('Real spacing - Hough frame','Реальный интервал - Метод Хафа')] = np.mean(nodes['real_spacing_hough'])
+    write_json(wfc.hough_brief, wfc.template['HOUGH_OUTPUT']+os.path.sep+"brief_"+str(wfc.classif_joint_set_counter)+".json")
 
     return nodes
