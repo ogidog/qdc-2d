@@ -5,6 +5,8 @@ from analysis.circularScanline.intersectCT import intersectCT
 from analysis.circularScanline.plot_Map_densityIntensity import plot_Map_densityIntensity
 from read_write_joints.polylines_to_lines import polylines_to_lines
 from read_write_joints.selectExtends import selectExtends
+import workflow.workflow_config as wfc
+import workflow.lang as lang
 
 
 def circularScanline(nodes, nbCircles):
@@ -96,6 +98,7 @@ def circularScanline(nodes, nbCircles):
     # Window selection
     plt.xlim([extends['minX'], extends['maxX']])
     plt.ylim([extends['minY'], extends['maxY']])
+    plt.title(lang.select_locale("Circular Window Sampling", "Выборка по окну окружности"))
     plt.show()
 
     m = m / c  # mean points within circles
@@ -105,11 +108,10 @@ def circularScanline(nodes, nbCircles):
     intensity_estimator = n / (4 * R)  # n/4r
     density_estimator = m / (2 * np.pi * R)  # m/2pr
     traceLength_estimator = (n / m) * np.pi * R / 2  # (n/m)pr/2
-    print('\n-----------------------')
     print('Mean intensity estimator : {}'.format(intensity_estimator))
     print('Mean density estimator : {}'.format(density_estimator));
     print('Mean trace length estimator : {}'.format(traceLength_estimator))
-    print('\n-----------------------')
+    print(' ')
     print('Mean/std intensity : {} / {}'.format(np.mean(intensity_vect), np.std(intensity_vect)))
     print('Mean/std density : {} / {}'.format(np.mean(density_vect), np.std(density_vect)))
 

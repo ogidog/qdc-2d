@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from shapely.geometry import MultiLineString, LineString
 
-from analysis.linearScanline.scanlineSelection import scanlineSelection
+from analysis.linearScanline.find_best_scanline import find_best_scanline
 from read_write_joints.nodes2vector import nodes2vector
 from read_write_joints.plot_nodes import plot_nodes
 from read_write_joints.selectExtends import selectExtends
@@ -14,10 +14,11 @@ import workflow.workflow_config as wfc
 
 
 def linearScanline(nodes, info_scanline):
+
     vector = nodes2vector(nodes)
 
-    autoScanline_bool = 0
-    best_scanline = scanlineSelection(autoScanline_bool, nodes, info_scanline['nbScan'])
+    print(lang.select_locale("-- Scanline AUTO --", "-- Автоматическая линенйная развертка --"))
+    best_scanline = find_best_scanline(nodes, info_scanline['nbScan']) # automatic scanline selection
     Xsl = np.array(best_scanline['Xsl']).flatten()
     Ysl = np.array(best_scanline['Ysl']).flatten()
     Xb = np.array(best_scanline['Xb']).flatten()
@@ -87,7 +88,7 @@ def linearScanline(nodes, info_scanline):
     frequency = 1 / np.mean(spacing_real)
 
     print(lang.select_locale('Spacing frequency : {}', 'Частота интервалов : {}').format(frequency))
-    wfc.linear_brief['Spacing frequency', 'Частота интервалов'] = frequency
+    wfc.linear_brief[lang.select_locale('Spacing frequency', 'Частота интервалов')] = frequency
 
     plt.figure(3)
     nbins = 10
@@ -101,25 +102,34 @@ def linearScanline(nodes, info_scanline):
                       title=lang.select_locale("Histogram - Apparent spacing", "Гистограмма - Видимый интервал"))
     ax2.hist(spacing_app, nbins, edgecolor="black")
     # ax3 = plt.subplot(313, xlabel="Real spacing (m)", ylabel="Counts", title="Histogram - Real spacing")
-    ax3 = plt.subplot(313, xlabel=lang.select_locale("Real spacing (m)","Реальный интервал (м)"), ylabel=lang.select_locale("Counts", "Кол-во"),
+    ax3 = plt.subplot(313, xlabel=lang.select_locale("Real spacing (m)", "Реальный интервал (м)"),
+                      ylabel=lang.select_locale("Counts", "Кол-во"),
                       title=lang.select_locale("Histogram - Real spacing", "Гистограмма - Реальный интервал"))
     ax3.hist(spacing_real, nbins, edgecolor="black")
-    plt.savefig(linear_path + os.path.sep + "fig3.png", dpi=300)
+    plt.savefig(wfc.template["LINEAR_OUTPUT"] + os.path.sep + "fig3_" + str(wfc.classif_joint_set_counter) + ".png",
+                dpi=300)
     plt.show()
 
     plt.figure(4)
     plt.subplots(constrained_layout=True)
-    # ax1 = plt.subplot(311, xlabel="Orientation (°)", ylabel="CDF", title="Cumulative distribution - Orientation")
-    ax1 = plt.subplot(311, xlabel="Угол наклона (°)", ylabel="CDF", title="Кумулятивное распределение - Угол наклона")
+    ax1 = plt.subplot(311, xlabel=lang.select_locale("Orientation (°)", "Угол наклона линии(°)"), ylabel="CDF",
+                      title=lang.select_locale("Cumulative distribution - Orientation",
+                                               "Кумулятивное распределение - Угол наклона"))
     ori = np.rad2deg(THETA)
     sns.ecdfplot(data=ori, ax=ax1)
-    # ax2 = plt.subplot(312, xlabel="Real spacing (m)", ylabel="CDF", title="Cumulative distribution - Spacing")
-    ax2 = plt.subplot(312, xlabel="Реальный интервал (м)", ylabel="CDF", title="Кумулятивное распределение - Интервал")
+
+    ax2 = plt.subplot(312, xlabel=lang.select_locale("Real spacing (m)", "Реальный интервал (м)"), ylabel="CDF",
+                      title=lang.select_locale("Cumulative distribution - Spacing",
+                                               "Кумулятивное распределение - Интервал"))
     sns.ecdfplot(data=spacing_real, ax=ax2)
-    # ax3 = plt.subplot(313, xlabel="Trace length (m)", ylabel="CDF", title="Cumulative distribution - Trace length")
-    ax3 = plt.subplot(313, xlabel="Длина линии (м)", ylabel="CDF", title="Кумулятивное распределение - Длинна линии")
+
+    ax3 = plt.subplot(313, xlabel=lang.select_locale("Trace length (m)", "Длина линии (м)"), ylabel="CDF",
+                      title=lang.select_locale("Cumulative distribution - Trace length",
+                                               "Кумулятивное распределение - Длинна линии"))
     sns.ecdfplot(data=nodes['norm'], ax=ax3)
-    plt.savefig(linear_path + os.path.sep + "fig4.png", dpi=300)
+
+    plt.savefig(wfc.template["LINEAR_OUTPUT"] + os.path.sep + "fig4_" + str(wfc.classif_joint_set_counter) + ".png",
+                dpi=300)
     plt.show()
 
     return [frequency, spacing_real, THETA]

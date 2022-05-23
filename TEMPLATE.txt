@@ -20,4 +20,5 @@ DY;2
 TABLE;D:\intellij-idea-workspace\qdc-2d\TEMPLATES\examples\wantedJoints.txt
 LINEAR_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\linear
 HOUGH_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\hough
+CIRCULAR_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\circular
 OPTIMIZATION_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\optimization

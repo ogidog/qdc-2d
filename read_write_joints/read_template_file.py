@@ -73,6 +73,9 @@ def read_template_file(file):
         elif line[0] == 'HOUGH_OUTPUT':
             template['HOUGH_OUTPUT'] = str.strip(line[1])
             return
+        elif line[0] == 'CIRCULAR_OUTPUT':
+            template['CIRCULAR_OUTPUT'] = str.strip(line[1])
+            return
         elif line[0] == 'OPTIMIZATION_OUTPUT':
             template['OPTIMIZATION_OUTPUT'] = str.strip(line[1])
             return
