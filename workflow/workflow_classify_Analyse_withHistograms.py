@@ -26,6 +26,10 @@ def workflow_classify_Analyse_withHistograms(template_file):
     plt.close()
 
     # -- Classification
+
+    if not os.path.exists(wfc.template['OPTIMIZATION_OUTPUT']):
+        os.makedirs(wfc.template['OPTIMIZATION_OUTPUT'])
+
     gaussianParams = find_jointSet_fromHistogram()
     limits = find_jointSetLimits(gaussianParams)
     classify_fromGaussians(limits)
@@ -54,6 +58,7 @@ def workflow_classify_Analyse_withHistograms(template_file):
               lang.select_locale('traceLength_estimator', 'Оценка длин линий'): []}
 
     print(lang.select_locale('\n---------STARTING ANALYSIS---------\n', '\n---------ЗАПУСК АНАЛИЗА---------\n'))
+
     for j in range(len(files)):
         joint_file = wfc.template['OUTPUT'] + os.path.sep + files[j]
         print(lang.select_locale('--- File : {}'.format(joint_file), '--- Файл : {}'.format(joint_file)))

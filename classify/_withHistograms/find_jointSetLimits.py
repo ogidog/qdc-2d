@@ -31,7 +31,7 @@ def find_jointSetLimits(gaussian_params):
                 gaussians_params[gauss + 1][2] * norm.pdf(x, gaussians_params[gauss + 1][0],
                                                           gaussians_params[gauss + 1][1])
                 - gaussians_params[gauss][2] * norm.pdf(x, gaussians_params[gauss][0], gaussians_params[gauss][1]))
-            inter = fmin(equation2solve, (gaussians_params[gauss][0] + gaussians_params[gauss + 1][0]) / 2)
+            inter = fmin(equation2solve, (gaussians_params[gauss][0] + gaussians_params[gauss + 1][0]) / 2, disp=False)
             intersection[gauss] = inter
 
         # equation to solve for the intersection of first and last gaussians

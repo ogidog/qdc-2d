@@ -15,6 +15,13 @@ def houghAnalysis(nodes):
         lang.select_locale('Gaussian distribution parameters for orientation: \n mu={} -- sigma={}\n'.format(mu, sigma),
                            'Гауссовское распределение параметров угла наклона линии: \n mu={} -- sigma={}\n'.format(mu,
                                                                                                                     sigma)))
+    wfc.hough_brief[lang.select_locale('Gaussian distribution parameters for orientation',
+                                       'Гауссовское распределение параметров угла наклона линии')] = {'mu': 0,
+                                                                                                      'sigma': 0}
+    wfc.hough_brief[lang.select_locale('Gaussian distribution parameters for orientation',
+                                       'Гауссовское распределение параметров угла наклона линии')]['mu'] = mu
+    wfc.hough_brief[lang.select_locale('Gaussian distribution parameters for orientation',
+                                       'Гауссовское распределение параметров угла наклона линии')]['sigma'] = sigma
 
     # Apparent spacing
     r = nodes['r']
@@ -46,7 +53,7 @@ def houghAnalysis(nodes):
                       ylabel=lang.select_locale('Counts', 'Кол-во'))
     ax3.hist(np.array(real_spacing).flatten(), nbins, edgecolor="black")
 
-    plt.savefig(wfc.template['HOUGH_OUTPUT'] + os.path.sep + "fig3" + wfc.classif_joint_set_counter + ".png")
+    plt.savefig(wfc.template['HOUGH_OUTPUT'] + os.path.sep + "fig3_" + str(wfc.classif_joint_set_counter) + ".png")
     plt.show()
 
     return nodes
