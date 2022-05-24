@@ -11,8 +11,8 @@ from read_write_joints.selectExtends import selectExtends
 import workflow.workflow_config as wfc
 import workflow.lang as lang
 
-def computePersistanceMap(nodes, nbRectangles):
 
+def computePersistanceMap(nodes, nbRectangles):
     plt.figure(2)
     [_, id_x1x2y1y2_matrice] = polylines_to_lines(nodes)
     id_x1x2y1y2_matrice = id_x1x2y1y2_matrice[:, 1:]
@@ -109,10 +109,6 @@ def computePersistanceMap(nodes, nbRectangles):
                     n_tot_cc = n_tot_cc + 1
                     n_inter_cc = n_inter_cc + 1
 
-        plt.savefig(wfc.template["PERSISTENCE_OUTPUT"] + os.path.sep + "fig2_" + str(wfc.classif_joint_set_counter) + ".png",
-                       dpi=300)
-        plt.show()
-
         if (n_tot_cc - n_trans_cc + n_inter_cc) > 0:
             persistance = L * h / (h * np.sin(math.radians(MEAN_ori)) + L * np.cos(math.radians(MEAN_ori))) * (
                     n_tot_cc + n_trans_cc - n_inter_cc) / (n_tot_cc - n_trans_cc + n_inter_cc)
@@ -122,6 +118,11 @@ def computePersistanceMap(nodes, nbRectangles):
             persistence_vect[i] = persistance
         else:
             persistence_vect[i] = 0
+
+    plt.savefig(
+        wfc.template["PERSISTENCE_OUTPUT"] + os.path.sep + "fig2_" + str(wfc.classif_joint_set_counter) + ".png",
+        dpi=300)
+    plt.show()
 
     mean_persistence = np.mean(persistence_vect)
     std_persistence = np.std(persistence_vect)
@@ -135,10 +136,14 @@ def computePersistanceMap(nodes, nbRectangles):
     plt.colorbar()
     ax = plt.gca()
     ax.invert_yaxis()
-    str_titleMap = 'Persistence map\nMean persistence : {}\nStd persistence : {}'.format(mean_persistence,
-                                                                                         std_persistence)
+    str_titleMap = lang.select_locale('Persistence map\nMean persistence : {}\nStd persistence : {}',
+                                      'Карта постоянства\nСреднее : {}\nДисперсия : {}').format(
+        mean_persistence, std_persistence)
+
     plt.title(str_titleMap)
     fig3.tight_layout()
-    plt.savefig(wfc.template["PERSISTENCE_OUTPUT"] + os.path.sep + "fig3_" + str(wfc.classif_joint_set_counter) + ".png",
-                dpi=300)
+
+    plt.savefig(
+        wfc.template["PERSISTENCE_OUTPUT"] + os.path.sep + "fig3_" + str(wfc.classif_joint_set_counter) + ".png",
+        dpi=300)
     plt.show()

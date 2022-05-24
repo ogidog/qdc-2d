@@ -3,6 +3,8 @@ import os
 from analysis.persistence.computePersistenceMap import computePersistanceMap
 from analysis.persistence.computePersistence import computePersistence
 from read_write_joints.readJoints import readJoints
+from read_write_joints.write_json import write_json
+import workflow.workflow_config as wfc
 
 import workflow.lang as lang
 
@@ -26,13 +28,14 @@ def run_persistence(template):
                 nodes['synthetic'] = template['SYNTHETIC']
 
                 # Persistence on overall area
-                print('I-- Persistence over the entire window')
+                print(lang.select_locale('I -- Persistence over the entire window\n',
+                                         'I -- Расчет постоянства по всему окну\n'))
                 persistance = computePersistence(nodes)
 
                 print('')
 
                 # Persistence map
-                print('II-- Persistence MAP')
+                print(lang.select_locale('II-- Persistence MAP\n', '\nII-- Карта постоянства\n'))
                 if "SQUARES" in template.keys():
                     squares = int(template['SQUARES'])
                 else:
@@ -53,7 +56,7 @@ def run_persistence(template):
                 print('')
 
                 # Persistence map
-                print(lang.select_locale('\nII-- Persistence MAP\n', '\nII-- Карта постоянства\n'))
+                print(lang.select_locale('II-- Persistence MAP\n', '\nII-- Карта постоянства\n'))
                 if "SQUARES" in template.keys():
                     squares = int(template['SQUARES'])
                 else:
@@ -73,6 +76,9 @@ def run_persistence(template):
                 squares = int(input(prompt))
 
             computePersistanceMap(nodes, squares)
+
+        write_json(wfc.persistence_brief,
+                   wfc.template['PERSISTENCE_OUTPUT'] + os.path.sep + "brief_" + str(wfc.classif_joint_set_counter) + ".json")
 
         return persistance
 

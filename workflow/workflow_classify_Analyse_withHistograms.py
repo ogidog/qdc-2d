@@ -76,10 +76,10 @@ def workflow_classify_Analyse_withHistograms(template_file):
         # [intensity_estimator, density_estimator, traceLength_estimator] = run_circular(wfc.template)
         #
         # # persistance
-        persistance = run_persistence(wfc.template)
+        # persistance = run_persistence(wfc.template)
         #
         # # volume
-        # run_volume(template)
+        run_volume(wfc.template)
         #
         # # wavelet
         # run_wavelet(template)

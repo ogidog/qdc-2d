@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 from matplotlib import pyplot as plt
 
@@ -13,8 +15,10 @@ def run_volume(template):
         spacing = np.array(template['jSPACING']).flatten()
         jointSetInfo = np.array([orientation, spacing], dtype="int").T
     else:
-        print('Missing arguments : JOINTS;orientation;spacing')
         return
+
+    if not os.path.exists(template['VOLUME_OUTPUT']):
+        os.makedirs(template['VOLUME_OUTPUT'])
 
     compute_volume(jointSetInfo)
     compute_Jv(jointSetInfo)

@@ -82,6 +82,9 @@ def read_template_file(file):
         elif line[0] == 'PERSISTENCE_OUTPUT':
             template['PERSISTENCE_OUTPUT'] = str.strip(line[1])
             return
+        elif line[0] == 'VOLUME_OUTPUT':
+            template['VOLUME_OUTPUT'] = str.strip(line[1])
+            return
         elif line[0] == 'JOINT':
             if len(line) < 4:
                 print('Missing information. Needed : JOINT;name;orientation;spacing')
