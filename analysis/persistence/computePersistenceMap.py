@@ -1,4 +1,5 @@
-import matplotlib
+import os
+
 import numpy as np
 import matplotlib.pyplot as plt
 import math
@@ -7,8 +8,12 @@ from shapely.geometry import LineString, MultiLineString
 from read_write_joints.polylines_to_lines import polylines_to_lines
 from read_write_joints.selectExtends import selectExtends
 
+import workflow.workflow_config as wfc
+import workflow.lang as lang
 
 def computePersistanceMap(nodes, nbRectangles):
+
+    plt.figure(2)
     [_, id_x1x2y1y2_matrice] = polylines_to_lines(nodes)
     id_x1x2y1y2_matrice = id_x1x2y1y2_matrice[:, 1:]
     MEAN_ori = np.mean(nodes['ori_mean_deg'])
@@ -104,6 +109,10 @@ def computePersistanceMap(nodes, nbRectangles):
                     n_tot_cc = n_tot_cc + 1
                     n_inter_cc = n_inter_cc + 1
 
+        plt.savefig(wfc.template["PERSISTENCE_OUTPUT"] + os.path.sep + "fig2_" + str(wfc.classif_joint_set_counter) + ".png",
+                       dpi=300)
+        plt.show()
+
         if (n_tot_cc - n_trans_cc + n_inter_cc) > 0:
             persistance = L * h / (h * np.sin(math.radians(MEAN_ori)) + L * np.cos(math.radians(MEAN_ori))) * (
                     n_tot_cc + n_trans_cc - n_inter_cc) / (n_tot_cc - n_trans_cc + n_inter_cc)
@@ -130,3 +139,6 @@ def computePersistanceMap(nodes, nbRectangles):
                                                                                          std_persistence)
     plt.title(str_titleMap)
     fig3.tight_layout()
+    plt.savefig(wfc.template["PERSISTENCE_OUTPUT"] + os.path.sep + "fig3_" + str(wfc.classif_joint_set_counter) + ".png",
+                dpi=300)
+    plt.show()
