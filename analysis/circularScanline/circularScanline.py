@@ -108,12 +108,33 @@ def circularScanline(nodes, nbCircles):
     intensity_estimator = n / (4 * R)  # n/4r
     density_estimator = m / (2 * np.pi * R)  # m/2pr
     traceLength_estimator = (n / m) * np.pi * R / 2  # (n/m)pr/2
-    print('Mean intensity estimator : {}'.format(intensity_estimator))
-    print('Mean density estimator : {}'.format(density_estimator));
-    print('Mean trace length estimator : {}'.format(traceLength_estimator))
+
+    print(lang.select_locale('Mean intensity estimator : {}', 'Оценка интенсивности (среднее) : {}').format(
+        intensity_estimator))
+    wfc.circular_brief[
+        lang.select_locale('Mean intensity estimator', 'Оценка интенсивности (среднее)')] = intensity_estimator
+
+    print(
+        lang.select_locale('Mean density estimator : {}', 'Оценка плотности (среднее) : {}').format(density_estimator))
+    wfc.circular_brief[lang.select_locale('Mean density estimator', 'Оценка плотности (среднее)')] = density_estimator
+
+    print(lang.select_locale('Mean trace length estimator : {}', 'Оценка длины линий (среднее) : {}').format(
+        traceLength_estimator))
+    wfc.circular_brief[
+        lang.select_locale('Mean trace length estimator', 'Оценка длины линий (среднее)')] = traceLength_estimator
+
     print(' ')
-    print('Mean/std intensity : {} / {}'.format(np.mean(intensity_vect), np.std(intensity_vect)))
-    print('Mean/std density : {} / {}'.format(np.mean(density_vect), np.std(density_vect)))
+
+    print(lang.select_locale('Mean/std intensity : {} / {}',
+                             'Среднее/Дисперсия (интенсивность) : {} / {}').format(np.mean(intensity_vect),
+                                                                                   np.std(intensity_vect)))
+    wfc.circular_brief[lang.select_locale('Mean/std intensity', 'Среднее/Дисперсия (интенсивность)')] = str(
+        np.mean(intensity_vect)) + " / " + str(np.std(intensity_vect))
+
+    print(lang.select_locale('Mean/std density : {} / {}', 'Cреднее/Дисперсия (плотность) : {} / {}').format(
+        np.mean(density_vect), np.std(density_vect)))
+    wfc.circular_brief[lang.select_locale('Mean/std density', 'Cреднее/Дисперсия (плотность)')] = str(
+        np.mean(density_vect)) + " / " + str(np.std(density_vect))
 
     plot_Map_densityIntensity(xw, yw, intensity_vect, density_vect, dx)
 

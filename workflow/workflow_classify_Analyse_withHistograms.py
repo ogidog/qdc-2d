@@ -4,7 +4,7 @@ import json
 from matplotlib import pyplot as plt
 
 from TEMPLATES.run_function.run_circular import run_circular
-from TEMPLATES.run_function.run_hough import run_hough
+# from TEMPLATES.run_function.run_hough import run_hough
 from TEMPLATES.run_function.run_linear import run_linear
 from TEMPLATES.run_function.run_persistence import run_persistence
 from TEMPLATES.run_function.run_volume import run_volume
@@ -67,7 +67,7 @@ def workflow_classify_Analyse_withHistograms(template_file):
         wfc.template['INPUT'] = joint_file
 
         # hough analyse
-        #nodes = run_hough(wfc.template)
+        # nodes = run_hough(wfc.template)
         #
         # # linear analyse
         # [frequency, spacing_real] = run_linear(wfc.template)
