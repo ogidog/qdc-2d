@@ -79,6 +79,9 @@ def read_template_file(file):
         elif line[0] == 'OPTIMIZATION_OUTPUT':
             template['OPTIMIZATION_OUTPUT'] = str.strip(line[1])
             return
+        elif line[0] == 'PERSISTENCE_OUTPUT':
+            template['PERSISTENCE_OUTPUT'] = str.strip(line[1])
+            return
         elif line[0] == 'JOINT':
             if len(line) < 4:
                 print('Missing information. Needed : JOINT;name;orientation;spacing')

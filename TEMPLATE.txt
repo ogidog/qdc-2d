@@ -9,7 +9,7 @@ COVER;0.9
 JOINT;j1;10;5
 JOINT;j2;40;10
 JOINT;j3;100;10
-CIRCLES;10
+CIRCLES;5
 SQUARES;5
 SCANS;2
 GAUSS;5;7;69
@@ -22,3 +22,4 @@ LINEAR_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\linear
 HOUGH_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\hough
 CIRCULAR_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\circular
 OPTIMIZATION_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\optimization
+PERSISTENCE_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\persistence

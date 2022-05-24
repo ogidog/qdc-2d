@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 from matplotlib import pyplot as plt
 
@@ -99,6 +101,8 @@ def circularScanline(nodes, nbCircles):
     plt.xlim([extends['minX'], extends['maxX']])
     plt.ylim([extends['minY'], extends['maxY']])
     plt.title(lang.select_locale("Circular Window Sampling", "Выборка по окну окружности"))
+    plt.savefig(wfc.template["CIRCULAR_OUTPUT"] + os.path.sep + "fig1_" + str(wfc.classif_joint_set_counter) + ".png",
+                dpi=300)
     plt.show()
 
     m = m / c  # mean points within circles

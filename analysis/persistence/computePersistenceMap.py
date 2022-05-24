@@ -59,6 +59,7 @@ def computePersistanceMap(nodes, nbRectangles):
         n_trans = []
         n_inter = []
         persistance = []
+
         # Analysis intersection
         n_tot_cc = 0
         n_trans_cc = 0

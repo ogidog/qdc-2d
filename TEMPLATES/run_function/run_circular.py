@@ -3,8 +3,9 @@ from matplotlib import pyplot as plt
 
 from analysis.circularScanline.circularScanline import circularScanline
 from read_write_joints.readJoints import readJoints
-import workflow.workflow_config as wfc
 import workflow.lang as lang
+import workflow.workflow_config as wfc
+from read_write_joints.write_json import write_json
 
 
 def run_circular(template):
@@ -27,5 +28,7 @@ def run_circular(template):
 
     nodes = readJoints(joint_file)
     [intensity_estimator, density_estimator, traceLength_estimator] = circularScanline(nodes, int(circles))
+
+    write_json(wfc.circular_brief, template['CIRCULAR_OUTPUT'] + os.path.sep + "brief_" + str(wfc.classif_joint_set_counter) + ".json")
 
     return [intensity_estimator, density_estimator, traceLength_estimator]

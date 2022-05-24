@@ -73,10 +73,10 @@ def workflow_classify_Analyse_withHistograms(template_file):
         # [frequency, spacing_real] = run_linear(wfc.template)
         #
         # # circular scanline
-        [intensity_estimator, density_estimator, traceLength_estimator] = run_circular(wfc.template)
+        # [intensity_estimator, density_estimator, traceLength_estimator] = run_circular(wfc.template)
         #
         # # persistance
-        # persistance = run_persistence(template)
+        persistance = run_persistence(wfc.template)
         #
         # # volume
         # run_volume(template)

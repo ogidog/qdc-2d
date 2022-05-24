@@ -1,3 +1,4 @@
+import os
 import sys
 import matplotlib.pyplot as plt
 import numpy as np
@@ -9,25 +10,29 @@ from read_write_joints.plot_lines import plot_lines
 from read_write_joints.polylines_to_lines import polylines_to_lines
 from read_write_joints.selectExtends import selectExtends
 
+import workflow.lang as lang
+import workflow.workflow_config as wfc
+
 
 def computePersistence(nodes, covering):
-    # %Check covering is [0 1]
 
     f = signature(computePersistence)
     if len(f.parameters) == 2:
         if covering > 1 or covering < 0:
-            print("Covering parameters should be [0 1]")
+            print(lang.select_locale("Covering parameters should be [0, 1]",'Коэффициент покрытия должны быть в интервале [0, 1]'))
             sys.exit(1)
 
+    plt.figure(1)
     [nodes, id_x1x2y1y2_matrice, *_] = polylines_to_lines(nodes)
     id_x1x2y1y2_matrice = id_x1x2y1y2_matrice[:, 1:]
     plt.clf()
     plt.cla()
     plot_lines(nodes)
-    plt.title('I-- Persistence over the entire window')
+    plt.title(lang.select_locale('I -- Persistence over the entire window','I -- Расчет постоянства по всему окну'))
 
     MEAN_ori = np.mean(nodes['ori_mean_deg'])
-    print('Mean joint orientation : {} deg'.format(MEAN_ori))
+    print(lang.select_locale('Mean joint orientation (°) : {}', 'Угол наклона линии (°) : {}').format(MEAN_ori))
+    wfc.persistence_brief[lang.select_locale('Mean joint orientation', 'Угол наклона линии')] = MEAN_ori
 
     # Observation window for synthetic joints
     if nodes['synthetic']:
@@ -49,7 +54,7 @@ def computePersistence(nodes, covering):
         y_max = np.max(nodes['y'])
 
     if len(f.parameters) == 2:
-        print('Input covering argument given')
+        print(lang.select_locale('Input covering argument given : {}', 'Задан коэффициент покрытия : {}').format(wfc.template['COVER']))
         # Square side value - c
         c = covering * np.min(np.array([y_max - y_min, x_max - x_min]))
         xw = np.mean(np.array([x_max, x_min]))
@@ -63,20 +68,11 @@ def computePersistence(nodes, covering):
         square['h'] = c
         square['L'] = c
     else:
-        print('No input covering argument. Draw rectangle to compute persistence.')
-        # rectangle = drawrectangle('Color','r', 'LineWidth', 0.3);
-        # squares.x1 = rectangle.Position(1);
-        # squares.x2 = rectangle.Position(1) + rectangle.Position(3);
-        # squares.y1 = rectangle.Position(2);
-        # squares.y2 = rectangle.Position(2) + rectangle.Position(4);
-        # square.h   = rectangle.Position(4);
-        # square.L   = rectangle.Position(3);
-
-        # xw = mean([squares.x1 squares.x2]);
-        # yw = mean([squares.y1 squares.y2]);
+        print(lang.select_locale('No covering argument', 'Не задан коэффициент покрытия'))
 
     # Plot middle of the square
     plt.plot(xw, yw, 'rx')
+
     # Plot square
     x_Square = np.array([squares['x1'], squares['x1'], squares['x2'], squares['x2'], squares['x1']])
     y_Square = np.array([squares['y1'], squares['y2'], squares['y2'], squares['y1'], squares['y1']])
@@ -128,6 +124,10 @@ def computePersistence(nodes, covering):
                 n_tot_cc = n_tot_cc + 1
                 n_inter_cc = n_inter_cc + 1
 
+    plt.savefig(wfc.template["PERSISTENCE_OUTPUT"] + os.path.sep + "fig1_" + str(wfc.classif_joint_set_counter) + ".png",
+                dpi=300)
+    plt.show()
+
     if (n_tot_cc - n_trans_cc + n_inter_cc) > 0:
         persistance_cc = square['L'] * square['h'] / (
                     square['h'] * np.sin(math.radians(MEAN_ori)) + square['L'] * np.cos(math.radians(MEAN_ori))) * (
@@ -137,7 +137,16 @@ def computePersistence(nodes, covering):
         n_inter =  n_inter_cc
         persistance = persistance_cc
 
-    print('Total joints : {} --- Inter joints : {} --- Transection joints : {}'.format(n_tot, n_inter, n_trans))
-    print('Mean persistance : {}'.format(np.mean(persistance)))
+    print(lang.select_locale('Total joints : {}','Всего линий : {}').format(n_tot))
+    wfc.persistence_brief[lang.select_locale('Total joints','Всего линий')] = n_tot
+
+    print(lang.select_locale('Inter joints : {}','Внутренних линий в покрытии: {}').format(n_inter))
+    wfc.persistence_brief[lang.select_locale('Inter joints','Внутренних линий в покрытии')] = n_inter
+
+    print(lang.select_locale('Transection joints : {}','Поперечные линии в покрытии : {}').format(n_trans))
+    wfc.persistence_brief[lang.select_locale('Transection joints','Поперечные линии в покрытии')] = n_trans
+
+    print(lang.select_locale('Mean persistance : {}','Коэффициент постоянства (среднее) : {}').format(np.mean(persistance)))
+    wfc.persistence_brief[lang.select_locale('Mean persistance','Коэффициент постоянства (среднее)')] = np.mean(persistance)
 
     return persistance
