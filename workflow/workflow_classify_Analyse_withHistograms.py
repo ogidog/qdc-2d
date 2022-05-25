@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import argparse
 import json
 from matplotlib import pyplot as plt
 
@@ -14,14 +15,15 @@ from classify._withHistograms.classify_fromGaussians import classify_fromGaussia
 from classify._withHistograms.find_jointSetLimits import find_jointSetLimits
 from classify._withHistograms.find_jointSet_fromHistogram import find_jointSet_fromHistogram
 from read_write_joints.readJoints import readJoints
-from read_write_joints.read_template_file import read_template_file
+from read_write_joints.read_template import read_template_txt, read_template_json
 import workflow.workflow_config as wfc
 import workflow.lang as lang
 
 
 def workflow_classify_Analyse_withHistograms(template_file):
-    wfc.template = read_template_file(template_file)
+    wfc.template = read_template_txt(template_file)
     wfc.nodes = readJoints(wfc.template['INPUT'])
+    template_json = json.dumps(wfc.template, ensure_ascii=False, indent=2)
 
     plt.close()
 
@@ -120,8 +122,15 @@ def workflow_classify_Analyse_withHistograms(template_file):
 #          template_file='D:\intellij-idea-workspace\qdc-2d\TEMPLATE.txt'):
 
 def main(template_file='D:\intellij-idea-workspace\qdc-2d\TEMPLATE.txt'):
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--template-config', help='Template config in a JSON format')
+
+    args = parser.parse_args()
+
     workflow_classify_Analyse_withHistograms(template_file)
 
 
 if __name__ == "__main__":
+
     main()

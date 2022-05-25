@@ -1,6 +1,6 @@
 import numpy as np
 
-def read_template_file(file):
+def read_template_txt(txt_file):
     template = {}
     template['jNAME'] = []
     template['jORIENTATION'] = []
@@ -29,7 +29,7 @@ def read_template_file(file):
             template['OUTPUT'] = str.strip(line[1])
             return
         elif line[0] == 'SCALE':
-            template['SCALE'] = np.round(np.float32(str.strip(line[1])))
+            template['SCALE'] = np.round(np.float64(str.strip(line[1])))
             return
         elif line[0] == 'NORTH':
             template['NORTH'] = np.array(str.strip(line[1]).split(" "), dtype=np.float32)
@@ -39,9 +39,6 @@ def read_template_file(file):
             return
         elif line[0] == 'COVER':
             template['COVER'] = np.float64(str.strip(line[1]))
-            return
-        elif line[0] == 'NB_LINEARSCANS':
-            template['NB_LINEARSCANS'] = np.round(np.float64(str.strip(line[1])))
             return
         elif line[0] == 'DX':
             template['DX'] = np.float64(str.strip(line[1]))
@@ -66,6 +63,9 @@ def read_template_file(file):
             return
         elif line[0] == 'OUTPUT':
             template['OUTPUT_PATH'] = str.strip(line[1])
+            return
+        elif line[0] == 'OUTPUT_TYPE':
+            template['OUTPUT_TYPE'] = str.strip(line[1])
             return
         elif line[0] == 'LINEAR_OUTPUT':
             template['LINEAR_OUTPUT'] = str.strip(line[1])
@@ -106,7 +106,7 @@ def read_template_file(file):
         else:
             print('{}: Not used\n'.format(line[0]))
 
-    f = open(file)
+    f = open(txt_file)
     template['SYNTHETIC'] = 0
 
     while True:
@@ -117,3 +117,6 @@ def read_template_file(file):
         switch(line.split(";"))
 
     return template
+
+def read_template_json(json_file):
+    pass

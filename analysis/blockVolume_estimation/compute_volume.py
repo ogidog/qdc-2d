@@ -5,6 +5,7 @@ from PIL import Image
 
 import workflow.lang as lang
 import workflow.workflow_config as wfc
+from read_write_joints.write_plot import write_plot
 
 
 def compute_volume(w):
@@ -87,9 +88,11 @@ def compute_volume(w):
 
     plt.title(lang.select_locale('Block types analysis with the block shape factor',
                                  'Анализ типов блока с учетом коэффициента формы'))
-    plt.savefig(
-        wfc.template["VOLUME_OUTPUT"] + os.path.sep + "fig1_" + str(wfc.classif_joint_set_counter) + ".png",
-        dpi=300)
+    # plt.savefig(
+    #     wfc.template["VOLUME_OUTPUT"] + os.path.sep + "fig1_" + str(wfc.classif_joint_set_counter) + ".png",
+    #     dpi=300)
+
+    write_plot(plt)
     plt.show()
 
     return Vb

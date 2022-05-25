@@ -6,7 +6,7 @@ from TEMPLATES.run_function.run_linear import run_linear
 from TEMPLATES.run_function.run_persistence import run_persistence
 from TEMPLATES.run_function.run_volume import run_volume
 from TEMPLATES.run_function.run_wavelet import run_wavelet
-from read_write_joints.read_template_file import read_template_file
+from read_write_joints.read_template import read_template_file
 
 
 def main(template_file="TEMPLATE.txt"):

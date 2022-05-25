@@ -2,6 +2,7 @@ STEP;3
 METHOD;hough
 INPUT;D:\intellij-idea-workspace\qdc-2d\TEMPLATES\examples\createdJoints1.txt
 OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results
+OUTPUT_TYPE;db;file;plot
 LANG;ru
 THETA;10
 SCALE;10
@@ -17,7 +18,6 @@ GAUSS;1;9;22
 GAUSS_NOISE;2
 DX;2
 DY;2
-TABLE;D:\intellij-idea-workspace\qdc-2d\TEMPLATES\examples\wantedJoints.txt
 LINEAR_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\linear
 HOUGH_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\hough
 CIRCULAR_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\circular

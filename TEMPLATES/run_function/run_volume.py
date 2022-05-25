@@ -5,6 +5,8 @@ from matplotlib import pyplot as plt
 
 from analysis.blockVolume_estimation.compute_Jv import compute_Jv
 from analysis.blockVolume_estimation.compute_volume import compute_volume
+import workflow.workflow_config as wfc
+from read_write_joints.write_json import write_json
 
 
 def run_volume(template):
@@ -22,3 +24,6 @@ def run_volume(template):
 
     compute_volume(jointSetInfo)
     compute_Jv(jointSetInfo)
+
+    write_json(wfc.volume_brief,
+               template['VOLUME_OUTPUT'] + os.path.sep + "brief_" + str(wfc.classif_joint_set_counter) + ".json")
