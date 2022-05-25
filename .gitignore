@@ -5,3 +5,4 @@ qdc-2d.iml
 /.env
 /.idea/
 /.run/
+/.ddl/
