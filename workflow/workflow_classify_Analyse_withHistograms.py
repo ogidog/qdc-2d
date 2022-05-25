@@ -3,6 +3,7 @@ import numpy as np
 import argparse
 import json
 from matplotlib import pyplot as plt
+from dotenv import load_dotenv
 
 from TEMPLATES.run_function.run_circular import run_circular
 # from TEMPLATES.run_function.run_hough import run_hough
@@ -122,6 +123,8 @@ def workflow_classify_Analyse_withHistograms(template_file):
 #          template_file='D:\intellij-idea-workspace\qdc-2d\TEMPLATE.txt'):
 
 def main(template_file='D:\intellij-idea-workspace\qdc-2d\TEMPLATE.txt'):
+
+    load_dotenv()
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--template-config', help='Template config in a JSON format')

@@ -2,3 +2,6 @@
 qdc-2d.iml
 /env/
 /workflow_results/*
+/.env
+/.idea/
+/.run/
