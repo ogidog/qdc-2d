@@ -5,10 +5,10 @@ from matplotlib import pyplot as plt
 
 from analysis.circularScanline.intersectCT import intersectCT
 from analysis.circularScanline.plot_Map_densityIntensity import plot_Map_densityIntensity
-from read_write_joints.polylines_to_lines import polylines_to_lines
-from read_write_joints.selectExtends import selectExtends
+from utils.polylines_to_lines import polylines_to_lines
+from utils.selectExtends import selectExtends
 import workflow.workflow_config as wfc
-import workflow.lang as lang
+import utils.lang as lang
 
 
 def circularScanline(nodes, nbCircles):

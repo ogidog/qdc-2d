@@ -4,8 +4,8 @@ from shapely.geometry import LineString
 
 from analysis.linearScanline.create_scanline import create_scanline
 from analysis.linearScanline.find_best_scanline import find_best_scanline
-from read_write_joints.nodes2vector import nodes2vector
-from read_write_joints.plot_nodes import plot_nodes
+from utils.nodes2vector import nodes2vector
+from utils.plot_nodes import plot_nodes
 
 
 def createScanlines(nodes, scanline_info, **kwargs):

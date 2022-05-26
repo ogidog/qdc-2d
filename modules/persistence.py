@@ -2,14 +2,14 @@ import os
 
 from analysis.persistence.computePersistenceMap import computePersistanceMap
 from analysis.persistence.computePersistence import computePersistence
-from read_write_joints.readJoints import readJoints
-from read_write_joints.write_json import write_json
+from utils.readJoints import readJoints
+from utils.write_json import write_json
 import workflow.workflow_config as wfc
 
-import workflow.lang as lang
+import utils.lang as lang
 
 
-def run_persistence(template):
+def persistence(template):
     if 'INPUT' in template.keys():
         joint_file = template['INPUT']
 

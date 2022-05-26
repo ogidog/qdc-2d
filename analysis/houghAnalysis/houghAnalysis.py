@@ -4,7 +4,7 @@ from scipy.stats import norm
 import matplotlib.pyplot as plt
 
 from analysis.houghAnalysis.plot_inHoughFrame import plot_inHoughFrame
-import workflow.lang as lang
+import utils.lang as lang
 import workflow.workflow_config as wfc
 
 

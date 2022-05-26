@@ -2,7 +2,7 @@ import numpy as np
 from shapely.geometry import LineString, MultiLineString
 
 from analysis.linearScanline.create_scanline import create_scanline
-from read_write_joints.nodes2vector import nodes2vector
+from utils.nodes2vector import nodes2vector
 
 
 def find_best_scanline(nodes, scanline_iterations):

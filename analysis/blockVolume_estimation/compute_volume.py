@@ -3,9 +3,9 @@ import numpy as np
 from matplotlib import pyplot as plt
 from PIL import Image
 
-import workflow.lang as lang
+import utils.lang as lang
 import workflow.workflow_config as wfc
-from read_write_joints.write_plot import write_plot
+from utils.write_plot import write_plot
 
 
 def compute_volume(w):

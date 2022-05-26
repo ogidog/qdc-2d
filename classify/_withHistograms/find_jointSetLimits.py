@@ -1,8 +1,7 @@
-import matplotlib.pyplot as plt
 import numpy as np
 from scipy.optimize import fmin
 from scipy.stats import norm
-import workflow.lang as lang
+import utils.lang as lang
 import workflow.workflow_config as wfc
 
 

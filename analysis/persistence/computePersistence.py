@@ -6,11 +6,11 @@ import math
 from inspect import signature
 from shapely.geometry import LineString, MultiLineString
 
-from read_write_joints.plot_lines import plot_lines
-from read_write_joints.polylines_to_lines import polylines_to_lines
-from read_write_joints.selectExtends import selectExtends
+from utils.plot_lines import plot_lines
+from utils.polylines_to_lines import polylines_to_lines
+from utils.selectExtends import selectExtends
 
-import workflow.lang as lang
+import utils.lang as lang
 import workflow.workflow_config as wfc
 
 
@@ -19,7 +19,7 @@ def computePersistence(nodes, covering):
     f = signature(computePersistence)
     if len(f.parameters) == 2:
         if covering > 1 or covering < 0:
-            print(lang.select_locale("Covering parameters should be [0, 1]",'Коэффициент покрытия должны быть в интервале [0, 1]'))
+            print(lang.select_locale("Covering parameters should be [0, 1]", 'Коэффициент покрытия должны быть в интервале [0, 1]'))
             sys.exit(1)
 
     plt.figure(1)
@@ -28,7 +28,7 @@ def computePersistence(nodes, covering):
     plt.clf()
     plt.cla()
     plot_lines(nodes)
-    plt.title(lang.select_locale('I -- Persistence over the entire window','I -- Расчет постоянства по всему окну'))
+    plt.title(lang.select_locale('I -- Persistence over the entire window', 'I -- Расчет постоянства по всему окну'))
 
     MEAN_ori = np.mean(nodes['ori_mean_deg'])
     print(lang.select_locale('Mean joint orientation (°) : {}', 'Угол наклона линии (°) : {}').format(MEAN_ori))
@@ -137,16 +137,17 @@ def computePersistence(nodes, covering):
         n_inter =  n_inter_cc
         persistance = persistance_cc
 
-    print(lang.select_locale('Total joints : {}','Всего линий : {}').format(n_tot))
-    wfc.persistence_brief[lang.select_locale('Total joints','Всего линий')] = n_tot
+    print(lang.select_locale('Total joints : {}', 'Всего линий : {}').format(n_tot))
+    wfc.persistence_brief[lang.select_locale('Total joints', 'Всего линий')] = n_tot
 
-    print(lang.select_locale('Inter joints : {}','Внутренних линий в покрытии: {}').format(n_inter))
-    wfc.persistence_brief[lang.select_locale('Inter joints','Внутренних линий в покрытии')] = n_inter
+    print(lang.select_locale('Inter joints : {}', 'Внутренних линий в покрытии: {}').format(n_inter))
+    wfc.persistence_brief[lang.select_locale('Inter joints', 'Внутренних линий в покрытии')] = n_inter
 
-    print(lang.select_locale('Transection joints : {}','Поперечные линии в покрытии : {}').format(n_trans))
-    wfc.persistence_brief[lang.select_locale('Transection joints','Поперечные линии в покрытии')] = n_trans
+    print(lang.select_locale('Transection joints : {}', 'Поперечные линии в покрытии : {}').format(n_trans))
+    wfc.persistence_brief[lang.select_locale('Transection joints', 'Поперечные линии в покрытии')] = n_trans
 
-    print(lang.select_locale('Mean persistance : {}','Коэффициент постоянства (среднее) : {}').format(np.mean(persistance)))
-    wfc.persistence_brief[lang.select_locale('Mean persistance','Коэффициент постоянства (среднее)')] = np.mean(persistance)
+    print(lang.select_locale('Mean persistance : {}', 'Коэффициент постоянства (среднее) : {}').format(np.mean(persistance)))
+    wfc.persistence_brief[
+        lang.select_locale('Mean persistance', 'Коэффициент постоянства (среднее)')] = np.mean(persistance)
 
     return persistance

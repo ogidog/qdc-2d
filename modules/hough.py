@@ -3,14 +3,14 @@ import os.path
 import matplotlib.pyplot as plt
 import numpy as np
 
-from read_write_joints.readJoints import readJoints
+from utils.readJoints import readJoints
 from analysis.houghAnalysis.houghAnalysis import houghAnalysis
-from read_write_joints.write_json import write_json
-import workflow.lang as lang
+from utils.write_json import write_json
+import utils.lang as lang
 import workflow.workflow_config as wfc
 
 
-def run_hough(template):
+def hough(template):
     plt.close()
 
     if 'INPUT' in template.keys():
@@ -27,9 +27,9 @@ def run_hough(template):
     # print(lang.select_locale('Real spacing - Hough frame : {}\n'.format(np.mean(nodes['real_spacing_hough'])),
     #                          'Реальный интервал - Метод Хафа : {}\n'.format(np.mean(nodes['real_spacing_hough']))))
 
-    print(lang.select_locale('Real spacing - Hough frame : {}\n','Реальный интервал - Метод Хафа : {}\n').format(np.mean(nodes['real_spacing_hough'])))
+    print(lang.select_locale('Real spacing - Hough frame : {}\n', 'Реальный интервал - Метод Хафа : {}\n').format(np.mean(nodes['real_spacing_hough'])))
 
-    wfc.hough_brief[lang.select_locale('Real spacing - Hough frame','Реальный интервал - Метод Хафа')] = np.mean(nodes['real_spacing_hough'])
+    wfc.hough_brief[lang.select_locale('Real spacing - Hough frame', 'Реальный интервал - Метод Хафа')] = np.mean(nodes['real_spacing_hough'])
     write_json(wfc.hough_brief, wfc.template['HOUGH_OUTPUT']+os.path.sep+"brief_"+str(wfc.classif_joint_set_counter)+".json")
 
     return nodes

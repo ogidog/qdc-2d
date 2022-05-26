@@ -3,10 +3,10 @@ import matplotlib.pyplot as plt
 
 from analysis.wavelet.computeWavelet import computeWavelet
 from analysis.wavelet.createScanlines import createScanlines
-from read_write_joints.readJoints import readJoints
+from utils.readJoints import readJoints
 
 
-def run_wavelet(template):
+def wavelet(template):
     plt.close()
     if 'INPUT' in template.keys() and 'SCANS' in template.keys() and 'DX' in template.keys() and 'DY' in template.keys():
         joint_path = template['INPUT']

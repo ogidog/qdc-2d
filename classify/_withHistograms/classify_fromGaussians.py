@@ -1,14 +1,14 @@
 import os
 import numpy as np
 
-from read_write_joints.splitNodes_per_setID import splitNodes_per_setID
-from read_write_joints.writeJoints import writeJoints
+from utils.splitNodes_per_setID import splitNodes_per_setID
+from utils.writeJoints import writeJoints
 import workflow.workflow_config as wfc
-import workflow.lang as lang
+import utils.lang as lang
 
 def classify_fromGaussians(limits):
     if limits == -1:
-        print(lang.select_locale('Only 1 jointset selected -- No need for classification','Выбран один набор линий - Классификация не требуется'))
+        print(lang.select_locale('Only 1 jointset selected -- No need for classification', 'Выбран один набор линий - Классификация не требуется'))
         nodes_classif = wfc.nodes
         return nodes_classif
 
@@ -34,6 +34,6 @@ def classify_fromGaussians(limits):
         split_matrice = writeJoints(split_nodes)
         np.savetxt(out, split_matrice, fmt="%d,%.10f,%.10f", delimiter=",")
 
-    print(lang.select_locale('Classification of joint set --> DONE!','Классификация набора линий --> Завершено'));
+    print(lang.select_locale('Classification of joint set --> DONE!', 'Классификация набора линий --> Завершено'));
 
     return nodes_classif

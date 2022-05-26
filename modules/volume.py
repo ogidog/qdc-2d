@@ -6,10 +6,10 @@ from matplotlib import pyplot as plt
 from analysis.blockVolume_estimation.compute_Jv import compute_Jv
 from analysis.blockVolume_estimation.compute_volume import compute_volume
 import workflow.workflow_config as wfc
-from read_write_joints.write_json import write_json
+from utils.write_json import write_json
 
 
-def run_volume(template):
+def volume(template):
     plt.close()
 
     if 'jORIENTATION' in template.keys() and 'jSPACING' in template.keys():

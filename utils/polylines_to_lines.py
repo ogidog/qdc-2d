@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from read_write_joints.nodes2vector import nodes2vector
+from utils.nodes2vector import nodes2vector
 
 
 def polylines_to_lines(nodes):

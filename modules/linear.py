@@ -3,13 +3,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from analysis.linearScanline.linearScanline import linearScanline
-from read_write_joints.readJoints import readJoints
-from read_write_joints.write_json import write_json
-import workflow.lang as lang
+from utils.readJoints import readJoints
+from utils.write_json import write_json
+import utils.lang as lang
 import workflow.workflow_config as wfc
 
 
-def run_linear(template):
+def linear(template):
     plt.close()
 
     if 'INPUT' in template.keys():

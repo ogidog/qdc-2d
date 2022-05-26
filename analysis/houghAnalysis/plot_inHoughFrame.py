@@ -3,8 +3,8 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 
-from read_write_joints.polylines_to_lines import polylines_to_lines
-import workflow.lang as lang
+from utils.polylines_to_lines import polylines_to_lines
+import utils.lang as lang
 import workflow.workflow_config as wfc
 
 

@@ -6,10 +6,10 @@ import seaborn as sns
 from shapely.geometry import MultiLineString, LineString
 
 from analysis.linearScanline.find_best_scanline import find_best_scanline
-from read_write_joints.nodes2vector import nodes2vector
-from read_write_joints.plot_nodes import plot_nodes
-from read_write_joints.selectExtends import selectExtends
-import workflow.lang as lang
+from utils.nodes2vector import nodes2vector
+from utils.plot_nodes import plot_nodes
+from utils.selectExtends import selectExtends
+import utils.lang as lang
 import workflow.workflow_config as wfc
 
 

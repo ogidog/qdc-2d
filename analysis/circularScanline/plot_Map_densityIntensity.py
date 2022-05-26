@@ -2,7 +2,7 @@ import os
 
 import numpy as np
 from matplotlib import pyplot as plt
-import workflow.lang as lang
+import utils.lang as lang
 import workflow.workflow_config as wfc
 
 

@@ -1,30 +1,20 @@
 import os
-import numpy as np
-import argparse
 import json
 from matplotlib import pyplot as plt
-from dotenv import load_dotenv
 
-from TEMPLATES.run_function.run_circular import run_circular
-# from TEMPLATES.run_function.run_hough import run_hough
-from TEMPLATES.run_function.run_linear import run_linear
-from TEMPLATES.run_function.run_persistence import run_persistence
-from TEMPLATES.run_function.run_volume import run_volume
-from TEMPLATES.run_function.run_wavelet import run_wavelet
-from analysis.mean_orientation import mean_orientation
+# from TEMPLATES.run_function.hough import hough
+from modules.volume import volume
 from classify._withHistograms.classify_fromGaussians import classify_fromGaussians
 from classify._withHistograms.find_jointSetLimits import find_jointSetLimits
 from classify._withHistograms.find_jointSet_fromHistogram import find_jointSet_fromHistogram
-from read_write_joints.readJoints import readJoints
-from read_write_joints.read_template import read_template_txt, read_template_json
 import workflow.workflow_config as wfc
-import workflow.lang as lang
+import utils.lang as lang
+import utils.template as template
 
 
-def workflow_classify_Analyse_withHistograms(template_file):
-    wfc.template = read_template_txt(template_file)
-    wfc.nodes = readJoints(wfc.template['INPUT'])
-    template_json = json.dumps(wfc.template, ensure_ascii=False, indent=2)
+def classify_analyse_with_histograms(_template, nodes):
+    wfc.template = _template
+    wfc.nodes = nodes
 
     plt.close()
 
@@ -118,22 +108,6 @@ def workflow_classify_Analyse_withHistograms(template_file):
     return summarizeTable, files
 
 
-# def main(inputFile='D:\intellij-idea-workspace\qdc-2d\TEMPLATES\examples\createdJoints1.txt',
-#          outputFolder='D:\intellij-idea-workspace\qdc-2d\TEMPLATES\examples\classif.txt',
-#          template_file='D:\intellij-idea-workspace\qdc-2d\TEMPLATE.txt'):
-
-def main(template_file='D:\intellij-idea-workspace\qdc-2d\TEMPLATE.txt'):
-
-    load_dotenv()
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--template-config', help='Template config in a JSON format')
-
-    args = parser.parse_args()
-
-    workflow_classify_Analyse_withHistograms(template_file)
-
-
 if __name__ == "__main__":
-
-    main()
+    _template = template.init()
+    workflow_classify_Analyse_withHistograms(_template)

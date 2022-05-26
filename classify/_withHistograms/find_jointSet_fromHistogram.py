@@ -5,11 +5,10 @@ from scipy.optimize import fmin_bfgs
 from matplotlib import pyplot as plt
 
 from classify._withHistograms.computeGaussians import computeGaussians
-from classify._withHistograms.jointSet_estimation_byUser import jointSet_estimation_byUser
 from classify._withHistograms.minimizeFunction import minimizeFunction
 from classify._withHistograms.smoothHisto import smoothHisto
 import workflow.workflow_config as wfc
-import workflow.lang as lang
+import utils.lang as lang
 
 
 def find_jointSet_fromHistogram():
@@ -109,7 +108,7 @@ def find_jointSet_fromHistogram():
         print(lang.select_locale('Standard deviation : {}  --  ', 'Дисперсия : {}  --  ').format(w[NBjointSet + j + 1]))
         optimized_joints[lang.select_locale('Standard deviation', 'Дисперсия')] = w[NBjointSet + j + 1]
 
-        print(lang.select_locale('Amplitude : {}','Средняя амплитуда : {}').format(w[2 * NBjointSet + j + 1]))
+        print(lang.select_locale('Amplitude : {}', 'Средняя амплитуда : {}').format(w[2 * NBjointSet + j + 1]))
         optimized_joints[lang.select_locale('Amplitude', 'Средняя амплитуда')] = w[2 * NBjointSet + j + 1]
 
         wfc.optimization_brief[lang.select_locale('Joints', 'Наборы линий')].append(optimized_joints)

@@ -2,13 +2,13 @@ import os
 from matplotlib import pyplot as plt
 
 from analysis.circularScanline.circularScanline import circularScanline
-from read_write_joints.readJoints import readJoints
-import workflow.lang as lang
+from utils.readJoints import readJoints
+import utils.lang as lang
 import workflow.workflow_config as wfc
-from read_write_joints.write_json import write_json
+from utils.write_json import write_json
 
 
-def run_circular(template):
+def circular(template):
     plt.close()
 
     if 'INPUT' in template.keys():

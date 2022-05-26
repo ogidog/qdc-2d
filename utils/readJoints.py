@@ -2,8 +2,6 @@ import numpy as np
 import cmath
 import csv
 
-from utils import test_dict
-
 
 def readJoints(joint_file):
 

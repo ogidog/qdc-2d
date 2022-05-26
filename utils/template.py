@@ -1,6 +1,20 @@
+import json
+import os
 import numpy as np
+from dotenv import dotenv_values
 
-def read_template_txt(txt_file):
+hough_brief = {}
+linear_brief = {}
+optimization_brief = {}
+circular_brief = {}
+persistence_brief = {}
+volume_brief = {}
+config = {}
+nodes = []
+classif_joint_set_counter = 0
+
+
+def read_from_txt_file(file):
     template = {}
     template['jNAME'] = []
     template['jORIENTATION'] = []
@@ -106,7 +120,7 @@ def read_template_txt(txt_file):
         else:
             print('{}: Not used\n'.format(line[0]))
 
-    f = open(txt_file)
+    f = open(file)
     template['SYNTHETIC'] = 0
 
     while True:
@@ -118,5 +132,20 @@ def read_template_txt(txt_file):
 
     return template
 
-def read_template_json(json_file):
-    pass
+
+def init(var_config_json: str):
+    env = dotenv_values(".env")
+
+    for key in list(filter(lambda key: 'QDC_2D_DB' in key, env.keys())):
+        if os.getenv(key) != None:
+            env[key] = os.getenv('QDC_2D_DB_HOST')
+
+    var_config: dict
+    if var_config_json == None:
+        var_config = json.load(open(os.getcwd() + '/TEMPLATES/TEMPLATE.json'))
+    else:
+        var_config = json.loads(var_config_json)
+
+    config = var_config | env
+
+    return config
