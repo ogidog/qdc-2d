@@ -11,7 +11,7 @@ from utils.polylines_to_lines import polylines_to_lines
 from utils.selectExtends import selectExtends
 
 import utils.lang as lang
-import workflow.workflow_config as wfc
+import utils.template as template
 
 
 def computePersistence(nodes, covering):
@@ -54,7 +54,7 @@ def computePersistence(nodes, covering):
         y_max = np.max(nodes['y'])
 
     if len(f.parameters) == 2:
-        print(lang.select_locale('Input covering argument given : {}', 'Задан коэффициент покрытия : {}').format(wfc.template['COVER']))
+        print(lang.select_locale('Input covering argument given : {}', 'Задан коэффициент покрытия : {}').format(template.config['COVER']))
         # Square side value - c
         c = covering * np.min(np.array([y_max - y_min, x_max - x_min]))
         xw = np.mean(np.array([x_max, x_min]))
@@ -124,7 +124,7 @@ def computePersistence(nodes, covering):
                 n_tot_cc = n_tot_cc + 1
                 n_inter_cc = n_inter_cc + 1
 
-    plt.savefig(wfc.template["PERSISTENCE_OUTPUT"] + os.path.sep + "fig1_" + str(wfc.classif_joint_set_counter) + ".png",
+    plt.savefig(template.config["PERSISTENCE_OUTPUT"] + os.path.sep + "fig1_" + str(wfc.classif_joint_set_counter) + ".png",
                 dpi=300)
     plt.show()
 

@@ -5,7 +5,7 @@ import numpy as np
 
 from utils.polylines_to_lines import polylines_to_lines
 import utils.lang as lang
-import workflow.workflow_config as wfc
+import utils.template as template
 
 
 def plot_inHoughFrame(nodes):
@@ -16,7 +16,7 @@ def plot_inHoughFrame(nodes):
     plt.xlabel('Theta')
     plt.ylabel('r')
 
-    plt.savefig(wfc.template['HOUGH_OUTPUT'] + os.path.sep + "fig1_" + str(wfc.classif_joint_set_counter) + ".png")
+    plt.savefig(template.config['HOUGH_OUTPUT'] + os.path.sep + "fig1_" + str(wfc.classif_joint_set_counter) + ".png")
     plt.show()
 
     plt.figure(2)
@@ -31,7 +31,7 @@ def plot_inHoughFrame(nodes):
         plt.title(lang.select_locale("Distribution of the orientation mean degree",
                                      "Распределение средних значений угла наклона"))
 
-    plt.savefig(wfc.template['HOUGH_OUTPUT'] + os.path.sep + "fig2_" + str(wfc.classif_joint_set_counter) + ".png")
+    plt.savefig(template.config['HOUGH_OUTPUT'] + os.path.sep + "fig2_" + str(wfc.classif_joint_set_counter) + ".png")
     plt.show()
 
     return nodes

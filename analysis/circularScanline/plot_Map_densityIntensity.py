@@ -3,7 +3,7 @@ import os
 import numpy as np
 from matplotlib import pyplot as plt
 import utils.lang as lang
-import workflow.workflow_config as wfc
+import utils.template as template
 
 
 def plot_Map_densityIntensity(xw, yw, intensity_vect, density_vect, dx):
@@ -28,6 +28,6 @@ def plot_Map_densityIntensity(xw, yw, intensity_vect, density_vect, dx):
     ax = plt.gca()
     ax.invert_yaxis()
 
-    plt.savefig(wfc.template["CIRCULAR_OUTPUT"] + os.path.sep + "fig2_" + str(wfc.classif_joint_set_counter) + ".png",
+    plt.savefig(template.config["CIRCULAR_OUTPUT"] + os.path.sep + "fig2_" + str(wfc.classif_joint_set_counter) + ".png",
                 dpi=300)
     plt.show()

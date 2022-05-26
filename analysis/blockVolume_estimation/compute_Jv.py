@@ -1,5 +1,5 @@
 import utils.lang as lang
-import workflow.workflow_config as wfc
+import utils.template as template
 
 
 def compute_Jv(w):

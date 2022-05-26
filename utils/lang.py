@@ -1,10 +1,10 @@
-import workflow.workflow_config as wfc
+import utils.template as template
 
 
 def select_locale(en_txt: str, ru_txt: str):
-    if wfc.template['LANG'] == 'ru':
+    if template.config['LANG'] == 'ru':
         return ru_txt
-    elif wfc.template['LANG'] == 'en':
+    elif template.config['LANG'] == 'en':
         return en_txt
     else:
         return ''

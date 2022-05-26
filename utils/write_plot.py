@@ -5,7 +5,7 @@ import sys
 
 from matplotlib import pyplot
 
-import workflow.workflow_config as wfc
+import utils.template as template
 
 
 def plot_to_base64(plt: pyplot, format: str, dpi: int):
@@ -19,17 +19,17 @@ def plot_to_base64(plt: pyplot, format: str, dpi: int):
 
 
 def write_plot(plt, output="", dpi=300, format="png", **kwargs):
-    if wfc.template['OUTPUT_TYPE'] == "file" and not output == "":
+    if template.config['OUTPUT_TYPE'] == "file" and not output == "":
         out_file = output + os.path.sep + "fig" + plt.gcf().number + "_" + str(
             wfc.classif_joint_set_counter) + "." + format
         plt.savefig(out_file, dpi=dpi, format=format)
 
         return out_file
 
-    elif wfc.template['OUTPUT_TYPE'] == "db":
+    elif template.config['OUTPUT_TYPE'] == "db":
         base64_data = plot_to_base64(plt, format, 200)
 
-    elif wfc.template['OUTPUT_TYPE'] == "plot":
+    elif template.config['OUTPUT_TYPE'] == "plot":
         plt.show(block=False)
 
     else:

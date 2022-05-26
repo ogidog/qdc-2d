@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 from analysis.houghAnalysis.plot_inHoughFrame import plot_inHoughFrame
 import utils.lang as lang
-import workflow.workflow_config as wfc
+import utils.template as template
 
 
 def houghAnalysis(nodes):
@@ -14,12 +14,12 @@ def houghAnalysis(nodes):
     print(lang.select_locale('Gaussian distribution parameters for orientation: \n mu={} -- sigma={}\n',
                              'Гауссовское распределение параметров угла наклона линии: \n mu={} -- sigma={}\n').format(
         mu, sigma))
-    wfc.hough_brief[lang.select_locale('Gaussian distribution parameters for orientation',
+    template.hough_brief[lang.select_locale('Gaussian distribution parameters for orientation',
                                        'Гауссовское распределение параметров угла наклона линии')] = {'mu': 0,
                                                                                                       'sigma': 0}
-    wfc.hough_brief[lang.select_locale('Gaussian distribution parameters for orientation',
+    template.hough_brief[lang.select_locale('Gaussian distribution parameters for orientation',
                                        'Гауссовское распределение параметров угла наклона линии')]['mu'] = mu
-    wfc.hough_brief[lang.select_locale('Gaussian distribution parameters for orientation',
+    template.hough_brief[lang.select_locale('Gaussian distribution parameters for orientation',
                                        'Гауссовское распределение параметров угла наклона линии')]['sigma'] = sigma
 
     # Apparent spacing
@@ -52,7 +52,7 @@ def houghAnalysis(nodes):
                       ylabel=lang.select_locale('Counts', 'Кол-во'))
     ax3.hist(np.array(real_spacing).flatten(), nbins, edgecolor="black")
 
-    plt.savefig(wfc.template['HOUGH_OUTPUT'] + os.path.sep + "fig3_" + str(wfc.classif_joint_set_counter) + ".png")
+    plt.savefig(template.config['HOUGH_OUTPUT'] + os.path.sep + "fig3_" + str(template.classif_joint_set_counter) + ".png")
     plt.show()
 
     return nodes

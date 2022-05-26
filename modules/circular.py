@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 from analysis.circularScanline.circularScanline import circularScanline
 from utils.readJoints import readJoints
 import utils.lang as lang
-import workflow.workflow_config as wfc
+import utils.template as template
 from utils.write_json import write_json
 
 

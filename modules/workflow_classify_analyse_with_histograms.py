@@ -7,27 +7,27 @@ from modules.volume import volume
 from classify._withHistograms.classify_fromGaussians import classify_fromGaussians
 from classify._withHistograms.find_jointSetLimits import find_jointSetLimits
 from classify._withHistograms.find_jointSet_fromHistogram import find_jointSet_fromHistogram
-import workflow.workflow_config as wfc
+import utils.template as template
 import utils.lang as lang
 import utils.template as template
 
 
 def classify_analyse_with_histograms(_template, nodes):
-    wfc.template = _template
+    template.config = _template
     wfc.nodes = nodes
 
     plt.close()
 
     # -- Classification
 
-    if not os.path.exists(wfc.template['OPTIMIZATION_OUTPUT']):
-        os.makedirs(wfc.template['OPTIMIZATION_OUTPUT'])
+    if not os.path.exists(template.config['OPTIMIZATION_OUTPUT']):
+        os.makedirs(template.config['OPTIMIZATION_OUTPUT'])
 
     gaussianParams = find_jointSet_fromHistogram()
     limits = find_jointSetLimits(gaussianParams)
     classify_fromGaussians(limits)
 
-    files = list(filter(lambda file: "classif" in file, os.listdir(wfc.template['OUTPUT'])))
+    files = list(filter(lambda file: "classif" in file, os.listdir(template.config['OUTPUT'])))
     resume = {lang.select_locale('SetId', 'Номер'): [],
               lang.select_locale("nbTraces", 'Кол-во линий'): [],
               lang.select_locale('orientation_mean', 'Среднее значение угла наклона'): [],
@@ -53,26 +53,26 @@ def classify_analyse_with_histograms(_template, nodes):
     print(lang.select_locale('\n---------STARTING ANALYSIS---------', '\n---------ЗАПУСК АНАЛИЗА---------'))
 
     for j in range(len(files)):
-        joint_file = wfc.template['OUTPUT'] + os.path.sep + files[j]
+        joint_file = template.config['OUTPUT'] + os.path.sep + files[j]
         print(lang.select_locale('\n--- File : {}\n', '\n--- Файл : {}\n').format(joint_file))
         set_iD = int(files[j].split('_')[-1].split("classif")[0])
 
-        wfc.template['INPUT'] = joint_file
+        template.config['INPUT'] = joint_file
 
         # hough analyse
-        # nodes = run_hough(wfc.template)
+        # nodes = run_hough(template.config)
         #
         # # linear analyse
-        # [frequency, spacing_real] = run_linear(wfc.template)
+        # [frequency, spacing_real] = run_linear(template.config)
         #
         # # circular scanline
-        # [intensity_estimator, density_estimator, traceLength_estimator] = run_circular(wfc.template)
+        # [intensity_estimator, density_estimator, traceLength_estimator] = run_circular(template.config)
         #
         # # persistance
-        # persistance = run_persistence(wfc.template)
+        # persistance = run_persistence(template.config)
         #
         # # volume
-        run_volume(wfc.template)
+        run_volume(template.config)
         #
         # # wavelet
         # run_wavelet(template)
@@ -110,4 +110,4 @@ def classify_analyse_with_histograms(_template, nodes):
 
 if __name__ == "__main__":
     _template = template.init()
-    workflow_classify_Analyse_withHistograms(_template)
+    # workflow_classify_Analyse_withHistograms(_template)

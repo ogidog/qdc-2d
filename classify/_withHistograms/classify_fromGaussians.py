@@ -3,7 +3,7 @@ import numpy as np
 
 from utils.splitNodes_per_setID import splitNodes_per_setID
 from utils.writeJoints import writeJoints
-import workflow.workflow_config as wfc
+import utils.template as template
 import utils.lang as lang
 
 def classify_fromGaussians(limits):
@@ -27,7 +27,7 @@ def classify_fromGaussians(limits):
     nodes_classif = wfc.nodes
 
     # Split nodes and write in OutPath
-    output_file_template = wfc.template['OUTPUT'] + os.path.sep + "classif.txt"
+    output_file_template = template.config['OUTPUT'] + os.path.sep + "classif.txt"
     for set in range(len(limits)):
         out = output_file_template.replace('.', ('_{}classif.'.format(str(set))))
         split_nodes = splitNodes_per_setID(nodes_classif, set)

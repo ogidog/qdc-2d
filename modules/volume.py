@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 
 from analysis.blockVolume_estimation.compute_Jv import compute_Jv
 from analysis.blockVolume_estimation.compute_volume import compute_volume
-import workflow.workflow_config as wfc
+import utils.template as template
 from utils.write_json import write_json
 
 

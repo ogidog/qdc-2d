@@ -8,7 +8,7 @@ from shapely.geometry import LineString, MultiLineString
 from utils.polylines_to_lines import polylines_to_lines
 from utils.selectExtends import selectExtends
 
-import workflow.workflow_config as wfc
+import utils.template as template
 import utils.lang as lang
 
 
@@ -120,7 +120,7 @@ def computePersistanceMap(nodes, nbRectangles):
             persistence_vect[i] = 0
 
     plt.savefig(
-        wfc.template["PERSISTENCE_OUTPUT"] + os.path.sep + "fig2_" + str(wfc.classif_joint_set_counter) + ".png",
+        template.config["PERSISTENCE_OUTPUT"] + os.path.sep + "fig2_" + str(wfc.classif_joint_set_counter) + ".png",
         dpi=300)
     plt.show()
 
@@ -144,6 +144,6 @@ def computePersistanceMap(nodes, nbRectangles):
     fig3.tight_layout()
 
     plt.savefig(
-        wfc.template["PERSISTENCE_OUTPUT"] + os.path.sep + "fig3_" + str(wfc.classif_joint_set_counter) + ".png",
+        template.config["PERSISTENCE_OUTPUT"] + os.path.sep + "fig3_" + str(wfc.classif_joint_set_counter) + ".png",
         dpi=300)
     plt.show()

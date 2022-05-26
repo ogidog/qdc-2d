@@ -4,7 +4,7 @@ from analysis.persistence.computePersistenceMap import computePersistanceMap
 from analysis.persistence.computePersistence import computePersistence
 from utils.readJoints import readJoints
 from utils.write_json import write_json
-import workflow.workflow_config as wfc
+import utils.template as template
 
 import utils.lang as lang
 
@@ -78,7 +78,7 @@ def persistence(template):
             computePersistanceMap(nodes, squares)
 
         write_json(wfc.persistence_brief,
-                   wfc.template['PERSISTENCE_OUTPUT'] + os.path.sep + "brief_" + str(wfc.classif_joint_set_counter) + ".json")
+                   template.config['PERSISTENCE_OUTPUT'] + os.path.sep + "brief_" + str(wfc.classif_joint_set_counter) + ".json")
 
         return persistance
 

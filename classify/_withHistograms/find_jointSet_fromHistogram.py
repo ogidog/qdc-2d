@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 from classify._withHistograms.computeGaussians import computeGaussians
 from classify._withHistograms.minimizeFunction import minimizeFunction
 from classify._withHistograms.smoothHisto import smoothHisto
-import workflow.workflow_config as wfc
+import utils.template as template
 import utils.lang as lang
 
 
@@ -43,11 +43,11 @@ def find_jointSet_fromHistogram():
     # gaussian_param_esti = jointSet_estimation_byUser()
     # -- From template file
     gaussian_param_esti = {}
-    gaussian_param_esti['G_mean'] = wfc.template['G_MEAN']
-    gaussian_param_esti['G_std'] = wfc.template['G_STD']
-    gaussian_param_esti['G_N'] = wfc.template['G_N']
-    gaussian_param_esti['noise'] = wfc.template['G_NOISE']
-    gaussian_param_esti['NBjointSet'] = len(wfc.template['G_MEAN'])
+    gaussian_param_esti['G_mean'] = template.config['G_MEAN']
+    gaussian_param_esti['G_std'] = template.config['G_STD']
+    gaussian_param_esti['G_N'] = template.config['G_N']
+    gaussian_param_esti['noise'] = template.config['G_NOISE']
+    gaussian_param_esti['NBjointSet'] = len(template.config['G_MEAN'])
 
     # Create Gaussian curves
     gaussians = computeGaussians(gaussian_param_esti)
@@ -84,7 +84,7 @@ def find_jointSet_fromHistogram():
         ax2.plot(theta_vector, gaussians_OPT['curves'][:, curve])
     ax2.plot(theta_vector, gaussians_OPT['sum'], linewidth=2)
 
-    plt.savefig(wfc.template['OPTIMIZATION_OUTPUT'] + os.path.sep + 'fig1.png', dpi=300)
+    plt.savefig(template.config['OPTIMIZATION_OUTPUT'] + os.path.sep + 'fig1.png', dpi=300)
     plt.show()
 
     # --  RESUME

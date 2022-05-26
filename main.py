@@ -1,3 +1,5 @@
+import os
+
 from modules.circular import circular
 from modules.hough import hough
 from modules.linear import linear
@@ -8,9 +10,105 @@ import utils.template as template
 from utils.readJoints import readJoints
 
 
-def main():
-    try:
+def classify_analyse_with_histograms(_template, nodes):
+    template.config = _template
+    wfc.nodes = nodes
 
+    plt.close()
+
+    # -- Classification
+
+    if not os.path.exists(template.config['OPTIMIZATION_OUTPUT']):
+        os.makedirs(template.config['OPTIMIZATION_OUTPUT'])
+
+    gaussianParams = find_jointSet_fromHistogram()
+    limits = find_jointSetLimits(gaussianParams)
+    classify_fromGaussians(limits)
+
+    files = list(filter(lambda file: "classif" in file, os.listdir(template.config['OUTPUT'])))
+    resume = {lang.select_locale('SetId', 'Номер'): [],
+              lang.select_locale("nbTraces", 'Кол-во линий'): [],
+              lang.select_locale('orientation_mean', 'Среднее значение угла наклона'): [],
+              lang.select_locale('orientation_min', 'Минимальное значение угла наклона'): [],
+              lang.select_locale('orientation_max', 'Максимальное значение угла наклона'): [],
+              lang.select_locale('length_mean', 'Средняя длина линии'): [],
+              lang.select_locale('length_min', 'Минимальная длина линии'): [],
+              lang.select_locale('length_max', 'Максимальная длина линии'): [],
+              lang.select_locale('spacing_mean_linearScanline', 'Средняя длина интервала - Линейная развертка'): [],
+              lang.select_locale('spacing_min_linearScanline', 'Минимальная длина интервала - Линейная развертка'): [],
+              lang.select_locale('spacing_max_linearScanline', 'Максимальная длина интервала - Линейная развертка'): [],
+              lang.select_locale('spacing_mean_houghAnalyse', 'Средняя длина интервала - Метод Хафа'): [],
+              lang.select_locale('spacing_min_houghAnalyse', 'Минимальная длина интервала - Метод Хафа'): [],
+              lang.select_locale('spacing_max_houghAnalyse', 'Максимальная длина интервала - Метод Хафа'): [],
+              lang.select_locale('persistence_mean', 'Средний коэффициент постоянства линий'): [],
+              lang.select_locale('persistence_min', 'Минимальный коэффициент постоянства линий'): [],
+              lang.select_locale('persistence_max', 'Максимальный коэффициент постоянства линий'): [],
+              lang.select_locale('spacing_frequency', 'Частота интервалов'): [],
+              lang.select_locale('intensity_estimator', 'Оценка интенсивность линий'): [],
+              lang.select_locale('density_estimator', 'Оценка плотности линий'): [],
+              lang.select_locale('traceLength_estimator', 'Оценка длин линий'): []}
+
+    print(lang.select_locale('\n---------STARTING ANALYSIS---------', '\n---------ЗАПУСК АНАЛИЗА---------'))
+
+    for j in range(len(files)):
+        joint_file = template.config['OUTPUT'] + os.path.sep + files[j]
+        print(lang.select_locale('\n--- File : {}\n', '\n--- Файл : {}\n').format(joint_file))
+        set_iD = int(files[j].split('_')[-1].split("classif")[0])
+
+        template.config['INPUT'] = joint_file
+
+        # hough analyse
+        nodes = hough()
+        #
+        # # linear analyse
+        # [frequency, spacing_real] = run_linear(template.config)
+        #
+        # # circular scanline
+        # [intensity_estimator, density_estimator, traceLength_estimator] = run_circular(template.config)
+        #
+        # # persistance
+        # persistance = run_persistence(template.config)
+        #
+        # # volume
+        # run_volume(template.config)
+        #
+        # # wavelet
+        # run_wavelet(template)
+
+        # -- summarize
+        # resume['SetId'].append(set_iD)
+        # resume['nbTraces'].append(len(nodes['iD']))
+        # orientations = mean_orientation(nodes)
+        # resume['orientation_mean'].append(orientations['MEAN'])
+        # resume['orientation_min'].append(orientations['MIN'])
+        # resume['orientation_max'].append(orientations['MAX'])
+        # resume['length_mean'].append(np.mean(nodes['norm']))
+        # resume['length_min'].append(np.min(nodes['norm']))
+        # resume['length_max'].append(np.max(nodes['norm']))
+        # resume['spacing_mean_linearScanline'].append(np.mean(spacing_real))
+        # resume['spacing_min_linearScanline'].append(np.min(spacing_real))
+        # resume['spacing_max_linearScanline'].append(np.max(spacing_real))
+        # resume['spacing_mean_houghAnalyse'].append(np.mean(nodes['real_spacing_hough']))
+        # resume['spacing_min_houghAnalyse'].append(np.min(nodes['real_spacing_hough']))
+        # resume['spacing_max_houghAnalyse'].append(np.max(nodes['real_spacing_hough']))
+        # resume['persistence_mean'].append(np.mean(persistance))
+        # resume['persistence_min'].append(np.min(persistance))
+        # resume['persistence_max'].append(np.max(persistance))
+        # resume['spacing_frequency'].append(frequency)
+        # resume['intensity_estimator'].append(intensity_estimator)
+        # resume['density_estimator'].append(density_estimator)
+        # resume['traceLength_estimator'].append(traceLength_estimator)
+
+        wfc.classif_joint_set_counter += 1
+
+    summarizeTable = json.dumps(resume)
+
+    return summarizeTable, files
+
+
+def main():
+
+    try:
         if template.config['STEP'] == 'HELP' or template.config['STEP'] == '-h':
             f = open('help.txt', mode="r")
             while True:
@@ -26,10 +124,10 @@ def main():
             if 'METHOD' in template.config.keys():
                 if template.config.METHOD == "hough":
                     print('Classify with Hough')
-                    #UI_classif_withHough()
+                    # UI_classif_withHough()
                 elif template.config['METHOD'] == "histo":
                     print('Classify with oriention histograms')
-                    #UI_classif_withGauss()
+                    # UI_classif_withGauss()
                 else:
                     print('Available method for STEP 2 : histo or hough')
                     return
@@ -101,10 +199,8 @@ if __name__ == "__main__":
     # TODO: For tests only
     #
     var_config_json = '{"jNAME":["j1","j2","j3"],"jORIENTATION":[10.0,40.0,100.0],"jSPACING":[5.0,10.0,10.0],"G_MEAN":[5.0,1.0],"G_STD":[7.0,9.0],"G_N":[69.0,22.0],"SYNTHETIC":0,"STEP":"3","METHOD":"hough","THETA":10.0,"SCALE":10.0,"COVER":0.9,"CIRCLES":5,"SQUARES":5,"SCANS":2.0,"G_NOISE":2,"DX":2.0,"DY":2.0}'
-    nodes = readJoints("examples/example/createdJoints1.txt")
     ######################
 
     template.config = template.init(var_config_json)
-    template.nodes = nodes
 
     main()

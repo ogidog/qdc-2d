@@ -7,7 +7,7 @@ from analysis.circularScanline.intersectCT import intersectCT
 from analysis.circularScanline.plot_Map_densityIntensity import plot_Map_densityIntensity
 from utils.polylines_to_lines import polylines_to_lines
 from utils.selectExtends import selectExtends
-import workflow.workflow_config as wfc
+import utils.template as template
 import utils.lang as lang
 
 
@@ -101,7 +101,7 @@ def circularScanline(nodes, nbCircles):
     plt.xlim([extends['minX'], extends['maxX']])
     plt.ylim([extends['minY'], extends['maxY']])
     plt.title(lang.select_locale("Circular Window Sampling", "Выборка по окну окружности"))
-    plt.savefig(wfc.template["CIRCULAR_OUTPUT"] + os.path.sep + "fig1_" + str(wfc.classif_joint_set_counter) + ".png",
+    plt.savefig(template.config["CIRCULAR_OUTPUT"] + os.path.sep + "fig1_" + str(wfc.classif_joint_set_counter) + ".png",
                 dpi=300)
     plt.show()
 

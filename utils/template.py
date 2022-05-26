@@ -137,8 +137,13 @@ def init(var_config_json: str):
     env = dotenv_values(".env")
 
     for key in list(filter(lambda key: 'QDC_2D_DB' in key, env.keys())):
-        if os.getenv(key) != None:
-            env[key] = os.getenv('QDC_2D_DB_HOST')
+        os_env = os.getenv(key)
+        if os_env != None:
+            env[key] = os_env
+
+    env_keys: list = list(env.keys())
+    for key in env_keys:
+        env[key.replace('QDC_2D_', '')] = env.pop(key, None)
 
     var_config: dict
     if var_config_json == None:

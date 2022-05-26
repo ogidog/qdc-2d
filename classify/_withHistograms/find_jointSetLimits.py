@@ -2,7 +2,7 @@ import numpy as np
 from scipy.optimize import fmin
 from scipy.stats import norm
 import utils.lang as lang
-import workflow.workflow_config as wfc
+import utils.template as template
 
 
 def equation2solve(x, gaussians_params, gauss):

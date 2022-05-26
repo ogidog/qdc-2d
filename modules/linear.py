@@ -6,7 +6,7 @@ from analysis.linearScanline.linearScanline import linearScanline
 from utils.readJoints import readJoints
 from utils.write_json import write_json
 import utils.lang as lang
-import workflow.workflow_config as wfc
+import utils.template as template
 
 
 def linear(template):
@@ -18,8 +18,8 @@ def linear(template):
         print('Missing arguments : INPUT (mandatory)')
         return
 
-    if not os.path.exists(wfc.template['LINEAR_OUTPUT']):
-        os.makedirs(wfc.template['LINEAR_OUTPUT'])
+    if not os.path.exists(template.config['LINEAR_OUTPUT']):
+        os.makedirs(template.config['LINEAR_OUTPUT'])
 
     info_scanline = {}
     if 'NORTH' in template.keys():
@@ -48,6 +48,6 @@ def linear(template):
     wfc.linear_brief[lang.select_locale('Trace length', 'Длина линии (среднее)')] = np.mean(nodes['norm'])
 
     write_json(wfc.linear_brief,
-               wfc.template['LINEAR_OUTPUT'] + os.path.sep + "brief_" + str(wfc.classif_joint_set_counter) + ".json")
+               template.config['LINEAR_OUTPUT'] + os.path.sep + "brief_" + str(wfc.classif_joint_set_counter) + ".json")
 
     return [frequency, spacing_real]

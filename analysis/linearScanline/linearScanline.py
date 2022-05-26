@@ -10,7 +10,7 @@ from utils.nodes2vector import nodes2vector
 from utils.plot_nodes import plot_nodes
 from utils.selectExtends import selectExtends
 import utils.lang as lang
-import workflow.workflow_config as wfc
+import utils.template as template
 
 
 def linearScanline(nodes, info_scanline):
@@ -49,7 +49,7 @@ def linearScanline(nodes, info_scanline):
 
     # plt.title("Aux Scanline")
     plt.title(lang.select_locale("Aux Scanline", "Вспомогательная сканирующая линия"))
-    plt.savefig(wfc.template['LINEAR_OUTPUT'] + os.path.sep + "fig1_" + str(wfc.classif_joint_set_counter) + ".png",
+    plt.savefig(template.config['LINEAR_OUTPUT'] + os.path.sep + "fig1_" + str(wfc.classif_joint_set_counter) + ".png",
                 dpi=300)
     plt.show()
 
@@ -77,7 +77,7 @@ def linearScanline(nodes, info_scanline):
     ax.set_theta_zero_location('N')
     ax.title.set_text(
         lang.select_locale('Rose diagram\n Scanline orientation (°)', 'Роза-диаграмма\n Угол наклона линии (°)'))
-    plt.savefig(wfc.template['LINEAR_OUTPUT'] + os.path.sep + "fig2_" + str(wfc.classif_joint_set_counter) + ".png",
+    plt.savefig(template.config['LINEAR_OUTPUT'] + os.path.sep + "fig2_" + str(wfc.classif_joint_set_counter) + ".png",
                 dpi=300)
     plt.show()
 
@@ -106,7 +106,7 @@ def linearScanline(nodes, info_scanline):
                       ylabel=lang.select_locale("Counts", "Кол-во"),
                       title=lang.select_locale("Histogram - Real spacing", "Гистограмма - Реальный интервал"))
     ax3.hist(spacing_real, nbins, edgecolor="black")
-    plt.savefig(wfc.template["LINEAR_OUTPUT"] + os.path.sep + "fig3_" + str(wfc.classif_joint_set_counter) + ".png",
+    plt.savefig(template.config["LINEAR_OUTPUT"] + os.path.sep + "fig3_" + str(wfc.classif_joint_set_counter) + ".png",
                 dpi=300)
     plt.show()
 
@@ -128,7 +128,7 @@ def linearScanline(nodes, info_scanline):
                                                "Кумулятивное распределение - Длинна линии"))
     sns.ecdfplot(data=nodes['norm'], ax=ax3)
 
-    plt.savefig(wfc.template["LINEAR_OUTPUT"] + os.path.sep + "fig4_" + str(wfc.classif_joint_set_counter) + ".png",
+    plt.savefig(template.config["LINEAR_OUTPUT"] + os.path.sep + "fig4_" + str(wfc.classif_joint_set_counter) + ".png",
                 dpi=300)
     plt.show()
 
