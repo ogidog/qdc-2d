@@ -7,14 +7,16 @@ import utils.template as template
 def read_joints(nodes_source):
 
     if nodes_source:
-        pass
+        reader = csv.reader(nodes_source)
     else:
-        matrix_joints = np.array([])
-        with open(template.config['INPUT'], 'r') as f:
-            reader = csv.reader(f)
-            for row in reader:
-                matrix_joints = np.append(matrix_joints, np.array(row))
-        matrix_joints = np.array(np.split(matrix_joints, reader.line_num), dtype=np.float64)
+        f = open(template.config['INPUT'], 'r')
+        reader = csv.reader(f)
+        f.close()
+
+    matrix_joints = np.array([])
+    for row in reader:
+        matrix_joints = np.append(matrix_joints, np.array(row))
+    matrix_joints = np.array(np.split(matrix_joints, reader.line_num), dtype=np.float64)
 
     iD = np.unique(matrix_joints[:, 0])
     nodes = dict([
