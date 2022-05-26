@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from analysis.linearScanline.linearScanline import linearScanline
-from utils.readJoints import readJoints
+from utils.read_joints import read_joints
 from utils.write_json import write_json
 import utils.lang as lang
 import utils.template as template
@@ -29,7 +29,7 @@ def linear(template):
     else:
         info_scanline['north'] = 0
 
-    nodes = readJoints(joint_file)
+    nodes = read_joints(joint_file)
     nodes['synthetic'] = template['SYNTHETIC']
 
     info_scanline['nbScan'] = 30

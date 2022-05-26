@@ -2,7 +2,7 @@ import os
 
 from analysis.persistence.computePersistenceMap import computePersistanceMap
 from analysis.persistence.computePersistence import computePersistence
-from utils.readJoints import readJoints
+from utils.read_joints import read_joints
 from utils.write_json import write_json
 import utils.template as template
 
@@ -24,7 +24,7 @@ def persistence(template):
                 return
 
             elif cover == 0:
-                nodes = readJoints(joint_file)
+                nodes = read_joints(joint_file)
                 nodes['synthetic'] = template['SYNTHETIC']
 
                 # Persistence on overall area
@@ -45,7 +45,7 @@ def persistence(template):
                 computePersistanceMap(nodes, squares)
 
             else:
-                nodes = readJoints(joint_file)
+                nodes = read_joints(joint_file)
                 nodes['synthetic'] = template['SYNTHETIC']
 
                 # Persistence on overall area
@@ -67,7 +67,7 @@ def persistence(template):
                 computePersistanceMap(nodes, int(squares))
 
         else:  # no cover given
-            nodes = readJoints(joint_file)
+            nodes = read_joints(joint_file)
             if "SQUARES" in template.keys():
                 squares = int(template['SQUARES'])
             else:

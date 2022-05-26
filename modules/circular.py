@@ -2,7 +2,7 @@ import os
 from matplotlib import pyplot as plt
 
 from analysis.circularScanline.circularScanline import circularScanline
-from utils.readJoints import readJoints
+from utils.read_joints import read_joints
 import utils.lang as lang
 import utils.template as template
 from utils.write_json import write_json
@@ -26,7 +26,7 @@ def circular(template):
     if not os.path.exists(template['CIRCULAR_OUTPUT']):
         os.makedirs(template['CIRCULAR_OUTPUT'])
 
-    nodes = readJoints(joint_file)
+    nodes = read_joints(joint_file)
     [intensity_estimator, density_estimator, traceLength_estimator] = circularScanline(nodes, int(circles))
 
     write_json(wfc.circular_brief, template['CIRCULAR_OUTPUT'] + os.path.sep + "brief_" + str(wfc.classif_joint_set_counter) + ".json")

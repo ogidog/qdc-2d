@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 from analysis.wavelet.computeWavelet import computeWavelet
 from analysis.wavelet.createScanlines import createScanlines
-from utils.readJoints import readJoints
+from utils.read_joints import read_joints
 
 
 def wavelet(template):
@@ -29,7 +29,7 @@ def wavelet(template):
         print('Missing arguments : INPUT - SCANS - DX - DY - THETA')
         return
 
-    nodes = readJoints(joint_path)
+    nodes = read_joints(joint_path)
     # Scanline PROCESSING
     scanline_info = {}
     scanline_info['nb_scans'] = 30

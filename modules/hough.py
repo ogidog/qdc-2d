@@ -3,7 +3,7 @@ import os.path
 import matplotlib.pyplot as plt
 import numpy as np
 
-from utils.readJoints import readJoints
+from utils.read_joints import read_joints
 from analysis.houghAnalysis.houghAnalysis import houghAnalysis
 from utils.write_json import write_json
 import utils.lang as lang
@@ -22,7 +22,7 @@ def hough():
     if not os.path.exists(template.config['HOUGH_OUTPUT']):
         os.makedirs(template.config['HOUGH_OUTPUT'])
 
-    nodes = readJoints(joint_file)
+    nodes = read_joints(joint_file)
     nodes = houghAnalysis(nodes)
 
     print(lang.select_locale('Real spacing - Hough frame : {}\n', 'Реальный интервал - Метод Хафа : {}\n').format(

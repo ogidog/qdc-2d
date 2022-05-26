@@ -2,15 +2,19 @@ import numpy as np
 import cmath
 import csv
 
+import utils.template as template
 
-def readJoints(joint_file):
+def read_joints(nodes_source):
 
-    matrix_joints = np.array([])
-    with open(joint_file, 'r') as f:
-        reader = csv.reader(f)
-        for row in reader:
-            matrix_joints = np.append(matrix_joints, np.array(row))
-    matrix_joints = np.array(np.split(matrix_joints, reader.line_num), dtype=np.float64)
+    if nodes_source:
+        pass
+    else:
+        matrix_joints = np.array([])
+        with open(template.config['INPUT'], 'r') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                matrix_joints = np.append(matrix_joints, np.array(row))
+        matrix_joints = np.array(np.split(matrix_joints, reader.line_num), dtype=np.float64)
 
     iD = np.unique(matrix_joints[:, 0])
     nodes = dict([
