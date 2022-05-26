@@ -31,7 +31,7 @@ def plot_inHoughFrame(nodes):
         plt.title(lang.select_locale("Distribution of the orientation mean degree",
                                      "Распределение средних значений угла наклона"))
 
-    plt.savefig(template.config['HOUGH_OUTPUT'] + os.path.sep + "fig2_" + str(wfc.classif_joint_set_counter) + ".png")
+    plt.savefig(template.config['HOUGH_OUTPUT'] + os.path.sep + "fig2_" + str(template.classif_joint_set_counter) + ".png")
     plt.show()
 
     return nodes

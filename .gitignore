@@ -1,7 +1,7 @@
 /.ipynb_checkpoints/
 qdc-2d.iml
 /env/
-/workflow_results/*
+/results/*
 /.env
 /.idea/
 /.run/
