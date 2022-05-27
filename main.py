@@ -13,9 +13,9 @@ from utils.read_joints import read_joints
 import utils.lang as lang
 
 
-def classify_analyse_with_histograms(var_config_json: str = None, nodes_source: str = None):
+def classify_analyse_with_histograms(vars_config_json: str = None, nodes_source: str = None):
 
-    template.config = template.init(var_config_json)
+    template.config = template.init(vars_config_json)
     template.nodes = read_joints(nodes_source)
 
     # plt.close()
@@ -113,6 +113,7 @@ def classify_analyse_with_histograms(var_config_json: str = None, nodes_source: 
 
 
 def main():
+
     try:
         if template.config['STEP'] == 'HELP' or template.config['STEP'] == '-h':
             f = open('help.txt', mode="r")

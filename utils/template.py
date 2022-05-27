@@ -133,7 +133,7 @@ def read_from_txt_file(file):
     return template
 
 
-def init(vars_config_json: str):
+def init(config_vars_json: str):
     env = dotenv_values(".env")
 
     for key in list(filter(lambda key: 'QDC_2D_DB' in key, env.keys())):
@@ -146,11 +146,11 @@ def init(vars_config_json: str):
         env[key.replace('QDC_2D_', '')] = env.pop(key, None)
 
     var_config: dict
-    if vars_config_json == None:
-        var_config = json.load(open(os.getcwd() + '/TEMPLATES/TEMPLATE.json'))
+    if config_vars_json == None:
+        config_vars = json.load(open(os.getcwd() + '/TEMPLATES/TEMPLATE.json'))
     else:
-        var_config = json.loads(vars_config_json)
+        config_vars = json.loads(config_vars_json)
 
-    config = var_config | env
+    config = config_vars | env
 
     return config

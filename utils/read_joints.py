@@ -4,10 +4,10 @@ import csv
 
 import utils.template as template
 
-def read_joints(nodes_source):
+def read_joints(joints_source):
 
-    if nodes_source:
-        reader = csv.reader(nodes_source)
+    if joints_source:
+        reader = csv.reader(joints_source)
     else:
         f = open(template.config['INPUT'], 'r')
         reader = csv.reader(f)
