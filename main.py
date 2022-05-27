@@ -13,12 +13,12 @@ from utils.read_joints import read_joints
 import utils.lang as lang
 
 
-def classify_analyse_with_histograms(vars_config_json: str = None, nodes_source: str = None):
+def classify_analyse_with_histograms(config_vars_json: str = None, nodes_source: str = None):
 
-    template.config = template.init(vars_config_json)
+    template.config = template.init(config_vars_json)
     template.nodes = read_joints(nodes_source)
 
-    # plt.close()
+    plt.close()
 
     # -- Classification
 
@@ -112,9 +112,12 @@ def classify_analyse_with_histograms(vars_config_json: str = None, nodes_source:
     pass
 
 
-def main():
+def main(config_vars_json):
 
     try:
+
+        template.config = template.init(config_vars_json)
+
         if template.config['STEP'] == 'HELP' or template.config['STEP'] == '-h':
             f = open('help.txt', mode="r")
             while True:
@@ -203,9 +206,8 @@ def main():
 if __name__ == "__main__":
     # TODO: For tests only
     #
-    var_config_json = '{"jNAME":["j1","j2","j3"],"jORIENTATION":[10.0,40.0,100.0],"jSPACING":[5.0,10.0,10.0],"G_MEAN":[5.0,1.0],"G_STD":[7.0,9.0],"G_N":[69.0,22.0],"SYNTHETIC":0,"STEP":"3","METHOD":"hough","THETA":10.0,"SCALE":10.0,"COVER":0.9,"CIRCLES":5,"SQUARES":5,"SCANS":2.0,"G_NOISE":2,"DX":2.0,"DY":2.0}'
+    config_vars_json = '{"jNAME":["j1","j2","j3"],"jORIENTATION":[10.0,40.0,100.0],"jSPACING":[5.0,10.0,10.0],"G_MEAN":[5.0,1.0],"G_STD":[7.0,9.0],"G_N":[69.0,22.0],"SYNTHETIC":0,"STEP":"3","METHOD":"hough","THETA":10.0,"SCALE":10.0,"COVER":0.9,"CIRCLES":5,"SQUARES":5,"SCANS":2.0,"G_NOISE":2,"DX":2.0,"DY":2.0}'
     ######################
 
-    template.config = template.init(var_config_json)
-
+    classify_analyse_with_histograms(config_vars_json)
     main()

@@ -6,17 +6,16 @@ import utils.template as template
 
 def read_joints(joints_source):
 
+    matrix_joints = np.array([])
     if joints_source:
         reader = csv.reader(joints_source)
     else:
         f = open(template.config['INPUT'], 'r')
         reader = csv.reader(f)
-        f.close()
+        for row in reader:
+            matrix_joints = np.append(matrix_joints, np.array(row))
+        matrix_joints = np.array(np.split(matrix_joints, reader.line_num), dtype=np.float64)
 
-    matrix_joints = np.array([])
-    for row in reader:
-        matrix_joints = np.append(matrix_joints, np.array(row))
-    matrix_joints = np.array(np.split(matrix_joints, reader.line_num), dtype=np.float64)
 
     iD = np.unique(matrix_joints[:, 0])
     nodes = dict([
@@ -64,9 +63,5 @@ def read_joints(joints_source):
     nodes['y'] = np.array(nodes['y'])
 
     del row
-
-
-    # TODO: test
-    # test_dict("D:\\Temp\\-QDC-2D-test\\nodes.mat", nodes, "nodes")
 
     return nodes
