@@ -210,4 +210,4 @@ if __name__ == "__main__":
     ######################
 
     classify_analyse_with_histograms(config_vars_json)
-    main()
+    # main()

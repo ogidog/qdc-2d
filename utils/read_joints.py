@@ -4,18 +4,19 @@ import csv
 
 import utils.template as template
 
-def read_joints(joints_source):
 
+def read_joints(joints_source):
     matrix_joints = np.array([])
     if joints_source:
-        reader = csv.reader(joints_source)
+        # reader = csv.reader(joints_source)
+        pass
     else:
         f = open(template.config['INPUT'], 'r')
-        reader = csv.reader(f)
+        reader = f.read()
+        reader = reader.replace("\n", "").replace("\r", "").split(";")
         for row in reader:
-            matrix_joints = np.append(matrix_joints, np.array(row))
-        matrix_joints = np.array(np.split(matrix_joints, reader.line_num), dtype=np.float64)
-
+            matrix_joints = np.append(matrix_joints, np.array(row.split(","), dtype=np.float64))
+        matrix_joints = np.array(np.split(matrix_joints, reader.line_num))
 
     iD = np.unique(matrix_joints[:, 0])
     nodes = dict([
