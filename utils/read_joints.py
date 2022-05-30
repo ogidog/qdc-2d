@@ -1,6 +1,5 @@
 import numpy as np
 import cmath
-import csv
 
 import utils.template as template
 
@@ -8,15 +7,15 @@ import utils.template as template
 def read_joints(joints_source):
     matrix_joints = np.array([])
     if joints_source:
-        # reader = csv.reader(joints_source)
-        pass
+        reader = joints_source.decode()
     else:
         f = open(template.config['INPUT'], 'r')
         reader = f.read()
-        reader = reader.replace("\n", "").replace("\r", "").split(";")
-        for row in reader:
+
+    reader = reader.strip().replace("\n", "").replace("\r", "").split(";")
+    for row in reader:
             matrix_joints = np.append(matrix_joints, np.array(row.split(","), dtype=np.float64))
-        matrix_joints = np.array(np.split(matrix_joints, reader.line_num))
+    matrix_joints = np.array(np.split(matrix_joints, len(reader)))
 
     iD = np.unique(matrix_joints[:, 0])
     nodes = dict([
