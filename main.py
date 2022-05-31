@@ -68,10 +68,10 @@ def classify_analyse_with_histograms(config_vars_json: str = None, joints_source
             nodes = hough()
 
             # linear analyse
-            [frequency, spacing_real] = linear(template.config)
-            #
-            # # circular scanline
-            # [intensity_estimator, density_estimator, traceLength_estimator] = run_circular(template.config)
+            [frequency, spacing_real] = linear()
+
+            # circular scanline
+            [intensity_estimator, density_estimator, traceLength_estimator] = circular(template.config)
             #
             # # persistance
             # persistance = run_persistence(template.config)

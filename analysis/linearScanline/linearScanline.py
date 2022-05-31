@@ -11,6 +11,7 @@ from utils.plot_nodes import plot_nodes
 from utils.selectExtends import selectExtends
 import utils.lang as lang
 import utils.template as template
+from utils.write_plot import write_plot
 
 
 def linearScanline(nodes, info_scanline):
@@ -49,9 +50,7 @@ def linearScanline(nodes, info_scanline):
 
     # plt.title("Aux Scanline")
     plt.title(lang.select_locale("Aux Scanline", "Вспомогательная сканирующая линия"))
-    plt.savefig(template.config['LINEAR_OUTPUT'] + os.path.sep + "fig1_" + str(wfc.classif_joint_set_counter) + ".png",
-                dpi=300)
-    plt.show()
+    write_plot(template.config['LINEAR_OUTPUT'])
 
     # POST-PROCESSING
     # -- joint direction
@@ -77,9 +76,7 @@ def linearScanline(nodes, info_scanline):
     ax.set_theta_zero_location('N')
     ax.title.set_text(
         lang.select_locale('Rose diagram\n Scanline orientation (°)', 'Роза-диаграмма\n Угол наклона линии (°)'))
-    plt.savefig(template.config['LINEAR_OUTPUT'] + os.path.sep + "fig2_" + str(wfc.classif_joint_set_counter) + ".png",
-                dpi=300)
-    plt.show()
+    write_plot(template.config['LINEAR_OUTPUT'])
 
     # -- joint tracelength and spacing
     coord_cross = np.sort((np.vstack((XYi, np.vstack((Xsl, Ysl)).T))), 0)
@@ -88,10 +85,10 @@ def linearScanline(nodes, info_scanline):
     frequency = 1 / np.mean(spacing_real)
 
     print(lang.select_locale('Spacing frequency : {}', 'Частота интервалов : {}').format(frequency))
-    wfc.linear_brief[lang.select_locale('Spacing frequency', 'Частота интервалов')] = frequency
+    template.linear_brief[lang.select_locale('Spacing frequency', 'Частота интервалов')] = frequency
 
-    plt.figure(3)
     nbins = 10
+    plt.figure(3)
     plt.subplots(constrained_layout=True)
     ax1 = plt.subplot(311, xlabel=lang.select_locale("Trace lengths (m)", "Длина линии (м)"),
                       ylabel=lang.select_locale("Counts", "Кол-во"),
@@ -106,9 +103,7 @@ def linearScanline(nodes, info_scanline):
                       ylabel=lang.select_locale("Counts", "Кол-во"),
                       title=lang.select_locale("Histogram - Real spacing", "Гистограмма - Реальный интервал"))
     ax3.hist(spacing_real, nbins, edgecolor="black")
-    plt.savefig(template.config["LINEAR_OUTPUT"] + os.path.sep + "fig3_" + str(wfc.classif_joint_set_counter) + ".png",
-                dpi=300)
-    plt.show()
+    write_plot(template.config["LINEAR_OUTPUT"])
 
     plt.figure(4)
     plt.subplots(constrained_layout=True)
@@ -128,8 +123,6 @@ def linearScanline(nodes, info_scanline):
                                                "Кумулятивное распределение - Длинна линии"))
     sns.ecdfplot(data=nodes['norm'], ax=ax3)
 
-    plt.savefig(template.config["LINEAR_OUTPUT"] + os.path.sep + "fig4_" + str(wfc.classif_joint_set_counter) + ".png",
-                dpi=300)
-    plt.show()
+    write_plot(template.config["LINEAR_OUTPUT"])
 
     return [frequency, spacing_real, THETA]

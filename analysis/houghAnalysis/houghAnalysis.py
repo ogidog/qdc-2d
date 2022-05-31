@@ -40,7 +40,6 @@ def houghAnalysis(nodes):
     nodes['real_spacing_hough'] = real_spacing
     nodes['app_spacing_hough'] = app_spacing
 
-    plt.figure(3)
     nbins = 10
     plt.subplots(constrained_layout=True)
     ax1 = plt.subplot(311, xlabel=lang.select_locale('Trace lengths (m)', 'Длина линии (м)'),
