@@ -47,7 +47,7 @@ def find_jointSetLimits(gaussian_params):
         intersection = sorted(intersection)
         print(lang.select_locale('The classification limits are : {}',
                                  'Ограничения классификации : {}').format(intersection))
-        wfc.optimization_brief[
+        template.optimization_brief[
             lang.select_locale('The classification limits are', 'Ограничения классификации')] = intersection
 
     return intersection

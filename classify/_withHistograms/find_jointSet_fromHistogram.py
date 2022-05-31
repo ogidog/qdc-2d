@@ -9,6 +9,7 @@ from classify._withHistograms.minimizeFunction import minimizeFunction
 from classify._withHistograms.smoothHisto import smoothHisto
 import utils.template as template
 import utils.lang as lang
+from utils.write_plot import write_plot
 
 
 def find_jointSet_fromHistogram():
@@ -23,18 +24,17 @@ def find_jointSet_fromHistogram():
     # ax.bar(x, y, bottom=0.0, width=2 * np.pi / N, alpha=0.5, edgecolor="black", align="edge")
     # plt.show()
 
-    plt.figure(2)
     plt.subplots(constrained_layout=True)
     ax1 = plt.subplot(2, 1, 1)
     ax1.set_title(lang.select_locale('Estimated result', 'Оценочные результаты'))
     ax1.set_xlabel(lang.select_locale('Orientation (°)', 'Угол наклона линии (°)'))
     ax1.set_ylabel(lang.select_locale('Counts', 'Кол-во'))
-    ax1.plot(theta_vector, wfc.nodes['oriHisto'], '--', color=[0.5, 0.5, 0],
+    ax1.plot(theta_vector, template.nodes['oriHisto'], '--', color=[0.5, 0.5, 0],
              label=lang.select_locale("Raw data", "Исходные данные"))  # plot tracelength
     XTick = np.arange(0, 190, 10)
     ax1.set_xtick = XTick
     # Plot smoothed data
-    theta_histogram_smoothed = smoothHisto(wfc.nodes['oriHisto'], 10)
+    theta_histogram_smoothed = smoothHisto(template.nodes['oriHisto'], 10)
     ax1.plot(theta_vector, theta_histogram_smoothed, '-', color=[1, 0, 0],
              label=lang.select_locale("Smoothed data", "Аппроксимация"))
     ax1.legend()
@@ -58,7 +58,7 @@ def find_jointSet_fromHistogram():
     plt.plot(theta_vector, gaussians['sum'], linewidth=2)
 
     # -- Optimization
-    theta_histogram = wfc.nodes['oriHisto']
+    theta_histogram = template.nodes['oriHisto']
     w0 = [gaussian_param_esti['noise']]
     w0.extend(gaussian_param_esti['G_mean'])
     w0.extend(gaussian_param_esti['G_std'])
@@ -84,17 +84,16 @@ def find_jointSet_fromHistogram():
         ax2.plot(theta_vector, gaussians_OPT['curves'][:, curve])
     ax2.plot(theta_vector, gaussians_OPT['sum'], linewidth=2)
 
-    plt.savefig(template.config['OPTIMIZATION_OUTPUT'] + os.path.sep + 'fig1.png', dpi=300)
-    plt.show()
+    write_plot(template.config['OPTIMIZATION_OUTPUT'])
 
     # --  RESUME
     print(lang.select_locale('End of histogram optimization!\n', 'Оптимизация завершена\n'))
     print(lang.select_locale('-- Results are : \n', '-- Результаты : \n'))
 
     print(lang.select_locale('Noise estimation : {}\n', 'Оценка шума : {}\n').format(w[1]))
-    wfc.optimization_brief[lang.select_locale('Noise estimation', 'Оценка шума')] = w[1]
+    template.optimization_brief[lang.select_locale('Noise estimation', 'Оценка шума')] = w[1]
 
-    wfc.optimization_brief[lang.select_locale('Joints', 'Наборы линий')] = []
+    template.optimization_brief[lang.select_locale('Joints', 'Наборы линий')] = []
 
     for j in range(NBjointSet):
         optimized_joints = {}
@@ -111,7 +110,7 @@ def find_jointSet_fromHistogram():
         print(lang.select_locale('Amplitude : {}', 'Средняя амплитуда : {}').format(w[2 * NBjointSet + j + 1]))
         optimized_joints[lang.select_locale('Amplitude', 'Средняя амплитуда')] = w[2 * NBjointSet + j + 1]
 
-        wfc.optimization_brief[lang.select_locale('Joints', 'Наборы линий')].append(optimized_joints)
+        template.optimization_brief[lang.select_locale('Joints', 'Наборы линий')].append(optimized_joints)
 
         print(' ')
 

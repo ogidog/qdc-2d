@@ -2,6 +2,8 @@ import os
 
 from matplotlib import pyplot as plt
 
+from classify._withHistograms.classify_fromGaussians import classify_fromGaussians
+from classify._withHistograms.find_jointSetLimits import find_jointSetLimits
 from classify._withHistograms.find_jointSet_fromHistogram import find_jointSet_fromHistogram
 from modules.circular import circular
 from modules.hough import hough
@@ -14,10 +16,10 @@ from utils.read_joints import read_joints
 import utils.lang as lang
 
 
-def classify_analyse_with_histograms(config_vars_json: str = None, nodes_source: str = None):
+def classify_analyse_with_histograms(config_vars_json: str = None, joints_source: str = None):
     try:
         template.config = template.init(config_vars_json)
-        template.nodes = read_joints(nodes_source)
+        template.nodes = read_joints(joints_source)
 
         # -- Classification
 
@@ -27,46 +29,46 @@ def classify_analyse_with_histograms(config_vars_json: str = None, nodes_source:
              os.makedirs(template.config['OPTIMIZATION_OUTPUT'])
 
         gaussianParams = find_jointSet_fromHistogram()
-        # limits = find_jointSetLimits(gaussianParams)
-        # classify_fromGaussians(limits)
-        #
-        # files = list(filter(lambda file: "classif" in file, os.listdir(template.config['OUTPUT'])))
-        # resume = {lang.select_locale('SetId', 'Номер'): [],
-        #           lang.select_locale("nbTraces", 'Кол-во линий'): [],
-        #           lang.select_locale('orientation_mean', 'Среднее значение угла наклона'): [],
-        #           lang.select_locale('orientation_min', 'Минимальное значение угла наклона'): [],
-        #           lang.select_locale('orientation_max', 'Максимальное значение угла наклона'): [],
-        #           lang.select_locale('length_mean', 'Средняя длина линии'): [],
-        #           lang.select_locale('length_min', 'Минимальная длина линии'): [],
-        #           lang.select_locale('length_max', 'Максимальная длина линии'): [],
-        #           lang.select_locale('spacing_mean_linearScanline', 'Средняя длина интервала - Линейная развертка'): [],
-        #           lang.select_locale('spacing_min_linearScanline', 'Минимальная длина интервала - Линейная развертка'): [],
-        #           lang.select_locale('spacing_max_linearScanline', 'Максимальная длина интервала - Линейная развертка'): [],
-        #           lang.select_locale('spacing_mean_houghAnalyse', 'Средняя длина интервала - Метод Хафа'): [],
-        #           lang.select_locale('spacing_min_houghAnalyse', 'Минимальная длина интервала - Метод Хафа'): [],
-        #           lang.select_locale('spacing_max_houghAnalyse', 'Максимальная длина интервала - Метод Хафа'): [],
-        #           lang.select_locale('persistence_mean', 'Средний коэффициент постоянства линий'): [],
-        #           lang.select_locale('persistence_min', 'Минимальный коэффициент постоянства линий'): [],
-        #           lang.select_locale('persistence_max', 'Максимальный коэффициент постоянства линий'): [],
-        #           lang.select_locale('spacing_frequency', 'Частота интервалов'): [],
-        #           lang.select_locale('intensity_estimator', 'Оценка интенсивность линий'): [],
-        #           lang.select_locale('density_estimator', 'Оценка плотности линий'): [],
-        #           lang.select_locale('traceLength_estimator', 'Оценка длин линий'): []}
-        #
-        # print(lang.select_locale('\n---------STARTING ANALYSIS---------', '\n---------ЗАПУСК АНАЛИЗА---------'))
+        limits = find_jointSetLimits(gaussianParams)
+        classify_fromGaussians(limits)
 
-        # for j in range(len(files)):
-        #     joint_file = template.config['OUTPUT'] + os.path.sep + files[j]
-        #     print(lang.select_locale('\n--- File : {}\n', '\n--- Файл : {}\n').format(joint_file))
-        #     set_iD = int(files[j].split('_')[-1].split("classif")[0])
-        #
-        #     template.config['INPUT'] = joint_file
+        files = list(filter(lambda file: "classif" in file, os.listdir(template.config['OUTPUT'])))
+        resume = {lang.select_locale('SetId', 'Номер'): [],
+                  lang.select_locale("nbTraces", 'Кол-во линий'): [],
+                  lang.select_locale('orientation_mean', 'Среднее значение угла наклона'): [],
+                  lang.select_locale('orientation_min', 'Минимальное значение угла наклона'): [],
+                  lang.select_locale('orientation_max', 'Максимальное значение угла наклона'): [],
+                  lang.select_locale('length_mean', 'Средняя длина линии'): [],
+                  lang.select_locale('length_min', 'Минимальная длина линии'): [],
+                  lang.select_locale('length_max', 'Максимальная длина линии'): [],
+                  lang.select_locale('spacing_mean_linearScanline', 'Средняя длина интервала - Линейная развертка'): [],
+                  lang.select_locale('spacing_min_linearScanline', 'Минимальная длина интервала - Линейная развертка'): [],
+                  lang.select_locale('spacing_max_linearScanline', 'Максимальная длина интервала - Линейная развертка'): [],
+                  lang.select_locale('spacing_mean_houghAnalyse', 'Средняя длина интервала - Метод Хафа'): [],
+                  lang.select_locale('spacing_min_houghAnalyse', 'Минимальная длина интервала - Метод Хафа'): [],
+                  lang.select_locale('spacing_max_houghAnalyse', 'Максимальная длина интервала - Метод Хафа'): [],
+                  lang.select_locale('persistence_mean', 'Средний коэффициент постоянства линий'): [],
+                  lang.select_locale('persistence_min', 'Минимальный коэффициент постоянства линий'): [],
+                  lang.select_locale('persistence_max', 'Максимальный коэффициент постоянства линий'): [],
+                  lang.select_locale('spacing_frequency', 'Частота интервалов'): [],
+                  lang.select_locale('intensity_estimator', 'Оценка интенсивность линий'): [],
+                  lang.select_locale('density_estimator', 'Оценка плотности линий'): [],
+                  lang.select_locale('traceLength_estimator', 'Оценка длин линий'): []}
+
+        print(lang.select_locale('\n---------STARTING ANALYSIS---------', '\n---------ЗАПУСК АНАЛИЗА---------'))
+
+        for j in range(len(files)):
+            joint_file = template.config['OUTPUT'] + os.path.sep + files[j]
+            print(lang.select_locale('\n--- File : {}\n', '\n--- Файл : {}\n').format(joint_file))
+            set_iD = int(files[j].split('_')[-1].split("classif")[0])
+
+            template.config['INPUT'] = joint_file
 
             # hough analyse
-            # nodes = hough()
-            #
-            # # linear analyse
-            # [frequency, spacing_real] = run_linear(template.config)
+            nodes = hough()
+
+            # linear analyse
+            [frequency, spacing_real] = linear(template.config)
             #
             # # circular scanline
             # [intensity_estimator, density_estimator, traceLength_estimator] = run_circular(template.config)

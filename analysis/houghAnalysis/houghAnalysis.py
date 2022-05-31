@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from analysis.houghAnalysis.plot_inHoughFrame import plot_inHoughFrame
 import utils.lang as lang
 import utils.template as template
+from utils.write_plot import write_plot
 
 
 def houghAnalysis(nodes):
@@ -52,7 +53,6 @@ def houghAnalysis(nodes):
                       ylabel=lang.select_locale('Counts', 'Кол-во'))
     ax3.hist(np.array(real_spacing).flatten(), nbins, edgecolor="black")
 
-    plt.savefig(template.config['HOUGH_OUTPUT'] + os.path.sep + "fig3_" + str(template.classif_joint_set_counter) + ".png")
-    plt.show()
+    write_plot(template.config['HOUGH_OUTPUT'])
 
     return nodes

@@ -13,16 +13,10 @@ import utils.template as template
 def hough():
     plt.close()
 
-    if 'INPUT' in template.config.keys():
-        joint_file = template.config['INPUT']
-    else:
-        print('Missing arguments : INPUT')
-        return
-
     if not os.path.exists(template.config['HOUGH_OUTPUT']):
         os.makedirs(template.config['HOUGH_OUTPUT'])
 
-    nodes = read_joints(joint_file)
+    nodes = read_joints()
     nodes = houghAnalysis(nodes)
 
     print(lang.select_locale('Real spacing - Hough frame : {}\n', 'Реальный интервал - Метод Хафа : {}\n').format(
@@ -30,7 +24,6 @@ def hough():
 
     template.hough_brief[lang.select_locale('Real spacing - Hough frame', 'Реальный интервал - Метод Хафа')] = np.mean(
         nodes['real_spacing_hough'])
-    write_json(template.hough_brief, template.config['HOUGH_OUTPUT'] + os.path.sep + "brief_" + str(
-        template.classif_joint_set_counter) + ".json")
+    write_json(template.hough_brief, template.config['HOUGH_OUTPUT'])
 
     return nodes

@@ -4,7 +4,7 @@ import cmath
 import utils.template as template
 
 
-def read_joints(joints_source):
+def read_joints(joints_source: str = None):
     matrix_joints = np.array([])
     if joints_source:
         reader = joints_source.decode()
@@ -12,9 +12,9 @@ def read_joints(joints_source):
         f = open(template.config['INPUT'], 'r')
         reader = f.read()
 
-    reader = reader.strip().replace("\n", "").replace("\r", "").split(";")
+    reader = reader.strip()[:-1].replace("\n", "").replace("\r", "").split(";")
     for row in reader:
-            matrix_joints = np.append(matrix_joints, np.array(row.split(","), dtype=np.float64))
+        matrix_joints = np.append(matrix_joints, np.array(row.split(","), dtype=np.float64))
     matrix_joints = np.array(np.split(matrix_joints, len(reader)))
 
     iD = np.unique(matrix_joints[:, 0])
@@ -61,7 +61,5 @@ def read_joints(joints_source):
 
     nodes['x'] = np.array(nodes['x'])
     nodes['y'] = np.array(nodes['y'])
-
-    del row
 
     return nodes

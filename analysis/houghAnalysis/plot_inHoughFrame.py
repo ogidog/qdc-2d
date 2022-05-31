@@ -6,6 +6,7 @@ import numpy as np
 from utils.polylines_to_lines import polylines_to_lines
 import utils.lang as lang
 import utils.template as template
+from utils.write_plot import write_plot
 
 
 def plot_inHoughFrame(nodes):
@@ -16,8 +17,7 @@ def plot_inHoughFrame(nodes):
     plt.xlabel('Theta')
     plt.ylabel('r')
 
-    plt.savefig(template.config['HOUGH_OUTPUT'] + os.path.sep + "fig1_" + str(wfc.classif_joint_set_counter) + ".png")
-    plt.show()
+    write_plot(template.config['HOUGH_OUTPUT'])
 
     plt.figure(2)
     plt.subplots(constrained_layout=True)
@@ -31,7 +31,6 @@ def plot_inHoughFrame(nodes):
         plt.title(lang.select_locale("Distribution of the orientation mean degree",
                                      "Распределение средних значений угла наклона"))
 
-    plt.savefig(template.config['HOUGH_OUTPUT'] + os.path.sep + "fig2_" + str(template.classif_joint_set_counter) + ".png")
-    plt.show()
+    write_plot(template.config['HOUGH_OUTPUT'])
 
     return nodes

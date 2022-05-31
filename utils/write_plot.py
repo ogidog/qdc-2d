@@ -1,14 +1,12 @@
 import base64
 import io
 import os
-import sys
-
-from matplotlib import pyplot
+import matplotlib.pyplot as plt
 
 import utils.template as template
 
 
-def plot_to_base64(plt: pyplot, format: str, dpi: int):
+def plot_to_base64(format: str, dpi: int):
     string_IO_bytes = io.BytesIO()
     plt.savefig(string_IO_bytes, format=format, dpi=dpi)
     string_IO_bytes.seek(0)
@@ -18,11 +16,12 @@ def plot_to_base64(plt: pyplot, format: str, dpi: int):
     return base64_data
 
 
-def write_plot(plt, output="", dpi=300, format="png", **kwargs):
-    if template.config['OUTPUT_TYPE'] == "file" and not output == "":
-        out_file = output + os.path.sep + "fig" + plt.gcf().number + "_" + str(
-            wfc.classif_joint_set_counter) + "." + format
+def write_plot(output, dpi=300, format="png"):
+    if template.config['OUTPUT_TYPE'] == "file":
+        out_file = output + os.path.sep + "fig" + str(plt.gcf().number) + "_" + str(
+            template.classif_joint_set_counter) + "." + format
         plt.savefig(out_file, dpi=dpi, format=format)
+        plt.show()
 
         return out_file
 
