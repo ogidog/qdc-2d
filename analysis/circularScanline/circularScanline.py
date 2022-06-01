@@ -9,11 +9,12 @@ from utils.polylines_to_lines import polylines_to_lines
 from utils.selectExtends import selectExtends
 import utils.template as template
 import utils.lang as lang
+from utils.write_plot import write_plot
 
 
 def circularScanline(nodes, nbCircles):
-    plt.figure(1)
 
+    plt.figure(1)
     [_, id_x1x2y1y2_matrice] = polylines_to_lines(nodes)
     id_x1x2y1y2_matrice = id_x1x2y1y2_matrice[:, 1:]
     x = id_x1x2y1y2_matrice[:, 0:2]
@@ -101,9 +102,7 @@ def circularScanline(nodes, nbCircles):
     plt.xlim([extends['minX'], extends['maxX']])
     plt.ylim([extends['minY'], extends['maxY']])
     plt.title(lang.select_locale("Circular Window Sampling", "Выборка по окну окружности"))
-    plt.savefig(template.config["CIRCULAR_OUTPUT"] + os.path.sep + "fig1_" + str(wfc.classif_joint_set_counter) + ".png",
-                dpi=300)
-    plt.show()
+    write_plot(template.config["CIRCULAR_OUTPUT"])
 
     m = m / c  # mean points within circles
     n = n / c  # mean intersections
@@ -115,16 +114,16 @@ def circularScanline(nodes, nbCircles):
 
     print(lang.select_locale('Mean intensity estimator : {}', 'Оценка интенсивности (среднее) : {}').format(
         intensity_estimator))
-    wfc.circular_brief[
+    template.circular_brief[
         lang.select_locale('Mean intensity estimator', 'Оценка интенсивности (среднее)')] = intensity_estimator
 
     print(
         lang.select_locale('Mean density estimator : {}', 'Оценка плотности (среднее) : {}').format(density_estimator))
-    wfc.circular_brief[lang.select_locale('Mean density estimator', 'Оценка плотности (среднее)')] = density_estimator
+    template.circular_brief[lang.select_locale('Mean density estimator', 'Оценка плотности (среднее)')] = density_estimator
 
     print(lang.select_locale('Mean trace length estimator : {}', 'Оценка длины линий (среднее) : {}').format(
         traceLength_estimator))
-    wfc.circular_brief[
+    template.circular_brief[
         lang.select_locale('Mean trace length estimator', 'Оценка длины линий (среднее)')] = traceLength_estimator
 
     print(' ')
@@ -132,12 +131,12 @@ def circularScanline(nodes, nbCircles):
     print(lang.select_locale('Mean/std intensity : {} / {}',
                              'Среднее/Дисперсия (интенсивность) : {} / {}').format(np.mean(intensity_vect),
                                                                                    np.std(intensity_vect)))
-    wfc.circular_brief[lang.select_locale('Mean/std intensity', 'Среднее/Дисперсия (интенсивность)')] = str(
+    template.circular_brief[lang.select_locale('Mean/std intensity', 'Среднее/Дисперсия (интенсивность)')] = str(
         np.mean(intensity_vect)) + " / " + str(np.std(intensity_vect))
 
     print(lang.select_locale('Mean/std density : {} / {}', 'Cреднее/Дисперсия (плотность) : {} / {}').format(
         np.mean(density_vect), np.std(density_vect)))
-    wfc.circular_brief[lang.select_locale('Mean/std density', 'Cреднее/Дисперсия (плотность)')] = str(
+    template.circular_brief[lang.select_locale('Mean/std density', 'Cреднее/Дисперсия (плотность)')] = str(
         np.mean(density_vect)) + " / " + str(np.std(density_vect))
 
     plot_Map_densityIntensity(xw, yw, intensity_vect, density_vect, dx)

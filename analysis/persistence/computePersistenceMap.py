@@ -10,6 +10,7 @@ from utils.selectExtends import selectExtends
 
 import utils.template as template
 import utils.lang as lang
+from utils.write_plot import write_plot
 
 
 def computePersistanceMap(nodes, nbRectangles):
@@ -119,10 +120,7 @@ def computePersistanceMap(nodes, nbRectangles):
         else:
             persistence_vect[i] = 0
 
-    plt.savefig(
-        template.config["PERSISTENCE_OUTPUT"] + os.path.sep + "fig2_" + str(wfc.classif_joint_set_counter) + ".png",
-        dpi=300)
-    plt.show()
+    write_plot(template.config["PERSISTENCE_OUTPUT"])
 
     mean_persistence = np.mean(persistence_vect)
     std_persistence = np.std(persistence_vect)
@@ -143,7 +141,4 @@ def computePersistanceMap(nodes, nbRectangles):
     plt.title(str_titleMap)
     fig3.tight_layout()
 
-    plt.savefig(
-        template.config["PERSISTENCE_OUTPUT"] + os.path.sep + "fig3_" + str(wfc.classif_joint_set_counter) + ".png",
-        dpi=300)
-    plt.show()
+    write_plot(template.config["PERSISTENCE_OUTPUT"])

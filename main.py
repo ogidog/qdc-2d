@@ -68,16 +68,16 @@ def classify_analyse_with_histograms(config_vars_json: str = None, joints_source
             # nodes = hough()
 
             # linear analyse
-            [frequency, spacing_real] = linear()
+            #[frequency, spacing_real] = linear()
 
             # circular scanline
-            # [intensity_estimator, density_estimator, traceLength_estimator] = circular(template.config)
-            #
-            # # persistance
-            # persistance = run_persistence(template.config)
-            #
-            # # volume
-            # run_volume(template.config)
+            #[intensity_estimator, density_estimator, traceLength_estimator] = circular()
+
+            # persistance
+            #persistance = persistence()
+
+            # volume
+            volume()
             #
             # # wavelet
             # run_wavelet(template)
@@ -116,7 +116,7 @@ def classify_analyse_with_histograms(config_vars_json: str = None, joints_source
 
     except Exception as exc:
         # TODO: log here
-        print(exc)
+        print(exc.with_traceback())
 
 
 def main(config_vars_json):
@@ -206,8 +206,9 @@ def main(config_vars_json):
         else:
             print('No METHOD;circular/volume')
 
-    except ValueError:
-        print(ValueError)
+    except Exception as exc:
+        # TODO: log here
+        print(exc.with_traceback())
 
 
 if __name__ == "__main__":

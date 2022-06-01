@@ -4,13 +4,12 @@ import numpy as np
 from matplotlib import pyplot as plt
 import utils.lang as lang
 import utils.template as template
+from utils.write_plot import write_plot
 
 
 def plot_Map_densityIntensity(xw, yw, intensity_vect, density_vect, dx):
-    plt.figure(2)
-
     # Intensity map plot
-    plt.subplots(constrained_layout=True)
+    plt.subplots(constrained_layout=True, num=2)
     plt.subplot(211)
     plt.imshow(intensity_vect.reshape((len(np.unique(yw)), len(np.unique(xw)))),
                extent=[np.min(xw), np.max(xw), np.max(yw), np.min(yw)], aspect='auto')
@@ -28,6 +27,4 @@ def plot_Map_densityIntensity(xw, yw, intensity_vect, density_vect, dx):
     ax = plt.gca()
     ax.invert_yaxis()
 
-    plt.savefig(template.config["CIRCULAR_OUTPUT"] + os.path.sep + "fig2_" + str(wfc.classif_joint_set_counter) + ".png",
-                dpi=300)
-    plt.show()
+    write_plot(template.config["CIRCULAR_OUTPUT"])

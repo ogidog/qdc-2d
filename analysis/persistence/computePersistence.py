@@ -12,6 +12,7 @@ from utils.selectExtends import selectExtends
 
 import utils.lang as lang
 import utils.template as template
+from utils.write_plot import write_plot
 
 
 def computePersistence(nodes, covering):
@@ -20,7 +21,7 @@ def computePersistence(nodes, covering):
     if len(f.parameters) == 2:
         if covering > 1 or covering < 0:
             print(lang.select_locale("Covering parameters should be [0, 1]", 'Коэффициент покрытия должны быть в интервале [0, 1]'))
-            sys.exit(1)
+            return None
 
     plt.figure(1)
     [nodes, id_x1x2y1y2_matrice, *_] = polylines_to_lines(nodes)
@@ -32,7 +33,7 @@ def computePersistence(nodes, covering):
 
     MEAN_ori = np.mean(nodes['ori_mean_deg'])
     print(lang.select_locale('Mean joint orientation (°) : {}', 'Угол наклона линии (°) : {}').format(MEAN_ori))
-    wfc.persistence_brief[lang.select_locale('Mean joint orientation', 'Угол наклона линии')] = MEAN_ori
+    template.persistence_brief[lang.select_locale('Mean joint orientation', 'Угол наклона линии')] = MEAN_ori
 
     # Observation window for synthetic joints
     if nodes['synthetic']:
@@ -124,9 +125,7 @@ def computePersistence(nodes, covering):
                 n_tot_cc = n_tot_cc + 1
                 n_inter_cc = n_inter_cc + 1
 
-    plt.savefig(template.config["PERSISTENCE_OUTPUT"] + os.path.sep + "fig1_" + str(wfc.classif_joint_set_counter) + ".png",
-                dpi=300)
-    plt.show()
+    write_plot(template.config["PERSISTENCE_OUTPUT"])
 
     if (n_tot_cc - n_trans_cc + n_inter_cc) > 0:
         persistance_cc = square['L'] * square['h'] / (
@@ -138,16 +137,16 @@ def computePersistence(nodes, covering):
         persistance = persistance_cc
 
     print(lang.select_locale('Total joints : {}', 'Всего линий : {}').format(n_tot))
-    wfc.persistence_brief[lang.select_locale('Total joints', 'Всего линий')] = n_tot
+    template.persistence_brief[lang.select_locale('Total joints', 'Всего линий')] = n_tot
 
     print(lang.select_locale('Inter joints : {}', 'Внутренних линий в покрытии: {}').format(n_inter))
-    wfc.persistence_brief[lang.select_locale('Inter joints', 'Внутренних линий в покрытии')] = n_inter
+    template.persistence_brief[lang.select_locale('Inter joints', 'Внутренних линий в покрытии')] = n_inter
 
     print(lang.select_locale('Transection joints : {}', 'Поперечные линии в покрытии : {}').format(n_trans))
-    wfc.persistence_brief[lang.select_locale('Transection joints', 'Поперечные линии в покрытии')] = n_trans
+    template.persistence_brief[lang.select_locale('Transection joints', 'Поперечные линии в покрытии')] = n_trans
 
     print(lang.select_locale('Mean persistance : {}', 'Коэффициент постоянства (среднее) : {}').format(np.mean(persistance)))
-    wfc.persistence_brief[
+    template.persistence_brief[
         lang.select_locale('Mean persistance', 'Коэффициент постоянства (среднее)')] = np.mean(persistance)
 
     return persistance

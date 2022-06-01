@@ -17,8 +17,8 @@ def circular():
         prompt = lang.select_locale('Number of horizontal circles? :', 'Количество окружностей по горизонтали? : '),
         circles = input(prompt)
 
-    if not os.path.exists(template['CIRCULAR_OUTPUT']):
-        os.makedirs(template['CIRCULAR_OUTPUT'])
+    if not os.path.exists(template.config['CIRCULAR_OUTPUT']):
+        os.makedirs(template.config['CIRCULAR_OUTPUT'])
 
     nodes = read_joints()
     [intensity_estimator, density_estimator, traceLength_estimator] = circularScanline(nodes, int(circles))
