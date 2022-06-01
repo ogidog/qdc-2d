@@ -14,4 +14,4 @@ def compute_Jv(w):
         'Кол-во линий по объему - количество линий на единицу поверхности'))
 
     print(lang.select_locale('Volumetric joint count : {}', 'Количество линий на единицу поверхности : {}').format(Jv))
-    wfc.volume_brief[lang.select_locale('Volumetric joint count', 'Количество линий на единицу поверхности')] = Jv
+    template.volume_brief[lang.select_locale('Volumetric joint count', 'Количество линий на единицу поверхности')] = Jv

@@ -77,10 +77,10 @@ def classify_analyse_with_histograms(config_vars_json: str = None, joints_source
             #persistance = persistence()
 
             # volume
-            volume()
-            #
-            # # wavelet
-            # run_wavelet(template)
+            #volume()
+
+            # wavelet
+            wavelet(template)
 
             # -- summarize
             # resume['SetId'].append(set_iD)

@@ -30,7 +30,7 @@ def compute_volume(w):
 
     if Vb != -1:
         print(lang.select_locale('Vb value : {}', 'Vb : {}').format(Vb))
-        wfc.volume_brief[lang.select_locale('Vb value', 'Vb')] = Vb
+        template.volume_brief[lang.select_locale('Vb value', 'Vb')] = Vb
 
     spacing = np.sort(w[:, 1])
     if len(spacing) == 3:
@@ -52,10 +52,10 @@ def compute_volume(w):
     Beta = (a2 + a2 * a3 + a3) ** 3 / (a2 * a3) ** 2
 
     print(lang.select_locale('Alpha2: {} -- Alpha3: {}', 'Alpha2: {} -- Alpha3: {}').format(*B))
-    wfc.volume_brief[lang.select_locale('Alpha2 -- Alpha3', 'Alpha2 -- Alpha3')] = [*B]
+    template.volume_brief[lang.select_locale('Alpha2 -- Alpha3', 'Alpha2 -- Alpha3')] = [*B]
 
     print(lang.select_locale('Block shape factor : {}', 'Коэффициент формы блока : {}').format(Beta))
-    wfc.volume_brief[lang.select_locale('Block shape factor', 'Коэффициент формы блока')] = Beta
+    template.volume_brief[lang.select_locale('Block shape factor', 'Коэффициент формы блока')] = Beta
 
     # Do the actual plotting
     img_file = os.path.dirname(__file__) + os.path.sep + "img_blockShape.PNG"
@@ -88,11 +88,7 @@ def compute_volume(w):
 
     plt.title(lang.select_locale('Block types analysis with the block shape factor',
                                  'Анализ типов блока с учетом коэффициента формы'))
-    # plt.savefig(
-    #     template.config["VOLUME_OUTPUT"] + os.path.sep + "fig1_" + str(wfc.classif_joint_set_counter) + ".png",
-    #     dpi=300)
 
-    write_plot(plt)
-    plt.show()
+    write_plot(template.config["VOLUME_OUTPUT"])
 
     return Vb
