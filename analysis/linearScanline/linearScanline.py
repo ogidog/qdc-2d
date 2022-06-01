@@ -65,8 +65,7 @@ def linearScanline(nodes, info_scanline):
     [height1, _] = np.histogram(THETA, N)
     [height2, _] = np.histogram(THETA, N)
 
-    plt.figure(2)
-    plt.subplots(constrained_layout=True)
+    plt.subplots(constrained_layout=True, num=2)
     ax = plt.subplot(polar=True)
     ax.bar(theta, height1, bottom=0.0, width=np.pi / N, alpha=0.5, edgecolor="black", align="edge")
     ax.bar(theta + np.pi, height2, bottom=0.0, width=np.pi / N, alpha=0.5, edgecolor="black", align="edge",
@@ -88,8 +87,7 @@ def linearScanline(nodes, info_scanline):
     template.linear_brief[lang.select_locale('Spacing frequency', 'Частота интервалов')] = frequency
 
     nbins = 10
-    plt.figure(3)
-    plt.subplots(constrained_layout=True)
+    plt.subplots(constrained_layout=True, num=3)
     ax1 = plt.subplot(311, xlabel=lang.select_locale("Trace lengths (m)", "Длина линии (м)"),
                       ylabel=lang.select_locale("Counts", "Кол-во"),
                       title=lang.select_locale("Histogram - Trace length", "Гистограмма - Длина линии"))
@@ -105,8 +103,7 @@ def linearScanline(nodes, info_scanline):
     ax3.hist(spacing_real, nbins, edgecolor="black")
     write_plot(template.config["LINEAR_OUTPUT"])
 
-    plt.figure(4)
-    plt.subplots(constrained_layout=True)
+    plt.subplots(constrained_layout=True, num=4)
     ax1 = plt.subplot(311, xlabel=lang.select_locale("Orientation (°)", "Угол наклона линии(°)"), ylabel="CDF",
                       title=lang.select_locale("Cumulative distribution - Orientation",
                                                "Кумулятивное распределение - Угол наклона"))
@@ -122,7 +119,6 @@ def linearScanline(nodes, info_scanline):
                       title=lang.select_locale("Cumulative distribution - Trace length",
                                                "Кумулятивное распределение - Длинна линии"))
     sns.ecdfplot(data=nodes['norm'], ax=ax3)
-
     write_plot(template.config["LINEAR_OUTPUT"])
 
     return [frequency, spacing_real, THETA]

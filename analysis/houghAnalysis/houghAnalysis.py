@@ -16,12 +16,12 @@ def houghAnalysis(nodes):
                              'Гауссовское распределение параметров угла наклона линии: \n mu={} -- sigma={}\n').format(
         mu, sigma))
     template.hough_brief[lang.select_locale('Gaussian distribution parameters for orientation',
-                                       'Гауссовское распределение параметров угла наклона линии')] = {'mu': 0,
-                                                                                                      'sigma': 0}
+                                            'Гауссовское распределение параметров угла наклона линии')] = {'mu': 0,
+                                                                                                           'sigma': 0}
     template.hough_brief[lang.select_locale('Gaussian distribution parameters for orientation',
-                                       'Гауссовское распределение параметров угла наклона линии')]['mu'] = mu
+                                            'Гауссовское распределение параметров угла наклона линии')]['mu'] = mu
     template.hough_brief[lang.select_locale('Gaussian distribution parameters for orientation',
-                                       'Гауссовское распределение параметров угла наклона линии')]['sigma'] = sigma
+                                            'Гауссовское распределение параметров угла наклона линии')]['sigma'] = sigma
 
     # Apparent spacing
     r = nodes['r']
@@ -41,7 +41,7 @@ def houghAnalysis(nodes):
     nodes['app_spacing_hough'] = app_spacing
 
     nbins = 10
-    plt.subplots(constrained_layout=True)
+    plt.subplots(constrained_layout=True, num=3)
     ax1 = plt.subplot(311, xlabel=lang.select_locale('Trace lengths (m)', 'Длина линии (м)'),
                       ylabel=lang.select_locale('Counts', 'Кол-во'))
     ax1.hist(np.array(nodes['norm']), nbins, edgecolor="black")

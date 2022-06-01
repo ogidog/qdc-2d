@@ -10,6 +10,7 @@ from utils.write_plot import write_plot
 
 
 def plot_inHoughFrame(nodes):
+
     plt.figure(1)
     # Create Hough matrix from nodes
     [nodes, *_] = polylines_to_lines(nodes)
@@ -20,7 +21,6 @@ def plot_inHoughFrame(nodes):
     write_plot(template.config['HOUGH_OUTPUT'])
 
     plt.figure(2)
-    plt.subplots(constrained_layout=True)
     nodes['r'] = [*range(len(nodes['iD']))]
     for j in range(len(nodes['iD'])):
         x = nodes['line'][j][0]

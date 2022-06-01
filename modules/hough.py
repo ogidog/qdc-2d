@@ -24,6 +24,7 @@ def hough():
 
     template.hough_brief[lang.select_locale('Real spacing - Hough frame', 'Реальный интервал - Метод Хафа')] = np.mean(
         nodes['real_spacing_hough'])
+
     write_json(template.hough_brief, template.config['HOUGH_OUTPUT'])
 
     return nodes

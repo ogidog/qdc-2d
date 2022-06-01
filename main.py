@@ -65,13 +65,13 @@ def classify_analyse_with_histograms(config_vars_json: str = None, joints_source
             template.config['INPUT'] = joint_file
 
             # hough analyse
-            nodes = hough()
+            # nodes = hough()
 
             # linear analyse
             [frequency, spacing_real] = linear()
 
             # circular scanline
-            [intensity_estimator, density_estimator, traceLength_estimator] = circular(template.config)
+            # [intensity_estimator, density_estimator, traceLength_estimator] = circular(template.config)
             #
             # # persistance
             # persistance = run_persistence(template.config)
@@ -106,7 +106,7 @@ def classify_analyse_with_histograms(config_vars_json: str = None, joints_source
             # resume['density_estimator'].append(density_estimator)
             # resume['traceLength_estimator'].append(traceLength_estimator)
 
-            # template.classif_joint_set_counter += 1
+            template.classif_joint_set_counter += 1
 
         # summarizeTable = json.dumps(resume)
 
