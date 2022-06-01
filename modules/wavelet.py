@@ -1,35 +1,48 @@
+import os
+
 import numpy as np
 import matplotlib.pyplot as plt
 
 from analysis.wavelet.computeWavelet import computeWavelet
 from analysis.wavelet.createScanlines import createScanlines
 from utils.read_joints import read_joints
+import utils.lang as lang
+import utils.template as template
 
 
-def wavelet(template):
+def wavelet():
     plt.close()
-    if 'INPUT' in template.keys() and 'SCANS' in template.keys() and 'DX' in template.keys() and 'DY' in template.keys():
-        joint_path = template['INPUT']
-        nb_scans = template['SCANS']
-        deltaX = template['DX']
-        deltaY = template['DY']
 
-        if 'THETA' in template.keys():
-            if 90 >= template['THETA'] >= -90:
-                THETA = 90 - template['THETA']
+    if 'SCANS' in template.config.keys() and 'DX' in template.config.keys() and 'DY' in template.config.keys():
+        nb_scans = template.config['SCANS']
+        deltaX = template.config['DX']
+        deltaY = template.config['DY']
+
+        if not os.path.exists(template.config['WAVELET_OUTPUT']):
+            os.makedirs(template.config['WAVELET_OUTPUT'])
+
+        if 'THETA' in template.config.keys():
+            if 90 >= template.config['THETA'] >= -90:
+                THETA = 90 - template.config['THETA']
             else:
-                print('Theta orientation for scanline should be (-90,90). Will estimate best scanline')
+                print(
+                    lang.select_locale('Theta orientation for scanline should be (-90,90). Will estimate best scanline',
+                                       'Значение угла наклона theta для сканирующей линии должно быть в диапазоне (-90,90). Будет выбрана произвольная сканирующая линия.')
+                )
                 THETA = -999
 
         else:
-            print('No theta orientation for scanline given by user. Will estimate best scanline')
+            print(
+                lang.select_locale('No theta orientation for scanline given by user. Will estimate best scanline',
+                                   'Не указано значение угла наклона. Будет выбрана произвольная сканирующая линия.')
+            )
             THETA = -999
 
     else:
-        print('Missing arguments : INPUT - SCANS - DX - DY - THETA')
+        print(lang.select_locale('Missing arguments : SCANS - DX - DY - THETA', 'Не указаны парметры : SCANS - DX - DY - THETA'))
         return
 
-    nodes = read_joints(joint_path)
+    nodes = read_joints()
     # Scanline PROCESSING
     scanline_info = {}
     scanline_info['nb_scans'] = 30
@@ -37,9 +50,7 @@ def wavelet(template):
     scanline_info['dX'] = deltaX
     scanline_info['dY'] = deltaY
     scanline_info['theta'] = np.deg2rad(THETA)
-    plt.figure(1)
     scanlines = createScanlines(nodes, scanline_info)
-    plt.show()
 
     # Wavelet analyse
     computeWavelet(scanlines)

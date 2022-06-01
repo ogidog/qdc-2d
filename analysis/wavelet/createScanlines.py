@@ -6,9 +6,13 @@ from analysis.linearScanline.create_scanline import create_scanline
 from analysis.linearScanline.find_best_scanline import find_best_scanline
 from utils.nodes2vector import nodes2vector
 from utils.plot_nodes import plot_nodes
+import utils.lang as lang
+from utils.write_plot import write_plot
+import utils.template as template
 
 
 def createScanlines(nodes, scanline_info, **kwargs):
+    plt.figure(1)
     nb_scans = scanline_info['nb_scans']
     nb_lines = scanline_info['nb_lines']
     deltaX = scanline_info['dX']
@@ -28,7 +32,7 @@ def createScanlines(nodes, scanline_info, **kwargs):
     Xb = np.array(best_scanline['Xb']).flatten()
     Yb = np.array(best_scanline['Yb']).flatten()
 
-    plt.plot(Xsl, Ysl, 'k--', linewidth=1, label="Main scanline")  # plot scanline
+    plt.plot(Xsl, Ysl, 'k--', linewidth=1, label=lang.select_locale("Main scanline",'Главная сканирующая линия'))  # plot scanline
     minX_scanline = np.min(Xsl[1])
 
     scanline = {"iD": [], "dX": [], "dY": []}
@@ -134,5 +138,7 @@ def createScanlines(nodes, scanline_info, **kwargs):
             plt.plot(scanline['X'][scan], scanline['Y'][scan], 'rx')
         else:
             plt.plot(scanline['X'][scan], scanline['Y'][scan], 'yx')
+
+    write_plot(template.config['WAVELET_OUTPUT'])
 
     return scanline

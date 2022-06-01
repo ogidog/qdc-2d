@@ -1,6 +1,9 @@
 import numpy as np
 from ghostipy.spectral import cwt, MorseWavelet
 from matplotlib import pyplot as plt
+from utils.write_plot import write_plot
+import utils.lang as lang
+import utils.template as template
 
 
 def computeWavelet(scanline):
@@ -23,14 +26,13 @@ def computeWavelet(scanline):
         wave[index] = 10
 
         # -- Plot wavelet analysis
-        plt.figure(scan + 2)
-        plt.subplots(constrained_layout=True)
+        plt.subplots(constrained_layout=True, num=scan + 2)
         plt.subplot(211)
-        plt.axhline(y=1, color='k', linestyle='-', label='Scanline')
+        plt.axhline(y=1, color='k', linestyle='-', label=lang.select_locale('Scanline','Сканирующая линия'))
         plt.xlim([0, len(wave)])
         plt.ylim([0.5, 1.5]);
         plt.plot(index, np.ones(len(index)), 'rx')
-        plt.text(len(wave) / 2, 1.08, 'Scanline', rotation=360)
+        plt.text(len(wave) / 2, 1.08, lang.select_locale('Scanline','Сканирующая линия'), rotation=360)
 
         # -- Wavelet analysis
         plt.subplot(212)
@@ -39,12 +41,12 @@ def computeWavelet(scanline):
         tms = np.array(np.arange(0, len(mtlb)) / Fs, dtype=np.int)
         [cfs, _, frq, *rest] = cwt(mtlb, fs=1, wavelet=MorseWavelet(gamma=3, beta=60))
         plt.pcolor(tms, frq, np.abs(cfs))
-        plt.xlabel('Position on scanline')
+        plt.xlabel(lang.select_locale('Position on scanline','Позиция на линии'))
         plt.ylabel('Scale')
         if scanline['iD'][scan] == 0:  # Main scanline
-            plt.title('Main scanline')
+            plt.title(lang.select_locale('Main Scanline','Главная сканирующая линия'))
         else:
             title_string = 'dX: {} - dY: {}'.format(scanline['dX'][scan], scanline['dY'][scan])
             plt.title(title_string)
 
-        plt.show()
+        write_plot(template.config['WAVELET_OUTPUT'])

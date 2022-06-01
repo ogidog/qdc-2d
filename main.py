@@ -2,6 +2,7 @@ import os
 
 from matplotlib import pyplot as plt
 
+from analysis.mean_orientation import mean_orientation
 from classify._withHistograms.classify_fromGaussians import classify_fromGaussians
 from classify._withHistograms.find_jointSetLimits import find_jointSetLimits
 from classify._withHistograms.find_jointSet_fromHistogram import find_jointSet_fromHistogram
@@ -65,7 +66,7 @@ def classify_analyse_with_histograms(config_vars_json: str = None, joints_source
             template.config['INPUT'] = joint_file
 
             # hough analyse
-            # nodes = hough()
+            nodes = hough()
 
             # linear analyse
             #[frequency, spacing_real] = linear()
@@ -80,14 +81,14 @@ def classify_analyse_with_histograms(config_vars_json: str = None, joints_source
             #volume()
 
             # wavelet
-            wavelet(template)
+            wavelet()
 
             # -- summarize
-            # resume['SetId'].append(set_iD)
-            # resume['nbTraces'].append(len(nodes['iD']))
-            # orientations = mean_orientation(nodes)
-            # resume['orientation_mean'].append(orientations['MEAN'])
-            # resume['orientation_min'].append(orientations['MIN'])
+            resume[lang.select_locale('SetId','Номер набора')].append(set_iD)
+            resume[lang.select_locale('nbTraces','Кол-во линий')].append(len(nodes['iD']))
+            orientations = mean_orientation(nodes)
+            resume[lang.select_locale('orientation_mean','Угол наклона (среднее)')].append(orientations['MEAN'])
+            resume['orientation_min'].append(orientations['MIN'])
             # resume['orientation_max'].append(orientations['MAX'])
             # resume['length_mean'].append(np.mean(nodes['norm']))
             # resume['length_min'].append(np.min(nodes['norm']))
@@ -107,12 +108,6 @@ def classify_analyse_with_histograms(config_vars_json: str = None, joints_source
             # resume['traceLength_estimator'].append(traceLength_estimator)
 
             template.classif_joint_set_counter += 1
-
-        # summarizeTable = json.dumps(resume)
-
-        # return summarizeTable, files
-
-        pass
 
     except Exception as exc:
         # TODO: log here
