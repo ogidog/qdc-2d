@@ -18,6 +18,10 @@ def plot_to_base64(format: str, dpi: int):
 
 def write_plot(output, dpi=300, format="png"):
     if template.config['OUTPUT_TYPE'] == "file":
+
+        if not os.path.exists(output):
+            os.makedirs(output)
+
         out_file = output + os.path.sep + "fig" + str(plt.gcf().number) + "_" + str(
             template.classif_joint_set_counter) + "." + format
         plt.savefig(out_file, dpi=dpi, format=format)

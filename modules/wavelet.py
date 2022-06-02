@@ -24,9 +24,6 @@ def wavelet():
         deltaX = template.config['DX']
         deltaY = template.config['DY']
 
-        if not os.path.exists(template.config['WAVELET_OUTPUT']):
-            os.makedirs(template.config['WAVELET_OUTPUT'])
-
         if 'THETA' in template.config.keys():
             if 90 >= template.config['THETA'] >= -90:
                 THETA = 90 - template.config['THETA']

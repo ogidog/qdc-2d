@@ -26,9 +26,6 @@ def volume():
     else:
         return
 
-    if not os.path.exists(template.config['VOLUME_OUTPUT']):
-        os.makedirs(template.config['VOLUME_OUTPUT'])
-
     compute_volume(jointSetInfo)
     compute_Jv(jointSetInfo)
 

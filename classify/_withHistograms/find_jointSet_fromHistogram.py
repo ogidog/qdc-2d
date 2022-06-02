@@ -13,6 +13,9 @@ from utils.write_plot import write_plot
 
 
 def find_jointSet_fromHistogram():
+
+    plt.close()
+
     theta_vector = [*range(1, 181, 2)]
 
     # plt.figure(1)

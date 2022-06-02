@@ -15,9 +15,6 @@ def linear():
     print(lang.select_locale('Analyse with linear scanline','Анализ - Линейная развертка'))
     template.linear_brief[lang.select_locale('Method', 'Модуль')] = lang.select_locale('Analyse with linear scanline','Анализ - Линейная развертка')
 
-    if not os.path.exists(template.config['LINEAR_OUTPUT']):
-        os.makedirs(template.config['LINEAR_OUTPUT'])
-
     info_scanline = {}
     if 'NORTH' in template.config.keys():
         info_scanline['north'] = template.config['NORTH']

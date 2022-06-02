@@ -1,6 +1,5 @@
 import os
 import numpy as np
-from matplotlib import pyplot as plt
 
 from analysis.mean_orientation import mean_orientation
 from classify._withHistograms.classify_fromGaussians import classify_fromGaussians
@@ -25,11 +24,6 @@ def classify_analyse_with_histograms(joints_source: str = None):
         template.nodes = read_joints(joints_source)
 
         # -- Classification
-
-        plt.close()
-
-        if not os.path.exists(template.config['OPTIMIZATION_OUTPUT']):
-            os.makedirs(template.config['OPTIMIZATION_OUTPUT'])
 
         gaussianParams = find_jointSet_fromHistogram()
         limits = find_jointSetLimits(gaussianParams)
