@@ -147,6 +147,8 @@ def main(config_vars_json: str = None, joints_source: str = None):
                     break
                 print(line)
 
+            return
+
         # -- Step 2 : Classify joints
         if template.config['STEP'] == 2:
             print(lang.select_locale('\n--- Classify joints ---\n', '\n--- Классификация линий ---\n'))
@@ -196,6 +198,7 @@ def main(config_vars_json: str = None, joints_source: str = None):
         else:
             print('No METHOD;hough/linear/persistence',
                   'Не задан параметр METHOD: (hough, linear, parallelLinear, circular, wavelet или persistence)')
+            return
 
         # -- Step 4 : Analysis all jointsets
         if int(template.config['STEP']) == 4:
@@ -214,6 +217,7 @@ def main(config_vars_json: str = None, joints_source: str = None):
                 return
         else:
             print(lang.select_locale('No METHOD;circular/volume', 'Не задан параметр METHOD: (circular или volume)'))
+            return
 
     except Exception as exc:
         # TODO: log here
