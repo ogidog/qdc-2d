@@ -1,6 +1,9 @@
-from utils import lang
+from utils import lang, template
 
 
 def parallel_linear():
+
     print(lang.select_locale('Analyse with parallel linear','Анализ - Метод параллельных сканирующих линий'))
+    template.parallel_linear_brief[lang.select_locale('Method', 'Модуль')] = lang.select_locale('Analyse with parallel linear','Анализ - Метод параллельных сканирующих линий')
+
     pass

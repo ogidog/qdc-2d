@@ -16,6 +16,7 @@ def persistence():
     plt.close()
 
     print(lang.select_locale('Analyse the persistence','Анализ - Постоянство линий'))
+    template.persistence_brief[lang.select_locale('Method', 'Модуль')] = lang.select_locale('Analyse the persistence','Анализ - Постоянство линий')
 
     if not os.path.exists(template.config['PERSISTENCE_OUTPUT']):
         os.makedirs(template.config['PERSISTENCE_OUTPUT'])

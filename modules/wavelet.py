@@ -8,6 +8,7 @@ from analysis.wavelet.createScanlines import createScanlines
 from utils.read_joints import read_joints
 import utils.lang as lang
 import utils.template as template
+from utils.write_json import write_json
 
 
 def wavelet():
@@ -15,6 +16,8 @@ def wavelet():
     plt.close()
 
     print(lang.select_locale('Analyse spacing with wavelet transform','Анализ - Метод вейвлет преобразований'))
+    template.wavelet_brief[lang.select_locale('Method', 'Модуль')] = lang.select_locale('Analyse spacing with wavelet transform','Анализ - Метод вейвлет преобразований')
+
 
     if 'SCANS' in template.config.keys() and 'DX' in template.config.keys() and 'DY' in template.config.keys():
         nb_scans = template.config['SCANS']
@@ -57,4 +60,6 @@ def wavelet():
 
     # Wavelet analyse
     computeWavelet(scanlines)
+
+    write_json(template.wavelet_brief, template.config['WAVELET_OUTPUT'])
 

@@ -5,10 +5,12 @@ from dotenv import dotenv_values
 
 hough_brief = {}
 linear_brief = {}
+parallel_linear_brief = {}
 optimization_brief = {}
 circular_brief = {}
 persistence_brief = {}
 volume_brief = {}
+wavelet_brief = {}
 config = {}
 nodes = []
 classif_joint_set_counter = 0

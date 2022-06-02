@@ -202,12 +202,9 @@ def main(config_vars_json: str = None, joints_source: str = None):
                                      '\n--- Характеристика степени соединенности линий ---\n'))
             if 'METHOD' in template.config.keys():
                 if template.config['METHOD'] == "circular":
-                    print(lang.select_locale('Analyse circular scanline', 'Анализ - Метод сканирующих окружностей'))
                     circular()
                     return
                 elif template.config['METHOD'] == "volume":
-                    print(lang.select_locale('Analyse block volume and volume joint count',
-                                             'Анализ объема блоков и кол-ва линий в блоке'))
                     volume()
                     return
             else:
