@@ -12,6 +12,8 @@ import utils.template as template
 def linear():
     plt.close()
 
+    print(lang.select_locale('Analyse with linear scanline','Анализ - Линейная развертка'))
+
     if not os.path.exists(template.config['LINEAR_OUTPUT']):
         os.makedirs(template.config['LINEAR_OUTPUT'])
 

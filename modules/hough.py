@@ -13,6 +13,8 @@ import utils.template as template
 def hough():
     plt.close()
 
+    print(lang.select_locale('Analyse with Hough frame', 'Анализ - Метод Хафа'))
+
     if not os.path.exists(template.config['HOUGH_OUTPUT']):
         os.makedirs(template.config['HOUGH_OUTPUT'])
 

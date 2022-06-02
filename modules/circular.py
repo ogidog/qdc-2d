@@ -9,7 +9,10 @@ from utils.write_json import write_json
 
 
 def circular():
+
     plt.close()
+
+    print(lang.select_locale('Analyse with circular scanline','Анализ - Метод сканирующих окружностей'))
 
     if 'CIRCLES' in template.config.keys():
         circles = template.config['CIRCLES']

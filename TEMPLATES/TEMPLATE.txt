@@ -24,3 +24,9 @@ CIRCULAR_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\circular
 OPTIMIZATION_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\optimization
 PERSISTENCE_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\persistence
 VOLUME_OUTPUT;D:\intellij-idea-workspace\qdc-2d\workflow_results\volume
+
+
+# TODO: For tests only
+    #
+    config_vars_json = '{"jNAME":["j1","j2","j3"],"jORIENTATION":[10.0,40.0,100.0],"jSPACING":[5.0,10.0,10.0],"G_MEAN":[5.0,1.0],"G_STD":[7.0,9.0],"G_N":[69.0,22.0],"SYNTHETIC":0,"STEP":"3","METHOD":"hough","THETA":10.0,"SCALE":10.0,"COVER":0.9,"CIRCLES":5,"SQUARES":5,"SCANS":2.0,"G_NOISE":2,"DX":2.0,"DY":2.0}'
+    ######################

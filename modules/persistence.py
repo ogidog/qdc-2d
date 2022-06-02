@@ -1,5 +1,7 @@
 import os
 
+import matplotlib.pyplot as plt
+
 from analysis.persistence.computePersistenceMap import computePersistanceMap
 from analysis.persistence.computePersistence import computePersistence
 from utils.read_joints import read_joints
@@ -10,6 +12,11 @@ import utils.lang as lang
 
 
 def persistence():
+
+    plt.close()
+
+    print(lang.select_locale('Analyse the persistence','Анализ - Постоянство линий'))
+
     if not os.path.exists(template.config['PERSISTENCE_OUTPUT']):
         os.makedirs(template.config['PERSISTENCE_OUTPUT'])
 

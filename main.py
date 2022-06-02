@@ -1,5 +1,5 @@
 import os
-
+import numpy as np
 from matplotlib import pyplot as plt
 
 from analysis.mean_orientation import mean_orientation
@@ -9,17 +9,19 @@ from classify._withHistograms.find_jointSet_fromHistogram import find_jointSet_f
 from modules.circular import circular
 from modules.hough import hough
 from modules.linear import linear
+from modules.parallel_linear import parallel_linear
 from modules.persistence import persistence
 from modules.volume import volume
 from modules.wavelet import wavelet
 import utils.template as template
 from utils.read_joints import read_joints
 import utils.lang as lang
+from utils.write_json import write_json
 
 
-def classify_analyse_with_histograms(config_vars_json: str = None, joints_source: str = None):
+def classify_analyse_with_histograms(joints_source: str = None):
     try:
-        template.config = template.init(config_vars_json)
+        # template.config = template.init(config_vars_json)
         template.nodes = read_joints(joints_source)
 
         # -- Classification
@@ -27,30 +29,32 @@ def classify_analyse_with_histograms(config_vars_json: str = None, joints_source
         plt.close()
 
         if not os.path.exists(template.config['OPTIMIZATION_OUTPUT']):
-             os.makedirs(template.config['OPTIMIZATION_OUTPUT'])
+            os.makedirs(template.config['OPTIMIZATION_OUTPUT'])
 
         gaussianParams = find_jointSet_fromHistogram()
         limits = find_jointSetLimits(gaussianParams)
         classify_fromGaussians(limits)
 
         files = list(filter(lambda file: "classif" in file, os.listdir(template.config['OUTPUT'])))
-        resume = {lang.select_locale('SetId', 'Номер'): [],
+        resume = {lang.select_locale('SetId', 'Номер набора'): [],
                   lang.select_locale("nbTraces", 'Кол-во линий'): [],
-                  lang.select_locale('orientation_mean', 'Среднее значение угла наклона'): [],
-                  lang.select_locale('orientation_min', 'Минимальное значение угла наклона'): [],
-                  lang.select_locale('orientation_max', 'Максимальное значение угла наклона'): [],
-                  lang.select_locale('length_mean', 'Средняя длина линии'): [],
-                  lang.select_locale('length_min', 'Минимальная длина линии'): [],
-                  lang.select_locale('length_max', 'Максимальная длина линии'): [],
+                  lang.select_locale('orientation_mean', 'Значение угла наклона (среднее)'): [],
+                  lang.select_locale('orientation_min', 'Значение угла наклона (минимальное)'): [],
+                  lang.select_locale('orientation_max', 'Значение угла наклона (максимальное)'): [],
+                  lang.select_locale('length_mean', 'Длина линии (средняя)'): [],
+                  lang.select_locale('length_min', 'Длина линии (минимальная)'): [],
+                  lang.select_locale('length_max', 'Длина линии (максимальная)'): [],
                   lang.select_locale('spacing_mean_linearScanline', 'Средняя длина интервала - Линейная развертка'): [],
-                  lang.select_locale('spacing_min_linearScanline', 'Минимальная длина интервала - Линейная развертка'): [],
-                  lang.select_locale('spacing_max_linearScanline', 'Максимальная длина интервала - Линейная развертка'): [],
+                  lang.select_locale('spacing_min_linearScanline',
+                                     'Минимальная длина интервала - Линейная развертка'): [],
+                  lang.select_locale('spacing_max_linearScanline',
+                                     'Максимальная длина интервала - Линейная развертка'): [],
                   lang.select_locale('spacing_mean_houghAnalyse', 'Средняя длина интервала - Метод Хафа'): [],
                   lang.select_locale('spacing_min_houghAnalyse', 'Минимальная длина интервала - Метод Хафа'): [],
                   lang.select_locale('spacing_max_houghAnalyse', 'Максимальная длина интервала - Метод Хафа'): [],
-                  lang.select_locale('persistence_mean', 'Средний коэффициент постоянства линий'): [],
-                  lang.select_locale('persistence_min', 'Минимальный коэффициент постоянства линий'): [],
-                  lang.select_locale('persistence_max', 'Максимальный коэффициент постоянства линий'): [],
+                  lang.select_locale('persistence_mean', 'Коэффициент постоянства линий (среднее)'): [],
+                  lang.select_locale('persistence_min', 'Коэффициент постоянства линий (минимальное)'): [],
+                  lang.select_locale('persistence_max', 'Коэффициент постоянства линий (максимальный)'): [],
                   lang.select_locale('spacing_frequency', 'Частота интервалов'): [],
                   lang.select_locale('intensity_estimator', 'Оценка интенсивность линий'): [],
                   lang.select_locale('density_estimator', 'Оценка плотности линий'): [],
@@ -69,53 +73,67 @@ def classify_analyse_with_histograms(config_vars_json: str = None, joints_source
             nodes = hough()
 
             # linear analyse
-            #[frequency, spacing_real] = linear()
+            [frequency, spacing_real] = linear()
 
             # circular scanline
-            #[intensity_estimator, density_estimator, traceLength_estimator] = circular()
+            [intensity_estimator, density_estimator, traceLength_estimator] = circular()
 
             # persistance
-            #persistance = persistence()
+            persistance = persistence()
 
             # volume
-            #volume()
+            volume()
 
             # wavelet
             wavelet()
 
             # -- summarize
-            resume[lang.select_locale('SetId','Номер набора')].append(set_iD)
-            resume[lang.select_locale('nbTraces','Кол-во линий')].append(len(nodes['iD']))
+            resume[lang.select_locale('SetId', 'Номер набора')].append(set_iD)
+            resume[lang.select_locale('nbTraces', 'Кол-во линий')].append(len(nodes['iD']))
             orientations = mean_orientation(nodes)
-            resume[lang.select_locale('orientation_mean','Угол наклона (среднее)')].append(orientations['MEAN'])
-            resume[lang.select_locale('orientation_min','Угол наклона (минимум)')].append(orientations['MIN'])
-            # resume['orientation_max'].append(orientations['MAX'])
-            # resume['length_mean'].append(np.mean(nodes['norm']))
-            # resume['length_min'].append(np.min(nodes['norm']))
-            # resume['length_max'].append(np.max(nodes['norm']))
-            # resume['spacing_mean_linearScanline'].append(np.mean(spacing_real))
-            # resume['spacing_min_linearScanline'].append(np.min(spacing_real))
-            # resume['spacing_max_linearScanline'].append(np.max(spacing_real))
-            # resume['spacing_mean_houghAnalyse'].append(np.mean(nodes['real_spacing_hough']))
-            # resume['spacing_min_houghAnalyse'].append(np.min(nodes['real_spacing_hough']))
-            # resume['spacing_max_houghAnalyse'].append(np.max(nodes['real_spacing_hough']))
-            # resume['persistence_mean'].append(np.mean(persistance))
-            # resume['persistence_min'].append(np.min(persistance))
-            # resume['persistence_max'].append(np.max(persistance))
-            # resume['spacing_frequency'].append(frequency)
-            # resume['intensity_estimator'].append(intensity_estimator)
-            # resume['density_estimator'].append(density_estimator)
-            # resume['traceLength_estimator'].append(traceLength_estimator)
+            resume[lang.select_locale('orientation_mean', 'Значение угла наклона (среднее)')].append(
+                orientations['MEAN'])
+            resume[lang.select_locale('orientation_min', 'Значение угла наклона (минимальное)')].append(
+                orientations['MIN'])
+            resume[lang.select_locale('orientation_max', 'Значение угла наклона (максимальное)')].append(
+                orientations['MAX'])
+            resume[lang.select_locale('length_mean', 'Длина линии (средняя)')].append(np.mean(nodes['norm']))
+            resume[lang.select_locale('length_min', 'Длина линии (минимальная)')].append(np.min(nodes['norm']))
+            resume[lang.select_locale('length_max', 'Длина линии (максимальная)')].append(np.max(nodes['norm']))
+            resume[lang.select_locale('spacing_mean_linearScanline',
+                                      'Средняя длина интервала - Линейная развертка')].append(np.mean(spacing_real))
+            resume[lang.select_locale('spacing_min_linearScanline',
+                                      'Минимальная длина интервала - Линейная развертка')].append(np.min(spacing_real))
+            resume[lang.select_locale('spacing_max_linearScanline',
+                                      'Максимальная длина интервала - Линейная развертка')].append(np.max(spacing_real))
+            resume[lang.select_locale('spacing_mean_houghAnalyse', 'Средняя длина интервала - Метод Хафа')].append(
+                np.mean(nodes['real_spacing_hough']))
+            resume[lang.select_locale('spacing_min_houghAnalyse', 'Минимальная длина интервала - Метод Хафа')].append(
+                np.min(nodes['real_spacing_hough']))
+            resume[lang.select_locale('spacing_max_houghAnalyse', 'Максимальная длина интервала - Метод Хафа')].append(
+                np.max(nodes['real_spacing_hough']))
+            resume[lang.select_locale('persistence_mean', 'Коэффициент постоянства линий (среднее)')].append(
+                np.mean(persistance))
+            resume[lang.select_locale('persistence_min', 'Коэффициент постоянства линий (минимальное)')].append(
+                np.min(persistance))
+            resume[lang.select_locale('persistence_max', 'Коэффициент постоянства линий (максимальный)')].append(
+                np.max(persistance))
+            resume[lang.select_locale('spacing_frequency', 'Частота интервалов')].append(frequency)
+            resume[lang.select_locale('intensity_estimator', 'Оценка интенсивность линий')].append(intensity_estimator)
+            resume[lang.select_locale('density_estimator', 'Оценка плотности линий')].append(density_estimator)
+            resume[lang.select_locale('traceLength_estimator', 'Оценка длин линий')].append(traceLength_estimator)
 
             template.classif_joint_set_counter += 1
+
+        template.classif_joint_set_counter = "common"
+        write_json(resume, template.config['OUTPUT'])
 
     except Exception as exc:
         # TODO: log here
         print(exc.with_traceback())
 
 
-def main(config_vars_json):
-
+def main(config_vars_json: str = None, joints_source: str = None):
     try:
 
         template.config = template.init(config_vars_json)
@@ -131,75 +149,73 @@ def main(config_vars_json):
 
         # -- Step 2 : Classify joints
         if template.config['STEP'] == 2:
-            print('STEP 2 : Classify joints')
+            print(lang.select_locale('\n--- Classify joints ---\n', '\n--- Классификация линий ---\n'))
             if 'METHOD' in template.config.keys():
-                if template.config.METHOD == "hough":
-                    print('Classify with Hough')
+                if template.config['METHOD'] == "hough":
+                    print(lang.select_locale('Classify with Hough', 'Классификация линий - Метод Хафа'))
                     # UI_classif_withHough()
                 elif template.config['METHOD'] == "histo":
-                    print('Classify with oriention histograms')
-                    # UI_classif_withGauss()
+                    print(lang.select_locale('Classify with Hough', 'Классификация линий - Метод гистограмм'))
+                    classify_analyse_with_histograms(config_vars_json, joints_source)
                 else:
-                    print('Available method for STEP 2 : histo or hough')
+                    print(lang.select_locale('Available method : histo or hough',
+                                             'Доступные значения для параметра METHOD: histo или hough'))
                     return
             else:
-                print('No METHOD:histo/hough')
+                print(lang.select_locale('No METHOD:histo/hough', 'Не задан параметр METHOD: (histo или hough)'))
                 return
 
         # -- Step 3 : Analysis 1 jointset
         if int(template.config['STEP']) == 3:
-            # print('STEP 3 : Analyse jointset')
-            print('Шаг 3 : Анализ набора линий\n')
+            print(lang.select_locale('\n--- Analysis only jointset ---\n', '\n--- Анализ одного набора линий ---\n'))
             if 'METHOD' in template.config.keys():
                 if template.config['METHOD'] == "hough":
-                    # print('Analyse with Hough frame')
-                    print('Анализ - Метод Хафа')
                     hough()
                     return
                 elif template.config['METHOD'] == "linear":
-                    # print('Analyse with linear scanline')
-                    print('Анализ - Линейная разверткой\n')
                     linear()
                     return
                 elif template.config['METHOD'] == "persistence":
-                    print('Analyse the persistence')
                     persistence()
                     return
                 elif template.config['METHOD'] == "wavelet":
-                    print('Analyse spacing with wavelet transform')
                     wavelet()
                     return
                 elif template.config['METHOD'] == "circular":
-                    print('Analyse with circular scanline')
                     circular()
                     return
                 elif template.config['METHOD'] == "parallelLinear":
-                    pass
-                    # parallelLinear()
+                    parallel_linear()
+                    return
             else:
-                print(
-                    'Available method for STEP 3 : hough or linear or parallelLinear or circular or wavelet or persistence')
+                print(lang.select_locale(
+                    'Available method : hough or linear or parallelLinear or circular or wavelet or persistence',
+                    'Доступные значения для параметра METHOD: hough, linear, parallelLinear, circular, wavelet или persistence'))
                 return
         else:
-            print('No METHOD;hough/linear/persistence')
+            print('No METHOD;hough/linear/persistence',
+                  'Не задан параметр METHOD: (hough, linear, parallelLinear, circular, wavelet или persistence)')
 
         # -- Step 4 : Analysis all jointsets
         if int(template.config['STEP']) == 4:
-            print('STEP 4 : Characterization of the jointing degree ')
+            print(lang.select_locale('\n--- Characterization of the jointing degree ---\n',
+                                     '\n--- Характеристика степени соединенности линий ---\n'))
             if 'METHOD' in template.config.keys():
                 if template.config['METHOD'] == "circular":
-                    print('Analyse circular scanline')
+                    print(lang.select_locale('Analyse circular scanline', 'Анализ - Метод сканирующих окружностей'))
                     circular()
                     return
                 elif template.config['METHOD'] == "volume":
-                    print('Analyse block volume and volume joint count')
+                    print(lang.select_locale('Analyse block volume and volume joint count',
+                                             'Анализ объема блоков и кол-ва линий в блоке'))
                     volume()
                     return
             else:
-                print('Available method for STEP 4 : circular or volume')
+                print(lang.select_locale('Available method : circular or volume',
+                                         'Доступные значения для параметра METHOD: circular или volume'))
                 return
         else:
-            print('No METHOD;circular/volume')
+            print(lang.select_locale('No METHOD;circular/volume', 'Не задан параметр METHOD: (circular или volume)'))
 
     except Exception as exc:
         # TODO: log here
@@ -207,10 +223,4 @@ def main(config_vars_json):
 
 
 if __name__ == "__main__":
-    # TODO: For tests only
-    #
-    config_vars_json = '{"jNAME":["j1","j2","j3"],"jORIENTATION":[10.0,40.0,100.0],"jSPACING":[5.0,10.0,10.0],"G_MEAN":[5.0,1.0],"G_STD":[7.0,9.0],"G_N":[69.0,22.0],"SYNTHETIC":0,"STEP":"3","METHOD":"hough","THETA":10.0,"SCALE":10.0,"COVER":0.9,"CIRCLES":5,"SQUARES":5,"SCANS":2.0,"G_NOISE":2,"DX":2.0,"DY":2.0}'
-    ######################
-
-    classify_analyse_with_histograms(config_vars_json)
-    # main()
+    main()

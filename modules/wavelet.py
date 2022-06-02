@@ -11,7 +11,10 @@ import utils.template as template
 
 
 def wavelet():
+
     plt.close()
+
+    print(lang.select_locale('Analyse spacing with wavelet transform','Анализ - Метод вейвлет преобразований'))
 
     if 'SCANS' in template.config.keys() and 'DX' in template.config.keys() and 'DY' in template.config.keys():
         nb_scans = template.config['SCANS']
