@@ -21,7 +21,7 @@ def write_plot(output, dpi=300, format="png"):
         out_file = output + os.path.sep + "fig" + str(plt.gcf().number) + "_" + str(
             template.classif_joint_set_counter) + "." + format
         plt.savefig(out_file, dpi=dpi, format=format)
-        plt.show()
+        plt.close()
 
         return out_file
 

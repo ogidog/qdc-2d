@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI, UploadFile, Form, File, BackgroundTasks, HTTPException, status, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from fastapi.encoders import jsonable_encoder
+
 
 from main import main
 
