@@ -136,7 +136,7 @@ def read_from_txt_file(file):
 def init(config_vars_json: str):
     env = dotenv_values(".env")
 
-    for key in list(filter(lambda key: 'QDC_2D_DB' in key, env.keys())):
+    for key in env.keys():
         os_env = os.getenv(key)
         if os_env != None:
             env[key] = os_env
