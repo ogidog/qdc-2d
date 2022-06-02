@@ -156,7 +156,8 @@ def main(config_vars_json: str = None, joints_source: str = None):
                     # UI_classif_withHough()
                 elif template.config['METHOD'] == "histo":
                     print(lang.select_locale('Classify with Hough', 'Классификация линий - Метод гистограмм'))
-                    classify_analyse_with_histograms(config_vars_json, joints_source)
+                    classify_analyse_with_histograms(joints_source)
+                    return
                 else:
                     print(lang.select_locale('Available method : histo or hough',
                                              'Доступные значения для параметра METHOD: histo или hough'))
