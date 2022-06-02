@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 
-from main import classify_analyse_with_histograms
+from main import main
 
 app = FastAPI()
 
@@ -30,7 +30,7 @@ async def exception_handler(request, exc):
     )
 
 def classify_run_service(config_vars, joints_source):
-    classify_analyse_with_histograms(config_vars, joints_source)
+    main(config_vars, joints_source)
 
 
 async def classify_run_controller(background_tasks: BackgroundTasks, config_vars, joints_source):
@@ -47,5 +47,3 @@ async def classify_run(background_tasks: BackgroundTasks, config_vars: str = For
 
 if __name__ == "__main__":
     uvicorn.run('app:app', host="localhost", port=8000)
-
-# raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Something went wrong!!!")
