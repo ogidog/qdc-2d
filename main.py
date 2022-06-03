@@ -20,7 +20,7 @@ from utils.write_json import write_json
 
 def classify_analyse_with_histograms(joints_source: str = None):
     try:
-        # template.config = template.init(config_vars_json)
+
         template.nodes = read_joints(joints_source)
 
         # -- Classification
@@ -130,7 +130,7 @@ def classify_analyse_with_histograms(joints_source: str = None):
 def main(config_vars_json: str = None, joints_source: str = None):
     try:
 
-        template.config = template.init(config_vars_json)
+        template.config = template.init_config(config_vars_json)
 
         if template.config['STEP'] == 'HELP' or template.config['STEP'] == '-h':
             f = open('help.txt', mode="r")

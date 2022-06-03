@@ -15,8 +15,11 @@ config = {}
 nodes = []
 classif_joint_set_counter = 0
 
+user_id = None
+task_id = None
 
-def read_from_txt_file(file):
+
+def init_config_from_txt_file(file):
     template = {}
     template['jNAME'] = []
     template['jORIENTATION'] = []
@@ -135,7 +138,7 @@ def read_from_txt_file(file):
     return template
 
 
-def init(config_vars_json: str):
+def init_config(config_vars_json: str):
     env = dotenv_values(".env")
 
     for key in env.keys():
