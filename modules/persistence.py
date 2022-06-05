@@ -11,7 +11,7 @@ import utils.template as template
 import utils.lang as lang
 
 
-def persistence():
+def persistence(joints_source: str = None):
 
     plt.close()
 
@@ -26,7 +26,7 @@ def persistence():
             return None
 
         elif cover == 0:
-            nodes = read_joints()
+            nodes = read_joints(joints_source)
             nodes['synthetic'] = template.config['SYNTHETIC']
 
             # Persistence on overall area
@@ -48,7 +48,7 @@ def persistence():
             computePersistanceMap(nodes, squares)
 
         else:
-            nodes = read_joints()
+            nodes = read_joints(joints_source)
             nodes['synthetic'] = template.config['SYNTHETIC']
 
             # Persistence on overall area
@@ -70,7 +70,7 @@ def persistence():
             computePersistanceMap(nodes, int(squares))
 
     else:  # no cover given
-        nodes = read_joints()
+        nodes = read_joints(joints_source)
         if "SQUARES" in template.config.keys():
             squares = int(template.config['SQUARES'])
         else:

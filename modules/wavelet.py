@@ -11,7 +11,7 @@ import utils.template as template
 from utils.write_json import write_json
 
 
-def wavelet():
+def wavelet(joints_source: str = None):
 
     plt.close()
 
@@ -45,7 +45,7 @@ def wavelet():
         print(lang.select_locale('Missing arguments : SCANS - DX - DY - THETA', 'Не указаны парметры : SCANS - DX - DY - THETA'))
         return
 
-    nodes = read_joints()
+    nodes = read_joints(joints_source)
     # Scanline PROCESSING
     scanline_info = {}
     scanline_info['nb_scans'] = 30

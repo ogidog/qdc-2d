@@ -8,7 +8,7 @@ import utils.template as template
 from utils.write_json import write_json
 
 
-def circular():
+def circular(joints_source: str = None):
 
     plt.close()
 
@@ -21,7 +21,7 @@ def circular():
         prompt = lang.select_locale('Number of horizontal circles? :', 'Количество окружностей по горизонтали? : '),
         circles = input(prompt)
 
-    nodes = read_joints()
+    nodes = read_joints(joints_source)
     [intensity_estimator, density_estimator, traceLength_estimator] = circularScanline(nodes, int(circles))
 
     write_json(template.circular_brief, template.config['CIRCULAR_OUTPUT'])

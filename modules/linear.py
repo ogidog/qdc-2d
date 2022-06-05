@@ -9,7 +9,7 @@ import utils.lang as lang
 import utils.template as template
 
 
-def linear():
+def linear(joints_source: str = None):
     plt.close()
 
     print(lang.select_locale('Analyse with linear scanline','Анализ - Линейная развертка'))
@@ -23,7 +23,7 @@ def linear():
     else:
         info_scanline['north'] = 0
 
-    nodes = read_joints()
+    nodes = read_joints(joints_source)
     nodes['synthetic'] = template.config['SYNTHETIC']
 
     info_scanline['nbScan'] = 30

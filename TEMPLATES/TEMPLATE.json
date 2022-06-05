@@ -27,8 +27,8 @@
     22.0
   ],
   "SYNTHETIC": 0,
-  "STEP": 2,
-  "METHOD": "histo",
+  "STEP": 3,
+  "METHOD": "persistence",
   "THETA": 10.0,
   "SCALE": 10.0,
   "COVER": 0.9,

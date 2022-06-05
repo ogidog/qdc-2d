@@ -10,7 +10,7 @@ from utils import lang
 from utils.write_json import write_json
 
 
-def volume():
+def volume(joints_source: str = None):
     plt.close()
 
     print(lang.select_locale('Analyse block volume and volume joint count',
