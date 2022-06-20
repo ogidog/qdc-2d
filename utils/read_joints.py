@@ -12,7 +12,20 @@ def read_joints(joints_source: str = None):
         f = open(template.config['INPUT'], 'r')
         reader = f.read()
 
-    reader = reader.strip()[:-1].replace("\n", "").replace("\r", "").split(";")
+    if ';' in reader:
+        reader = reader.strip()[:-1].replace("\n", "").replace("\r", "").split(";")
+    elif ' ' in reader:
+        reader_splitted = reader.split("\n")
+        reader = []
+        for line in reader_splitted:
+            xy_coords = line.strip().split()
+            xy_coords = [[[i / 4 + 1, xy_coords[i], xy_coords[i + 1]], [i / 4 + 1, xy_coords[i + 2], xy_coords[i + 3]]]
+                for i in range(0, len(xy_coords), 4)]
+            xy_coords = np.array(xy_coords).flatten()
+            reader.append([[xy_coords[i],xy_coords[i+1],xy_coords[i+2]] for i in range(0, len(xy_coords),3)])
+
+            pass
+
     for row in reader:
         matrix_joints = np.append(matrix_joints, np.array(row.split(","), dtype=np.float64))
     matrix_joints = np.array(np.split(matrix_joints, len(reader)))

@@ -1,6 +1,5 @@
 from datetime import datetime
 import uvicorn
-from waitress import serve
 from jose import jwt
 from dotenv import dotenv_values
 from fastapi import FastAPI, UploadFile, Form, File, BackgroundTasks, status, Request, Response
