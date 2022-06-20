@@ -18,15 +18,6 @@ def find_jointSet_fromHistogram():
 
     theta_vector = [*range(1, 181, 2)]
 
-    # plt.figure(1)
-    # theta = nodes['ori_mean']
-    # N = 50
-    # x = np.linspace(0.0, 2 * np.pi, N, endpoint=False)
-    # [y, _] = np.histogram(np.array([np.array(theta), np.array(theta) + np.pi]), N)
-    # ax = plt.subplot(polar=True)
-    # ax.bar(x, y, bottom=0.0, width=2 * np.pi / N, alpha=0.5, edgecolor="black", align="edge")
-    # plt.show()
-
     plt.subplots(constrained_layout=True)
     ax1 = plt.subplot(2, 1, 1)
     ax1.set_title(lang.select_locale('Estimated result', 'Оценочные результаты'))
