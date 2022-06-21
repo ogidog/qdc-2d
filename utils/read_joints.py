@@ -10,29 +10,13 @@ def read_joints(joints_source: str = None):
         reader = joints_source.decode()
     else:
         f = open(template.config['INPUT'], 'r')
-        reader = f.read().strip()
-
-    counter = 0
-    if ',' in reader:
-        reader = reader.split("\n")
+        reader = f.read()
+        reader = reader.strip().split("\n")
         reader = [item.split(',') for item in reader]
-    elif ' ' in reader:
-        reader_splitted = reader.split("\n")
-        reader = []
-        for line in reader_splitted:
-            xy_coords = line.strip().split()
-            xy_coords = [[[i / 4 + (counter + 1), xy_coords[i], xy_coords[i + 1]],
-                          [i / 4 + (counter + 1), xy_coords[i + 2], xy_coords[i + 3]]]
-                         for i in range(0, len(xy_coords), 4)]
-            counter = counter + len(xy_coords)
-            xy_coords = np.array(xy_coords).flatten()
-            reader.extend([[xy_coords[i], xy_coords[i + 1], xy_coords[i + 2]] for i in range(0, len(xy_coords), 3)])
 
     for item in reader:
         matrix_joints = np.append(matrix_joints, np.array(item, dtype=np.float64))
     matrix_joints = np.array(np.split(matrix_joints, len(reader)))
-    # if len(np.where(matrix_joints == 0)[0]) > 0:
-    #     matrix_joints = matrix_joints + np.array([0, 1, 1])
 
     iD = np.unique(matrix_joints[:, 0])
     nodes = dict([
