@@ -28,11 +28,15 @@ def classify_fromGaussians(limits):
 
     # Split nodes and write in OutPath
     output_file_template = template.config['OUTPUT'] + os.path.sep + "classif.txt"
+
+    if not os.path.exists(template.config['OUTPUT']):
+        os.makedirs(template.config['OUTPUT'])
+
     for set in range(len(limits)):
         out = output_file_template.replace('.', ('_{}classif.'.format(str(set))))
         split_nodes = splitNodes_per_setID(nodes_classif, set)
         split_matrice = writeJoints(split_nodes)
-        np.savetxt(out, split_matrice, fmt="%d,%.10f,%.10f;", delimiter=",")
+        np.savetxt(out, split_matrice, fmt="%d,%.10f,%.10f", delimiter=",")
 
     print(lang.select_locale('Classification of joint set --> DONE!', 'Классификация набора линий --> Завершено'));
 

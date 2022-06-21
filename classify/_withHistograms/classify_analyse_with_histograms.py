@@ -63,22 +63,22 @@ def classify_analyse_with_histograms(joints_source: str = None):
             template.config['INPUT'] = joint_file
 
             # hough analyse
-            nodes = hough()
+            # nodes = hough()
 
             # linear analyse
             [frequency, spacing_real] = linear()
 
             # circular scanline
-            [intensity_estimator, density_estimator, traceLength_estimator] = circular()
+            #[intensity_estimator, density_estimator, traceLength_estimator] = circular()
 
             # persistance
-            persistance = persistence()
+            # persistance = persistence()
 
             # volume
-            volume()
+            #volume()
 
             # wavelet
-            wavelet()
+            #wavelet()
 
             # -- summarize
             resume[lang.select_locale('SetId', 'Номер набора')].append(set_iD)

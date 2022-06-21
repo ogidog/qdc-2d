@@ -45,7 +45,7 @@ def circularScanline(nodes, nbCircles):
     s = {'xC': [], 'yC': [], 'xT': [], 'yT': [], 'xTC': [], 'yTC': [], 'm': []}
     for nc in range(len(xw)):  # Analysis for each circle
         # CIRCLE INTERSECT
-        # circle coor
+        # circle coord
         xc = xw[nc]
         yc = yw[nc]
         # translate to the origin

@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import warnings
+warnings.filterwarnings("ignore")
 
 from utils.nodes2vector import nodes2vector
 
@@ -12,7 +14,7 @@ def polylines_to_lines(nodes):
     for i in range(len(nodes['iD'])):
         x = nodes['x'][i]
         y = nodes['y'][i]
-        p = np.polyfit(x, y, 1)
+        p = np.polyfit(x, y, 2)
         x_1 = np.min(x)
         x_2 = np.max(x)
         y_1 = p[0] * x_1 + p[1]
